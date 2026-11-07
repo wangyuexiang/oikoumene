@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Oikoumene: an interactive historical atlas of the Old World, 500 BCE to 2000 CE.">
+<title>Oikoumene</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Noto+Serif+SC:wght@500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<style>
+/* Layout: header rail · map (left, flex) + chronicle column (right, 330px) · bottom timeline with era bands. Phase card floats bottom-left over the map; detail card floats top-right over the map. */
+:root{
+  --paper:#eee6d2; --paper-deep:#d8caa6; --sea:#cfdcd6; --sea-line:#a9bdb4; --water:#5f8fa8; --ink:#2a241f; --ink-soft:#6b5f52; --relief:#6f5a3a;
+  --rule:#b3a487; --accent:#9a3a22; --panel:rgba(246,241,229,.95); --panel-solid:#f6f1e5; --shadow:0 2px 14px rgba(40,30,10,.16);
+  --k-pol:#9a3a22; --k-sci:#1f5f8b; --k-tec:#b8720f; --k-tho:#5b3d8a; --k-rel:#2f7a4f; --k-art:#b5457a;
+  --display:"Cormorant Garamond","Noto Serif SC",Georgia,serif; --zh:"Noto Serif SC","Cormorant Garamond",serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --relief-blend:multiply; --relief-op:.85;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --paper:#2e2925; --paper-deep:#1f1b18; --sea:#161e21; --sea-line:#2b383c; --water:#4f8cab; --ink:#eadfc8; --ink-soft:#b3a58d; --relief:#c9b48a; --rule:#5a5043; --accent:#e07a5f; --panel:rgba(30,27,24,.95); --panel-solid:#1e1b18; --shadow:0 2px 14px rgba(0,0,0,.5);
+  --k-pol:#e07a5f; --k-sci:#6fb3e0; --k-tec:#e6a94a; --k-tho:#b48ee6; --k-rel:#6fcf97; --k-art:#e88ab8; --relief-blend:soft-light; --relief-op:.9; color-scheme:dark } }
+:root[data-theme="dark"]{ --paper:#2e2925; --paper-deep:#1f1b18; --sea:#161e21; --sea-line:#2b383c; --water:#4f8cab; --ink:#eadfc8; --ink-soft:#b3a58d; --relief:#c9b48a; --rule:#5a5043; --accent:#e07a5f; --panel:rgba(30,27,24,.95); --panel-solid:#1e1b18; --shadow:0 2px 14px rgba(0,0,0,.5);
+  --k-pol:#e07a5f; --k-sci:#6fb3e0; --k-tec:#e6a94a; --k-tho:#b48ee6; --k-rel:#6fcf97; --k-art:#e88ab8; --relief-blend:soft-light; --relief-op:.9; color-scheme:dark }
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--sea);color:var(--ink);font-family:var(--display);font-size:15px;overflow:hidden}
+#app{position:relative;height:100%;display:grid;grid-template-rows:auto 1fr auto;grid-template-columns:1fr 330px;grid-template-areas:"hd hd" "map side" "tl tl"}
+header{grid-area:hd;display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding-block:7px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));border-bottom:1px solid var(--rule);background:var(--panel-solid);z-index:3}
+header h1{margin:0;font-size:24px;font-weight:700;letter-spacing:.03em;white-space:nowrap;color:var(--accent)}
+header h1 small{font-family:var(--zh);font-size:13px;font-weight:500;color:var(--ink-soft);margin-left:10px;letter-spacing:0}
+.ctl{display:flex;gap:6px;align-items:center;font-family:var(--mono);font-size:12px;color:var(--ink-soft);flex-wrap:wrap}
+.sp{flex:1}
+button,select,input{font:inherit;font-family:var(--mono);font-size:12px;color:var(--ink);background:var(--panel-solid);border:1px solid var(--rule);border-radius:4px;padding:4px 10px;min-height:30px}
+button{cursor:pointer}
+button:hover{border-color:var(--accent)}
+button[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#lang{padding-right:22px}
+.chip{display:inline-flex;align-items:center;gap:6px}
+.chip i{width:9px;height:9px;border-radius:50%;background:var(--c);flex:none}
+.chip[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:#fff}
+.chip[aria-pressed="true"] i{background:#fff}
+#search{position:relative}
+#q{width:230px;padding-left:28px;background:var(--panel-solid) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><circle cx='7' cy='7' r='4.5' fill='none' stroke='%237a6a55' stroke-width='1.4'/><path d='M10.5 10.5 14 14' stroke='%237a6a55' stroke-width='1.6' stroke-linecap='round'/></svg>") 8px center/14px no-repeat}
+#sug{position:absolute;left:0;top:34px;width:320px;max-height:300px;overflow:auto;background:var(--panel-solid);border:1px solid var(--rule);box-shadow:var(--shadow);z-index:9;font-family:var(--zh);font-size:13px}
+#sug div{padding:6px 10px;cursor:pointer;display:flex;gap:8px;align-items:baseline}
+#sug div:hover,#sug div.on{background:var(--paper-deep)}
+#sug small{font-family:var(--mono);color:var(--ink-soft);font-size:10.5px;margin-left:auto}
+#stage{grid-area:map;min-height:0;min-width:0;position:relative;background:var(--sea)}
+svg{width:100%;height:100%;display:block;touch-action:none;cursor:grab;user-select:none}
+svg.drag{cursor:grabbing}
+.land{fill:var(--paper);stroke:none}
+.coast{fill:none;stroke:var(--sea-line);stroke-width:.7;vector-effect:non-scaling-stroke}
+#relief{mix-blend-mode:var(--relief-blend);opacity:var(--relief-op);pointer-events:none}
+.grat{fill:none;stroke:var(--ink);stroke-opacity:.08;stroke-width:.5;vector-effect:non-scaling-stroke}
+.frame{fill:none;stroke:var(--ink);stroke-opacity:.3;stroke-width:.8;vector-effect:non-scaling-stroke}
+.pol{stroke-width:1.1;stroke-opacity:.85;stroke-linejoin:round;vector-effect:non-scaling-stroke;transition:fill-opacity .25s,stroke-opacity .25s}
+.pol.dim{fill-opacity:.06;stroke-opacity:.25}
+.pol.un{fill:var(--paper-deep);fill-opacity:.3;stroke:var(--ink);stroke-opacity:.3;stroke-dasharray:2 2;stroke-width:.6}
+.layer{transition:opacity .7s ease}
+.layer.in{opacity:0}
+.ghost{fill:none;stroke:var(--accent);stroke-width:1;stroke-dasharray:3 2.2;opacity:.6;vector-effect:non-scaling-stroke;pointer-events:none}
+.lake{fill:var(--sea);stroke:var(--sea-line);stroke-width:.4;vector-effect:non-scaling-stroke;pointer-events:none}
+.river{fill:none;stroke:var(--water);stroke-opacity:.55;stroke-width:.6;vector-effect:non-scaling-stroke;pointer-events:none}
+.river.r1{stroke-width:1}
+.rlbl{font-family:var(--display);font-style:italic;font-size:calc(8.5px*var(--inv,1));fill:var(--relief);text-anchor:middle;letter-spacing:.14em;text-transform:uppercase;opacity:.85;paint-order:stroke;stroke:var(--paper);stroke-width:2;stroke-opacity:.5;pointer-events:none}
+.rlbl.zh{font-family:var(--zh);font-style:normal;text-transform:none;letter-spacing:.3em}
+.rlbl.minor{display:none}
+svg[data-z="2"] .rlbl.minor,svg[data-z="3"] .rlbl.minor{display:block}
+.wlbl{font-family:var(--display);font-style:italic;font-size:calc(7.5px*var(--inv,1));fill:var(--water);text-anchor:middle;pointer-events:none;display:none}
+svg[data-z="2"] .wlbl,svg[data-z="3"] .wlbl{display:block}
+.peak path{fill:var(--relief);stroke:none}
+.peak text{font-family:var(--mono);font-size:calc(6.5px*var(--inv,1));fill:var(--relief);pointer-events:none;display:none}
+svg[data-z="2"] .peak text,svg[data-z="3"] .peak text{display:block}
+.city{cursor:pointer}
+.city circle{fill:var(--panel-solid);stroke:var(--ink);stroke-width:.9}
+.city.cap circle{fill:var(--accent);stroke:var(--panel-solid);stroke-width:1}
+.city.cap .ring{fill:none;stroke:var(--accent);stroke-width:.7;opacity:.8}
+.city text{font-family:var(--zh);font-size:calc(9px*var(--inv,1));fill:var(--ink);paint-order:stroke;stroke:var(--paper);stroke-width:2.6;stroke-linejoin:round;pointer-events:none}
+.city.cap text{font-weight:700}
+.city.minor text{display:none}
+svg[data-z="2"] .city.minor text,svg[data-z="3"] .city.minor text{display:block}
+.lbl{font-family:var(--display);font-weight:600;font-size:calc(12px*var(--inv,1));fill:var(--ink);text-anchor:middle;letter-spacing:.18em;text-transform:uppercase;paint-order:stroke;stroke:var(--paper);stroke-width:2.4;stroke-opacity:.7;pointer-events:none}
+.lbl.zh{font-family:var(--zh);text-transform:none;letter-spacing:.35em;font-size:calc(11px*var(--inv,1))}
+.ev{cursor:pointer}
+.ev circle{fill:var(--c);stroke:var(--panel-solid);stroke-width:1.2}
+.ev .halo{fill:var(--c);opacity:.22;stroke:none}
+.ev text{font-family:var(--zh);font-size:calc(8.5px*var(--inv,1));fill:var(--c);paint-order:stroke;stroke:var(--paper);stroke-width:2.4;pointer-events:none}
+.ev.on .halo{opacity:.45;r:9}
+.jr path{fill:none;stroke:var(--accent);stroke-width:1.3;vector-effect:non-scaling-stroke}
+.jr path.draw{stroke-dasharray:2000;stroke-dashoffset:2000;animation:draw 2.4s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.jr circle{fill:var(--paper);stroke:var(--accent);stroke-width:1.2}
+.jr text{font-family:var(--mono);font-size:calc(8px*var(--inv,1));fill:var(--accent);text-anchor:middle;dominant-baseline:central;pointer-events:none}
+/* phase card */
+#phase{position:absolute;left:max(14px,env(safe-area-inset-left,0px));bottom:14px;width:min(340px,70vw);background:var(--panel);border:1px solid var(--rule);box-shadow:var(--shadow);padding:10px 14px 12px;z-index:2;font-family:var(--zh);font-size:13px}
+#phase .t{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.04em}
+#phase .dots{display:flex;gap:3px;margin:6px 0 8px;flex-wrap:wrap}
+#phase .dots i{width:7px;height:7px;border-radius:50%;background:var(--rule);opacity:.55;cursor:pointer}
+#phase .dots i.on{background:var(--accent);opacity:1;transform:scale(1.25)}
+#phase .sum{line-height:1.5;margin-bottom:8px}
+#phase .lg{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12.5px}
+#phase .lg span{display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+#phase .lg i{width:11px;height:11px;border-radius:2px;border:1px solid var(--ink);flex:none}
+#phase .lg span.more{color:var(--ink-soft);font-family:var(--mono);font-size:11px}
+#phase .tg{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+#phase .tg button{min-height:24px;padding:2px 8px;font-size:11px}
+/* detail card */
+#card{position:absolute;right:max(14px,env(safe-area-inset-right,0px));top:14px;width:min(330px,70vw);background:var(--panel);border:1px solid var(--rule);border-top:3px solid var(--accent);box-shadow:var(--shadow);padding:10px 14px 12px;font-size:14px;line-height:1.5;z-index:2;font-family:var(--zh)}
+#card h3{margin:0 0 4px;font-size:19px;display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+#card .x{position:absolute;right:10px;top:8px;cursor:pointer;color:var(--ink-soft);font-family:var(--mono);font-size:13px;padding:2px 4px}
+#card h3{padding-right:22px}
+#card .names{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);white-space:pre-line;line-height:1.65;margin-top:4px}
+#card .ex{color:var(--ink-soft);font-style:italic;font-size:12.5px;margin-top:6px}
+#card .tag{display:inline-block;font-family:var(--mono);font-size:10.5px;color:var(--accent);border:1px solid var(--accent);border-radius:3px;padding:0 6px;margin-right:4px}
+#card a{color:var(--accent)}
+#card .k{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--c);margin-right:6px}
+/* people */
+.per{cursor:pointer}
+.per rect{fill:var(--panel-solid);stroke:var(--c);stroke-width:1.2;rx:1}
+.per .in{fill:var(--c);stroke:none}
+.per text{font-family:var(--zh);font-size:calc(8.5px*var(--inv,1));fill:var(--ink);font-style:italic;paint-order:stroke;stroke:var(--paper);stroke-width:2.4;pointer-events:none}
+.per.on rect{stroke-width:2.2}
+.tr path{fill:none;stroke:var(--c);stroke-width:1.1;stroke-dasharray:3 2;vector-effect:non-scaling-stroke;opacity:.9}
+.tr circle{fill:var(--panel-solid);stroke:var(--c);stroke-width:1.1}
+.tr text{font-family:var(--zh);font-size:calc(7.5px*var(--inv,1));fill:var(--c);paint-order:stroke;stroke:var(--paper);stroke-width:2;pointer-events:none}
+#card .tagline{font-family:var(--display);font-style:italic;color:var(--accent);font-size:13.5px;margin:-2px 0 6px}
+#card .desc{font-size:13.5px;line-height:1.6;margin-top:6px}
+#card .wk{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}
+#card .wk a{display:inline-block;font-family:var(--mono);font-size:11px;border:1px solid var(--accent);border-radius:3px;padding:2px 8px;text-decoration:none}
+#card .wk a:hover{background:var(--accent);color:#fff}
+#card .life{font-family:var(--mono);font-size:11px;color:var(--ink-soft)}
+#card button.sm{min-height:24px;padding:2px 8px;font-size:11px;margin-top:8px}
+#zoomc{position:absolute;right:max(14px,env(safe-area-inset-right,0px));bottom:14px;display:flex;flex-direction:column;gap:4px;z-index:2}
+#zoomc button{width:32px;padding:0}
+#hint{position:absolute;left:50%;top:10px;transform:translateX(-50%);font-family:var(--mono);font-size:10.5px;color:var(--ink-soft);background:var(--panel);border:1px solid var(--rule);padding:2px 10px;border-radius:3px;z-index:1;white-space:nowrap;max-width:60%;overflow:hidden;text-overflow:ellipsis}
+/* chronicle */
+#side{grid-area:side;min-height:0;border-left:1px solid var(--rule);background:var(--paper);display:flex;flex-direction:column}
+#side h4{margin:0;padding:8px 14px;font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);border-bottom:1px solid var(--rule);display:flex;justify-content:space-between}
+#chron{overflow:auto;flex:1;padding:8px 10px 8px 12px;scroll-behavior:smooth}
+.ce{display:grid;grid-template-columns:60px 1fr;gap:8px;padding:8px 10px;margin-bottom:6px;background:var(--panel-solid);border:1px solid transparent;border-left:3px solid var(--c);border-radius:3px;cursor:pointer;font-family:var(--zh);font-size:13px;line-height:1.45}
+.ce .y{font-family:var(--mono);font-size:11px;color:var(--c);padding-top:2px}
+.ce:hover{border-color:var(--rule)}
+.ce.now{border-color:var(--accent);background:var(--panel)}
+.ce.era{grid-template-columns:1fr;background:transparent;border:0;border-top:1px solid var(--rule);margin-top:10px;padding:8px 2px 2px;font-family:var(--display);font-style:italic;color:var(--ink-soft);font-size:13px;letter-spacing:.06em;cursor:default}
+/* timeline */
+footer{grid-area:tl;border-top:1px solid var(--rule);background:var(--panel-solid);display:grid;grid-template-columns:auto 1fr auto;gap:10px 14px;align-items:center;padding-block:8px 6px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));z-index:3}
+#tl{position:relative;height:64px;cursor:pointer;user-select:none}
+#eras{position:absolute;left:0;right:0;top:10px;height:26px;display:flex;border-radius:3px;overflow:hidden;border:1px solid var(--rule)}
+#eras div{height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--zh);font-size:11px;color:var(--ink);overflow:hidden;white-space:nowrap;border-right:1px solid rgba(0,0,0,.12);background:var(--c);opacity:.8}
+#slices{position:absolute;left:0;right:0;top:38px;height:6px}
+#note{margin-top:2px}
+#slices i{position:absolute;top:0;width:2px;height:6px;background:var(--ink);opacity:.35}
+#evt{position:absolute;left:0;right:0;top:0;height:9px;pointer-events:none}
+#evt i{position:absolute;top:0;width:2px;height:7px;background:var(--c);opacity:.85}
+#cur{position:absolute;top:4px;width:2px;height:44px;background:var(--accent);transform:translateX(-1px);pointer-events:none}
+#cur b{position:absolute;left:50%;top:-4px;transform:translate(-50%,-100%);background:var(--ink);color:var(--paper);font-family:var(--mono);font-weight:400;font-size:10.5px;padding:1px 7px;border-radius:3px;white-space:nowrap}
+#ticks{position:absolute;left:0;right:0;bottom:0;font-family:var(--mono);font-size:9.5px;color:var(--ink-soft)}
+#ticks span{position:absolute;transform:translateX(-50%)}
+#yrbox{display:flex;align-items:center;gap:4px}
+#yrin{width:84px;text-align:center;font-size:14px;font-family:var(--display);font-weight:700}
+#yr{font-size:26px;font-weight:700;min-width:6ch;font-variant-numeric:tabular-nums;line-height:1;font-family:var(--display)}
+#yr small{display:block;font-family:var(--mono);font-size:10px;font-weight:400;color:var(--ink-soft);margin-top:3px}
+#note{grid-column:1/-1;font-size:10.5px;color:var(--ink-soft);font-family:var(--mono);line-height:1.4}
+#b-side{display:none}
+@media (max-width:900px){
+  #app{grid-template-columns:1fr;grid-template-areas:"hd" "map" "tl"}
+  #side{position:absolute;right:0;top:0;bottom:0;width:min(330px,85vw);z-index:4;box-shadow:var(--shadow);transform:translateX(100%);transition:transform .3s}
+  #side.open{transform:none} #b-side{display:inline-block}
+}
+@media (max-width:640px){
+  header h1{font-size:18px} header h1 small{display:block;margin:0;font-size:11px} #q{width:150px} #hint{display:none}
+  #card{top:auto;bottom:0;right:0;left:0;width:auto;max-height:42%;overflow:auto;border-left:0;border-right:0;border-bottom:0;border-radius:10px 10px 0 0}
+  #phase{display:none} #zoomc{bottom:auto;top:12px}
+  footer{grid-template-columns:1fr;gap:6px} #yr{display:none} #note{display:none} #yrbox{justify-content:center}
+  header{gap:6px 10px} button,select,input{padding:3px 8px;min-height:28px;font-size:11px}
+}
+@media (prefers-reduced-motion:reduce){.layer,.pol,#side{transition:none}.jr path.draw{animation:none;stroke-dashoffset:0}}
+</style>
+</head>
+<body>
+<div id="app">
+<header>
+  <h1>Oikoumene <small id="sub"></small></h1>
+  <div id="search"><input id="q" type="search" autocomplete="off" placeholder=""><div id="sug" hidden></div></div>
+  <div class="ctl" id="kinds"></div>
+  <span class="sp"></span>
+  <div class="ctl">
+    <select id="lang" aria-label="language"><option value="en">English</option><option value="zh">中文</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="es">Español</option></select>
+    <button id="b-jr">Alexander</button><button id="b-people" aria-pressed="true"></button><button id="b-tour"></button><button id="b-side">☰</button>
+  </div>
+</header>
+<div id="stage">
+  <svg id="map" viewBox="0 0 1000 700" role="img" aria-label="historical map of the Old World" data-z="1">
+    <defs>
+      <pattern id="waves" width="14" height="8" patternUnits="userSpaceOnUse"><path d="M0 4 q3.5 -3 7 0 t7 0" fill="none" stroke="var(--sea-line)" stroke-width=".5" opacity=".5"/></pattern>
+      <clipPath id="landclip"></clipPath>
+    </defs>
+    <g id="cam"><rect x="-1500" y="-1500" width="4000" height="4000" fill="url(#waves)"/>
+      <g id="g-land"></g><image id="relief" x="0" y="0" width="1000" height="700" clip-path="url(#landclip)"/><g id="g-coast"></g><g id="g-layers"></g><g id="g-water"></g><g id="g-grat"></g><g id="g-ghost"></g><g id="g-rlbl"></g><g id="g-lbl"></g><g id="g-peak"></g><g id="g-city"></g><g id="g-per"></g><g id="g-tr" class="tr"></g><g id="g-ev"></g><g id="g-jr" class="jr"></g></g>
+  </svg>
+  <div id="hint"></div>
+  <div id="phase"></div>
+  <div id="card" hidden></div>
+  <div id="zoomc"><button id="z-in" aria-label="zoom in">+</button><button id="z-out" aria-label="zoom out">−</button><button id="z-0" aria-label="reset">⌂</button></div>
+</div>
+<aside id="side"><h4><span id="side-t"></span><span id="side-n"></span></h4><div id="chron"></div></aside>
+<footer>
+  <div id="yr">—<small></small></div>
+  <div id="tl"><div id="evt"></div><div id="eras"></div><div id="slices"></div><div id="cur"><b></b></div><div id="ticks"></div></div>
+  <div id="yrbox"><button id="b-prev">‹</button><input id="yrin" type="text" inputmode="numeric" aria-label="year"><button id="b-next">›</button><button id="b-play">▶</button></div>
+  <div id="note"></div>
+</footer>
+</div>
+
+<script>
+const LINEAGE=[
+  [/Roman|Byzantine|Eastern Roman|Western Roman/i,'#8a2f1c'],
+  [/Caliphate|Umayyad|Abbasid|Fatimid|Mamluke|Ottoman|Córdoba|Almohad|Almoravid|Seljuk|Buyid|Samanid|Ghaznavid|Hafsid|Merinides|Zayyanid|Watassid|Sokoto|Granada|Emirate/i,'#2f6b4f'],
+  [/Carolingian|France|Frank|Angevin|West Francia/i,'#2c4f8a'],
+  [/Holy Roman|Austria|Prussia|Germany|East Francia|Habsburg/i,'#c99a2e'],
+  [/England|United Kingdom|Wessex|Mercia|Scotland|Anglo/i,'#a23b63'],
+  [/Moscow|Russia|Rus|Kiev|Novgorod|Vladimir|Muscovy/i,'#5a3e7a'],
+  [/Persia|Parthia|Sasanian|Achaemenid|Safavid|Seleucid|Iran/i,'#b06a2a'],
+  [/Alexander|Macedon|Greek|Athens|Antigonus|Kassander|Lysimachus|Ptolemaic|Pergamon|Greece/i,'#2a7a8a'],
+  [/Carthag|Phoenic|Numidia/i,'#7a4a2a'],
+  [/Mongol|Golden Horde|Ilkhanate|Chagatai|Timurid|White Horde|Khanate|Yuan/i,'#6d7b2e'],
+  [/Spain|Castile|Aragón|Portugal|León|Navarre|Asturias|Visigoth/i,'#b23a3a'],
+  [/Venice|Genoa|Florence|Papal|Naples|Sicil|Milan|Tuscany|Sardinia|Italy|Lombard/i,'#9a6a1f'],
+];
+const JOURNEY={zh:'亚历山大东征',en:"Alexander's campaigns",w:'Wars of Alexander the Great',wz:'亚历山大大帝东征',stops:[
+  {y:-334,zh:'佩拉',en:'Pella',c:[22.52,40.76],nz:'自马其顿都城出发，渡赫勒斯滂',ne:'Sets out from the Macedonian capital'},
+  {y:-334,zh:'格拉尼库斯河',en:'Granicus',c:[27.1,40.2],nz:'首破波斯总督军',ne:'First victory over the Persian satraps'},
+  {y:-333,zh:'伊苏斯',en:'Issus',c:[36.1,36.85],nz:'大败大流士三世',ne:'Routs Darius III'},
+  {y:-332,zh:'推罗',en:'Tyre',c:[35.2,33.27],nz:'七月围城',ne:'Seven-month siege'},
+  {y:-331,zh:'亚历山大里亚',en:'Alexandria',c:[29.92,31.2],nz:'建城；赴锡瓦问神',ne:'Founds the city; the oracle at Siwa'},
+  {y:-331,zh:'高加米拉',en:'Gaugamela',c:[43.25,36.36],nz:'决战，波斯帝国崩解',ne:'Decisive battle'},
+  {y:-331,zh:'巴比伦',en:'Babylon',c:[44.42,32.54],nz:'入城',ne:'Enters the city'},
+  {y:-330,zh:'波斯波利斯',en:'Persepolis',c:[52.89,29.93],nz:'焚宫',ne:'Burns the palace'},
+  {y:-329,zh:'马拉坎达',en:'Maracanda',c:[66.97,39.65],nz:'索格底亚那两年苦战',ne:'Two hard years in Sogdiana'},
+  {y:-323,zh:'巴比伦',en:'Babylon',c:[44.42,32.54],nz:'病逝，年三十二',ne:'Dies at 32'}]};
+LINEAGE.push([/^(Han|Qin|Tang|Song|Ming|Qing|Jin|Sui|Northern Wei|Toba Wei|Southern Song|China)$/,'#b03a2e'],[/Japan|Shogun|Kamakura|Edo/,'#7a3b5e'],[/Korea|Goryeo|Joseon|Silla|Koguryo|Paekche/,'#3a6e8c'],[/Maurya|Gupta|Delhi|Mughal|Chola|Vijayanagara|India/,'#c0762c']);
+LINEAGE.push([/^(Han|Qin|Tang|Song|Ming|Qing|Jin|Sui|Northern Wei|Toba Wei|Southern Song|China)$/,'#b03a2e'],[/Japan|Shogun|Kamakura|Edo/,'#7a3b5e'],[/Korea|Goryeo|Joseon|Silla|Koguryo|Paekche/,'#3a6e8c'],[/Maurya|Gupta|Delhi|Mughal|Chola|Vijayanagara|India/,'#c0762c']);
+
+const KINDS={pol:{zh:'政治',en:'Politics',fr:'Politique',de:'Politik',es:'Política'},sci:{zh:'科学',en:'Science',fr:'Science',de:'Wissenschaft',es:'Ciencia'},tec:{zh:'技术',en:'Technology',fr:'Technique',de:'Technik',es:'Tecnología'},tho:{zh:'思想',en:'Thought',fr:'Pensée',de:'Denken',es:'Pensamiento'},rel:{zh:'宗教',en:'Religion',fr:'Religion',de:'Religion',es:'Religión'},art:{zh:'艺术',en:'Art',fr:'Art',de:'Kunst',es:'Arte'}};
+const ERAS=[
+  {from:-500,to:-27,c:'#9fb7c9',n:{en:'Classical',zh:'古典时代',fr:'Antiquité classique',de:'Klassische Antike',es:'Época clásica'}},
+  {from:-27,to:476,c:'#c9a06a',n:{en:'Roman · Han',zh:'罗马 · 汉',fr:'Rome · Han',de:'Rom · Han',es:'Roma · Han'}},
+  {from:476,to:750,c:'#b3a0c4',n:{en:'Late Antiquity',zh:'晚期古代',fr:'Antiquité tardive',de:'Spätantike',es:'Antigüedad tardía'}},
+  {from:750,to:1000,c:'#9ec2a0',n:{en:'Early Middle Ages',zh:'中世纪早期',fr:'Haut Moyen Âge',de:'Frühmittelalter',es:'Alta Edad Media'}},
+  {from:1000,to:1300,c:'#c9b36a',n:{en:'High Middle Ages',zh:'中世纪盛期',fr:'Moyen Âge central',de:'Hochmittelalter',es:'Plena Edad Media'}},
+  {from:1300,to:1500,c:'#c48f7a',n:{en:'Late Middle Ages',zh:'中世纪晚期',fr:'Bas Moyen Âge',de:'Spätmittelalter',es:'Baja Edad Media'}},
+  {from:1500,to:1800,c:'#8fb5c9',n:{en:'Early Modern',zh:'近代早期',fr:'Époque moderne',de:'Frühe Neuzeit',es:'Edad Moderna'}},
+  {from:1800,to:2000,c:'#b9b9b9',n:{en:'Modern',zh:'现代',fr:'Époque contemporaine',de:'Moderne',es:'Edad Contemporánea'}}];
+const T={
+ en:{sub:'The Old World through time · prototype v6',legend:'Polities',slice:'Slice',pol:'polities',unnamed:'unnamed peoples / no polity',cap:'Capital',names:'Names through time',note:'Borders: aourednik/historical-basemaps (CC BY 4.0) · relief, rivers, lakes: Natural Earth · gazetteer, events, journey: prototype data. Borders are schematic; dashed = previous slice.',chron:'Chronicle',tour:'Tour',wiki:'Wikipedia',relief:'Relief',ghost:'Ghost',search:'Search city / polity / event',hint:'Scroll to zoom · drag to pan · click a city, polity or event · ← → change slice · Space plays',bce:'BCE',ce:'CE',year:'Year',events:'events',local:'local',people:'People',born:'b.',died:'d.',trace:'Trace life',untrace:'Hide trace',read:'Read'},
+ zh:{sub:'寰宇时序 · 旧大陆历史地图 · 原型 v6',legend:'政权',slice:'切片',pol:'个政权',unnamed:'未命名部族 / 无主地',cap:'都城',names:'历代名称',note:'边界 aourednik/historical-basemaps（CC BY 4.0）· 山川水系 Natural Earth · 地名谱系、事件与行迹为原型数据。边界为示意，虚线 = 上一切片。',chron:'编年',tour:'巡礼',wiki:'维基百科',relief:'山川',ghost:'上一切片',search:'搜索城市 / 政权 / 事件',hint:'滚轮缩放 · 拖拽平移 · 点击城市、政权或事件 · ← → 切换切片 · 空格播放',bce:'前',ce:'公元',year:'年',events:'条事件',local:'当地',people:'人物',born:'生',died:'卒',trace:'生平行迹',untrace:'收起行迹',read:'阅读'},
+ fr:{sub:'Le Vieux Monde à travers le temps · prototype v6',legend:'Entités politiques',slice:'Coupe',pol:'entités',unnamed:'peuples sans État',cap:'Capitale',names:'Noms au fil du temps',note:'Frontières : aourednik/historical-basemaps (CC BY 4.0) · relief, fleuves, lacs : Natural Earth · toponymes, événements, itinéraire : données prototype. Frontières schématiques ; pointillé = coupe précédente.',chron:'Chronique',tour:'Visite',wiki:'Wikipédia',relief:'Relief',ghost:'Coupe précédente',search:'Ville / État / événement',hint:'Molette : zoom · glisser : déplacer · cliquer une ville, un État ou un événement · ← → coupe suivante · Espace : lecture',bce:'av. J.-C.',ce:'apr. J.-C.',year:'Année',events:'événements',local:'local',people:'Personnages',born:'né',died:'mort',trace:'Parcours',untrace:'Masquer',read:'Lire'},
+ de:{sub:'Die Alte Welt im Wandel der Zeit · Prototyp v6',legend:'Herrschaften',slice:'Schnitt',pol:'Herrschaften',unnamed:'namenlose Völker / kein Staat',cap:'Hauptstadt',names:'Namen im Lauf der Zeit',note:'Grenzen: aourednik/historical-basemaps (CC BY 4.0) · Relief, Flüsse, Seen: Natural Earth · Ortsnamen, Ereignisse, Reise: Prototypdaten. Grenzen schematisch; gestrichelt = vorheriger Schnitt.',chron:'Chronik',tour:'Rundgang',wiki:'Wikipedia',relief:'Relief',ghost:'Vorheriger Schnitt',search:'Stadt / Reich / Ereignis',hint:'Scrollen: Zoom · Ziehen: Verschieben · Stadt, Reich oder Ereignis anklicken · ← → Schnitt wechseln · Leertaste: Abspielen',bce:'v. Chr.',ce:'n. Chr.',year:'Jahr',events:'Ereignisse',local:'lokal',people:'Personen',born:'geb.',died:'gest.',trace:'Lebensweg',untrace:'Ausblenden',read:'Lesen'},
+ es:{sub:'El Viejo Mundo a través del tiempo · prototipo v6',legend:'Entidades políticas',slice:'Corte',pol:'entidades',unnamed:'pueblos sin Estado',cap:'Capital',names:'Nombres a lo largo del tiempo',note:'Fronteras: aourednik/historical-basemaps (CC BY 4.0) · relieve, ríos, lagos: Natural Earth · topónimos, eventos, viaje: datos prototipo. Fronteras esquemáticas; discontinua = corte anterior.',chron:'Crónica',tour:'Recorrido',wiki:'Wikipedia',relief:'Relieve',ghost:'Corte anterior',search:'Ciudad / Estado / evento',hint:'Rueda: zoom · arrastrar: mover · clic en ciudad, Estado o evento · ← → cambiar corte · Espacio: reproducir',bce:'a. C.',ce:'d. C.',year:'Año',events:'eventos',local:'local',people:'Personajes',born:'n.',died:'m.',trace:'Trayectoria',untrace:'Ocultar',read:'Leer'}};
+const LANGS=['en','zh','fr','de','es'];
+/* projection: Equal Earth centred on 62°E, Atlantic → Japan, Equator → Arctic */
+const W=1000,H=700,B={west:-30,east:150,south:0,north:80};
+const frameGeo={type:'Polygon',coordinates:[[...Array.from({length:91},(_,i)=>[B.west+i*2,B.south]),...Array.from({length:41},(_,i)=>[B.east,B.south+i*2]),...Array.from({length:91},(_,i)=>[B.east-i*2,B.north]),...Array.from({length:41},(_,i)=>[B.west,B.north-i*2])].reverse()]};
+const proj=d3.geoEqualEarth().rotate([-62,0]).fitExtent([[4,4],[W-4,H-4]],frameGeo);
+const path=d3.geoPath(proj);
+const inB=(lng,lat)=>lng>=B.west&&lng<=B.east&&lat>=B.south&&lat<=B.north;
+const P=(lng,lat)=>inB(lng,lat)?proj([lng,lat]):null;
+const sarea=r=>{let a=0;for(let i=0;i<r.length-1;i++)a+=r[i][0]*r[i+1][1]-r[i+1][0]*r[i][1];return a};
+const fixPoly=p=>p.forEach((r,i)=>{const a=sarea(r);if((i===0&&a>0)||(i>0&&a<0))r.reverse()});
+const rewind=g=>{if(!g)return g;if(g.type==='Polygon')fixPoly(g.coordinates);else if(g.type==='MultiPolygon')g.coordinates.forEach(fixPoly);return g};
+const hashColor=s=>{let h=0;for(const ch of s)h=(h*31+ch.charCodeAt(0))>>>0;return `hsl(${h%360} 30% 55%)`};
+const tint=n=>{for(const[re,c]of LINEAGE)if(re.test(n))return c;return hashColor(n)};
+const fy=y=>{const t=T[lang];if(lang==='zh')return y<0?`前 ${-y}`:`公元 ${y}`;return y<0?`${-y} ${t.bce}`:`${y} ${t.ce}`};
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+const nm=o=>o[lang]||(lang==='zh'&&o.zh)||o.en||'';
+const cityName=(g,n)=>lang==='zh'?n.zh:lang==='en'?n.en:(g.names.length>1?n.en:(g[lang]||n.en));
+/* state */
+let INDEX=[],EVENTS=[],GAZ=[],PEOPLE=[],PHYS=null,people=true,traced=null,cache={},idx=0,lang='en',ghost=true,relief=true,jr=false,playing=false,hover=null,kinds=new Set(Object.keys(KINDS));
+const $=id=>document.getElementById(id),svg=$('map'),cam=$('cam');
+let cz=1,cx=0,cy=0;
+const applyCam=()=>{cam.setAttribute('transform',`translate(${cx} ${cy}) scale(${cz})`);svg.style.setProperty('--inv',(1/Math.sqrt(cz)).toFixed(3));svg.dataset.z=cz>=4?'3':cz>=1.8?'2':'1'};
+async function load(i){const e=INDEX[i];if(!cache[e.file]){const d=await(await fetch('data/'+e.file)).json();d.features.forEach(f=>rewind(f.geometry));cache[e.file]=d}return cache[e.file]}
+function sliceRange(i){const a=INDEX[i].year,b=i+1<INDEX.length?INDEX[i+1].year:2100;return[a,b]}
+const Y0=-500,Y1=2000,yx=y=>(y-Y0)/(Y1-Y0);
+/* hillshade: reproject the equirectangular relief into the Equal Earth frame once, on a canvas */
+async function buildRelief(){try{
+  const img=new Image();img.src='data/relief.webp';await img.decode();
+  const sw=img.naturalWidth,sh=img.naturalHeight;const sc=document.createElement('canvas');sc.width=sw;sc.height=sh;const sx=sc.getContext('2d');sx.drawImage(img,0,0);const src=sx.getImageData(0,0,sw,sh).data;
+  const K=2,ow=W*K,oh=H*K,G=6;const gw=Math.floor(ow/G)+2,gh=Math.floor(oh/G)+2;const gx=new Float32Array(gw*gh),gy=new Float32Array(gw*gh);
+  for(let j=0;j<gh;j++)for(let i=0;i<gw;i++){const ll=proj.invert([i*G/K,j*G/K]);let u=NaN,v=NaN;if(ll&&inB(ll[0],ll[1])){u=(ll[0]-B.west)/(B.east-B.west)*(sw-1);v=(B.north-ll[1])/(B.north-B.south)*(sh-1)}gx[j*gw+i]=u;gy[j*gw+i]=v}
+  const oc=document.createElement('canvas');oc.width=ow;oc.height=oh;const ox=oc.getContext('2d');const out=ox.createImageData(ow,oh);const d=out.data;
+  for(let y=0;y<oh;y++){const j=Math.floor(y/G),fy=y/G-j;for(let x=0;x<ow;x++){const i=Math.floor(x/G),fx=x/G-i;const a=j*gw+i;const u00=gx[a],u10=gx[a+1],u01=gx[a+gw],u11=gx[a+gw+1];if(isNaN(u00)||isNaN(u10)||isNaN(u01)||isNaN(u11))continue;
+    const u=(u00*(1-fx)+u10*fx)*(1-fy)+(u01*(1-fx)+u11*fx)*fy,v=(gy[a]*(1-fx)+gy[a+1]*fx)*(1-fy)+(gy[a+gw]*(1-fx)+gy[a+gw+1]*fx)*fy;const s=(Math.round(v)*sw+Math.round(u))*4;const o=(y*ow+x)*4;d[o]=d[o+1]=d[o+2]=src[s];d[o+3]=255}}
+  ox.putImageData(out,0,0);$('relief').setAttribute('href',oc.toDataURL('image/webp',.8));
+}catch(e){console.warn('relief skipped',e)}}
+function drawStatic(){
+  const landD=PHYS.land.map(f=>path(f.geometry)).join('');
+  $('g-land').innerHTML=`<path class="land" d="${landD}"/>`;
+  $('landclip').innerHTML=`<path d="${landD}"/>`;
+  $('g-coast').innerHTML=`<path class="coast" d="${landD}"/><path class="frame" d="${path(frameGeo)}"/>`;
+  $('g-water').innerHTML=PHYS.lakes.map(f=>`<path class="lake" d="${path(f.geometry)}"/>`).join('')+PHYS.rivers.map(f=>`<path class="river r${f.properties.r<=2?1:2}" d="${path(f.geometry)}"><title>${esc(nm(f.properties))}</title></path>`).join('')
+    +PHYS.rivers.filter(f=>f.properties.r<=2&&f.properties.en).map(f=>{const c=path.centroid(f.geometry);return isFinite(c[0])?`<text class="wlbl" x="${c[0].toFixed(1)}" y="${c[1].toFixed(1)}">${esc(nm(f.properties))}</text>`:''}).join('');
+  $('g-grat').innerHTML=`<path class="grat" d="${path(d3.geoGraticule().step([10,10])())}"/>`;
+  $('g-peak').innerHTML=PHYS.peaks.map(p=>{const pt=P(p.c[0],p.c[1]);if(!pt)return'';return `<g class="peak" transform="translate(${pt[0].toFixed(1)} ${pt[1].toFixed(1)})"><path d="M-2.4 1.6 L0 -2.6 L2.4 1.6 Z"/><text x="3" y="2">${esc(nm(p))} ${p.elev||''}</text></g>`}).join('');
+  drawReliefLabels();
+}
+function drawReliefLabels(){
+  const items=[...PHYS.ranges.map(f=>({f,minor:f.properties.r>2})),...PHYS.deserts.map(f=>({f,minor:f.properties.r>2}))];
+  $('g-rlbl').innerHTML=relief?items.map(({f,minor})=>{const c=path.centroid(f.geometry);if(!isFinite(c[0]))return'';if(path.area(f.geometry)<25)return'';return `<text class="rlbl${lang==='zh'?' zh':''}${minor?' minor':''}" x="${c[0].toFixed(1)}" y="${c[1].toFixed(1)}">${esc(nm(f.properties))}</text>`}).join(''):'';
+  $('relief').style.display=relief?'':'none';$('g-peak').style.display=relief?'':'none';
+}
+let lastYear=null;
+async function render(){
+  const e=INDEX[idx],year=e.year,data=await load(idx),prev=idx>0?await load(idx-1):null,t=T[lang];
+  const nPol=data.features.filter(f=>f.properties.en).length;
+  $('yr').innerHTML=fy(year)+`<small>${t.slice} ${idx+1}/${INDEX.length} · ${nPol} ${t.pol}</small>`;
+  $('yrin').value=year;$('cur').style.left=(yx(year)*100)+'%';$('cur').querySelector('b').textContent=fy(year);
+  const feats=data.features.map(f=>{const c=path.centroid(f.geometry);return{f,c,area:path.area(f.geometry),key:f.properties.en||'',label:f.properties.en?(lang==='zh'&&f.properties.zh?f.properties.zh:f.properties.en):t.unnamed}}).sort((a,b)=>b.area-a.area);
+  const L=$('g-layers');const g=document.createElementNS('http://www.w3.org/2000/svg','g');g.setAttribute('class','layer in');
+  g.innerHTML=feats.map(o=>`<path class="pol${o.key?'':' un'}" data-n="${esc(o.key)}" d="${path(o.f.geometry)}" ${o.key?`fill="${tint(o.key)}" fill-opacity=".34" stroke="${tint(o.key)}"`:''}><title>${esc(o.label)}</title></path>`).join('');
+  const old=[...L.children];L.appendChild(g);requestAnimationFrame(()=>requestAnimationFrame(()=>{g.classList.remove('in');old.forEach(o=>o.style.opacity='0');setTimeout(()=>old.forEach(o=>o.remove()),750)}));
+  $('g-ghost').innerHTML=ghost&&prev&&lastYear!==null?prev.features.filter(f=>f.properties.en).map(f=>`<path class="ghost" d="${path(f.geometry)}"/>`).join(''):'';
+  const seenL=new Set();$('g-lbl').innerHTML=feats.filter(o=>o.key&&o.area>900&&isFinite(o.c[0])&&!seenL.has(o.key)&&seenL.add(o.key)).slice(0,26).map(o=>`<text class="lbl${lang==='zh'?' zh':''}" x="${o.c[0].toFixed(1)}" y="${o.c[1].toFixed(1)}">${esc(o.label)}</text>`).join('');
+  // phase card
+  const[a,b]=sliceRange(idx);const seen=new Set(),rows=[];for(const o of feats){if(!o.key||seen.has(o.key))continue;seen.add(o.key);rows.push(o)}
+  const evs=EVENTS.filter(ev=>ev.y>=a&&ev.y<b&&kinds.has(ev.k));
+  $('phase').innerHTML=`<div class="t">${t.slice} ${idx+1}/${INDEX.length} · ${fy(a)} → ${b>=2100?'…':fy(b)}</div><div class="dots">${INDEX.map((s,i)=>`<i class="${i===idx?'on':''}" data-i="${i}" title="${esc(fy(s.year))}"></i>`).join('')}</div>
+    <div class="sum">${eraOf(year)?`<b>${esc(eraOf(year).n[lang])}</b> · `:''}${nPol} ${t.pol} · ${evs.length} ${t.events}</div>
+    <div class="lg">${rows.slice(0,8).map(o=>`<span data-n="${esc(o.key)}"><i style="background:${tint(o.key)}"></i>${esc(o.label)}</span>`).join('')}${rows.length>8?`<span class="more">+${rows.length-8}</span>`:''}</div>
+    <div class="tg"><button id="b-relief" aria-pressed="${relief}">${t.relief}</button><button id="b-ghost" aria-pressed="${ghost}">${t.ghost}</button></div>`;
+  $('b-relief').onclick=()=>{relief=!relief;drawReliefLabels();render()};$('b-ghost').onclick=()=>{ghost=!ghost;render()};
+  // cities
+  $('g-city').innerHTML=GAZ.map(gz=>{const n=gz.names.find(n=>year>=n.from&&year<=n.to);if(!n)return'';const cap=gz.cap.some(([a,b])=>year>=a&&year<=b);const pt=P(gz.coord[0],gz.coord[1]);if(!pt)return'';const major=cap||gz.names.length>1;return `<g class="city${cap?' cap':''}${major?'':' minor'}" data-g="${esc(gz.en)}" transform="translate(${pt[0].toFixed(1)} ${pt[1].toFixed(1)})">${cap?'<circle class="ring" r="4.2"/>':''}<circle r="${cap?2.2:1.6}"/><text x="${cap?6:4}" y="3">${esc(cityName(gz,n))}</text></g>`}).join('');
+  // people alive in this slice
+  const stackP={};$('g-per').innerHTML=people?PEOPLE.filter(pp=>pp.span[1]>=a&&pp.span[0]<b).map(pp=>{const pt=P(pp.c[0],pp.c[1]);if(!pt)return'';const[x,y]=pt;const k=Math.round(x/10)+','+Math.round(y/10);const n=stackP[k]=(stackP[k]||0)+1;const ox=(n-1)*7;return `<g class="per${traced===pp.en?' on':''}" data-p="${esc(pp.en)}" style="--c:var(--k-${pp.k})" transform="translate(${(x+ox).toFixed(1)} ${(y-9).toFixed(1)})"><rect x="-3.2" y="-3.2" width="6.4" height="6.4"/><rect class="in" x="-1.4" y="-1.4" width="2.8" height="2.8"/><text x="5" y="-3">${esc(lang==='zh'?pp.zh:pp.en)}</text></g>`}).join(''):'';
+  drawTrace();
+  // events
+  const stack={};$('g-ev').innerHTML=evs.map(ev=>{const pt=P(ev.c[0],ev.c[1]);if(!pt)return'';const[x,y]=pt;const k=Math.round(x/10)+','+Math.round(y/10);const n=stack[k]=(stack[k]||0)+1;return `<g class="ev" data-e="${EVENTS.indexOf(ev)}" style="--c:var(--k-${ev.k})" transform="translate(${x.toFixed(1)} ${y.toFixed(1)})"><circle class="halo" r="6"/><circle r="2.4"/><text x="5" y="${-4-(n-1)*9}">${esc(evText(ev))}</text></g>`}).join('');
+  if(jr){const pts=JOURNEY.stops.map(s=>P(s.c[0],s.c[1]));let d='';pts.forEach((p,i)=>{if(!i){d+=`M${p[0]} ${p[1]}`;return}const q=pts[i-1],mx=(p[0]+q[0])/2,my=(p[1]+q[1])/2-14;d+=` Q${mx} ${my} ${p[0]} ${p[1]}`});
+    const had=$('g-jr').childElementCount>0;$('g-jr').innerHTML=`<path class="${had?'':'draw'}" d="${d}"/>`+JOURNEY.stops.map((s,i)=>`<g data-stop="${i}" transform="translate(${pts[i][0].toFixed(1)} ${pts[i][1].toFixed(1)})"><circle r="5"/><text>${i+1}</text></g>`).join('')}
+  else $('g-jr').innerHTML='';
+  // chronicle highlight
+  document.querySelectorAll('.ce[data-e]').forEach(el=>{const ev=EVENTS[+el.dataset.e];el.classList.toggle('now',ev.y>=a&&ev.y<b)});
+  const first=document.querySelector('.ce.now');if(first&&!tour)first.scrollIntoView({block:'start',behavior:'smooth'});
+  $('b-jr').setAttribute('aria-pressed',jr);
+  const u=new URL(location);u.searchParams.set('year',year);u.searchParams.set('lang',lang);jr?u.searchParams.set('journey','alexander'):u.searchParams.delete('journey');history.replaceState(null,'',u);
+  applyHover();lastYear=year;
+}
+const eraOf=y=>ERAS.find(e=>y>=e.from&&y<e.to)||ERAS[ERAS.length-1];
+const evText=ev=>ev[lang]||(lang==='zh'?ev.zh:ev.en);
+function renderChrome(){const t=T[lang];
+  $('sub').textContent=t.sub;$('b-tour').textContent=t.tour;$('b-people').textContent=t.people;$('side-t').textContent=t.chron;$('q').placeholder=t.search;$('hint').textContent=t.hint;$('note').textContent=t.note;$('lang').value=lang;
+  $('kinds').innerHTML=Object.entries(KINDS).map(([k,v])=>`<button class="chip" data-k="${k}" style="--c:var(--k-${k})" aria-pressed="${kinds.has(k)}"><i></i>${v[lang]}</button>`).join('');
+  $('eras').innerHTML=ERAS.map(e=>`<div style="--c:${e.c};width:${((e.to-e.from)/(Y1-Y0)*100).toFixed(2)}%" title="${esc(e.n[lang])}">${esc(e.n[lang])}</div>`).join('');
+  $('slices').innerHTML=INDEX.map(s=>`<i style="left:${(yx(s.year)*100).toFixed(2)}%"></i>`).join('');
+  $('ticks').innerHTML=[-500,-200,1,200,400,600,800,1000,1200,1400,1600,1800,2000].map(y=>`<span style="left:${(yx(y)*100).toFixed(2)}%">${y<0?-y+' '+(lang==='zh'?'前':t.bce):y}</span>`).join('');
+  const evl=EVENTS.filter(ev=>kinds.has(ev.k));
+  $('evt').innerHTML=evl.map(ev=>`<i style="left:${(yx(ev.y)*100).toFixed(2)}%;--c:var(--k-${ev.k})"></i>`).join('');
+  let html='',lastEra=null;evl.forEach(ev=>{const er=eraOf(ev.y);if(er!==lastEra){html+=`<div class="ce era">${esc(er.n[lang])}</div>`;lastEra=er}html+=`<div class="ce" data-e="${EVENTS.indexOf(ev)}" style="--c:var(--k-${ev.k})"><span class="y">${esc(fy(ev.y))}</span><span>${esc(evText(ev))}</span></div>`});
+  $('chron').innerHTML=html;$('side-n').textContent=evl.length;
+}
+function applyHover(){document.querySelectorAll('.pol').forEach(p=>p.classList.toggle('dim',!!hover&&p.dataset.n!==hover))}
+const wiki=(w,wz)=>{const t=T[lang];const en=w?`<a href="https://en.wikipedia.org/wiki/${encodeURIComponent(w.replace(/ /g,'_'))}" target="_blank" rel="noopener">en</a>`:'';const zh=wz?`<a href="https://zh.wikipedia.org/wiki/${encodeURIComponent(wz)}" target="_blank" rel="noopener">zh</a>`:'';return (en||zh)?`<div class="ex">${t.wiki}: ${[en,zh].filter(Boolean).join(' · ')}</div>`:''};
+let camAnim=null;function flyTo(lng,lat,z,ms=1200){if(camAnim)cancelAnimationFrame(camAnim);const pt=P(lng,lat)||[W/2,H/2];const t0={cz,cx,cy},t1={cz:z,cx:W/2-pt[0]*z,cy:H/2-pt[1]*z};const start=performance.now();const step=now=>{const t=Math.min(1,(now-start)/ms),e=t<.5?2*t*t:-1+(4-2*t)*t;cz=t0.cz+(t1.cz-t0.cz)*e;cx=t0.cx+(t1.cx-t0.cx)*e;cy=t0.cy+(t1.cy-t0.cy)*e;applyCam();if(t<1)camAnim=requestAnimationFrame(step)};camAnim=requestAnimationFrame(step)}
+const home=()=>{if(camAnim)cancelAnimationFrame(camAnim);const t0={cz,cx,cy},start=performance.now();const step=now=>{const t=Math.min(1,(now-start)/900),e=t<.5?2*t*t:-1+(4-2*t)*t;cz=t0.cz+(1-t0.cz)*e;cx=t0.cx*(1-e);cy=t0.cy*(1-e);applyCam();if(t<1)camAnim=requestAnimationFrame(step)};camAnim=requestAnimationFrame(step)};
+let tour=null;async function runTour(){if(tour){tour=null;$('b-tour').setAttribute('aria-pressed',false);$('card').hidden=true;home();return}
+  tour={};$('b-tour').setAttribute('aria-pressed',true);
+  for(let i=0;i<INDEX.length;i++){if(!tour)return;idx=i;await render();const[a,b]=sliceRange(i);const top=EVENTS.find(ev=>ev.top&&ev.y>=a&&ev.y<b)||EVENTS.find(ev=>ev.y>=a&&ev.y<b);
+    if(top){flyTo(top.c[0],top.c[1],4);await new Promise(r=>setTimeout(r,900));if(!tour)return;evCard(top)}else home();
+    await new Promise(r=>setTimeout(r,2600))}
+  tour=null;$('b-tour').setAttribute('aria-pressed',false)}
+function evCard(d){document.querySelectorAll('.ev.on').forEach(e=>e.classList.remove('on'));const el=document.querySelector(`.ev[data-e="${EVENTS.indexOf(d)}"]`);if(el)el.classList.add('on');
+  card(`<h3><b>${fy(d.y)}</b></h3><div><span class="k" style="--c:var(--k-${d.k})"></span>${esc(evText(d))}</div><div class="ex">${KINDS[d.k][lang]} · ${esc(eraOf(d.y).n[lang])}</div>${wikiBtns(d.w,d.wz)}`)}
+function drawTrace(){const pp=PEOPLE.find(x=>x.en===traced);if(!pp||!pp.places.length){$('g-tr').innerHTML='';return}
+  const pts=[pp.c,...pp.places.map(q=>q.c)].map(c=>P(c[0],c[1])).filter(Boolean);let d='';pts.forEach((p,i)=>{d+=(i?' L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)});
+  $('g-tr').innerHTML=`<g style="--c:var(--k-${pp.k})"><path d="${d}"/>${pp.places.map(q=>{const pt=P(q.c[0],q.c[1]);return pt?`<circle cx="${pt[0].toFixed(1)}" cy="${pt[1].toFixed(1)}" r="2.4"/><text x="${(pt[0]+4).toFixed(1)}" y="${(pt[1]+3).toFixed(1)}">${esc(fy(q.y))} ${esc(lang==='zh'?q.zh:q.en)}</text>`:''}).join('')}</g>`}
+function wikiBtns(w,wz){const t=T[lang];const a=[];if(w)a.push(`<a href="https://en.wikipedia.org/wiki/${encodeURIComponent(w.replace(/ /g,'_'))}" target="_blank" rel="noopener">${t.wiki} · EN ↗</a>`);if(wz)a.push(`<a href="https://zh.wikipedia.org/wiki/${encodeURIComponent(wz)}" target="_blank" rel="noopener">${t.wiki} · 中文 ↗</a>`);if(w&&lang!=='en'&&lang!=='zh')a.push(`<a href="https://${lang}.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(w)}" target="_blank" rel="noopener">${t.wiki} · ${lang.toUpperCase()} ↗</a>`);return a.length?`<div class="wk">${a.join('')}</div>`:''}
+function personCard(pp){const t=T[lang];document.querySelectorAll('.per.on').forEach(e=>e.classList.remove('on'));const el=document.querySelector(`.per[data-p="${CSS.escape(pp.en)}"]`);if(el)el.classList.add('on');
+  card(`<h3><b>${esc(lang==='zh'?pp.zh:pp.en)}</b></h3><div class="tagline">${esc(pp.title[lang]||(lang==='zh'?pp.title.zh:pp.title.en))}</div><div class="life"><span class="k" style="--c:var(--k-${pp.k})"></span>${KINDS[pp.k][lang]} · ${t.born} ${fy(pp.span[0])} – ${t.died} ${fy(pp.span[1])}</div><div class="desc">${esc(pp.desc[lang]||(lang==='zh'?pp.desc.zh:pp.desc.en))}</div>${wikiBtns(pp.w,pp.wz)}${pp.places.length?`<button class="sm" id="b-trace" aria-pressed="${traced===pp.en}">${traced===pp.en?t.untrace:t.trace}</button>`:''}`);
+  const b=$('b-trace');if(b)b.onclick=()=>{traced=traced===pp.en?null:pp.en;if(traced){const first=pp.places[0];if(INDEX[idx].year<pp.span[0]||INDEX[idx].year>pp.span[1])jumpYear(pp.span[0]+1)}render();personCard(pp)}}
+function cityCard(g){const y=INDEX[idx].year,n=g.names.find(n=>y>=n.from&&y<=n.to)||g.names[0],t=T[lang];
+  card(`<h3><b>${esc(cityName(g,n))}</b></h3>${g.tag?`<div class="tagline">${esc(g.tag[lang]||(lang==='zh'?g.tag.zh:g.tag.en))}</div>`:''}<div><span class="tag">${esc(g.en)}</span><span class="tag">${esc(n.loc)}</span></div>${g.desc?`<div class="desc">${esc(g.desc[lang]||(lang==='zh'?g.desc.zh:g.desc.en))}</div>`:''}<div class="names">${g.names.map(n=>`${fy(n.from)} – ${n.to>=3000?'…':fy(n.to)}\n    ${n.zh} · ${n.en} · ${n.loc}`).join('\n')}</div><div class="ex">fr ${esc(g.fr)} · de ${esc(g.de)}${g.es?' · es '+esc(g.es):''}</div><div class="ex">${t.cap}: ${g.cap.map(([a,b])=>fy(a)+'–'+(b>=3000?'…':fy(b))).join(', ')||'—'}</div>${wikiBtns(g.w,g.wz)}`)}
+function card(html){const c=$('card');c.innerHTML=html+`<span class="x" id="cx">✕</span>`;c.hidden=false;$('cx').onclick=()=>c.hidden=true}
+/* search */
+let sugItems=[],sugOn=-1;
+function search(q){q=q.trim().toLowerCase();if(!q)return[];const out=[];
+  GAZ.forEach(g=>{const hit=[g.en,g.fr,g.de,g.es,...g.names.flatMap(n=>[n.zh,n.en,n.loc])].some(s=>s&&s.toLowerCase().includes(q));if(hit)out.push({t:'city',g,label:cityName(g,g.names[g.names.length-1]),sub:g.en})});
+  PEOPLE.forEach(pp=>{if([pp.zh,pp.en,pp.title.zh,pp.title.en].some(s=>s&&s.toLowerCase().includes(q)))out.push({t:'person',pp,label:lang==='zh'?pp.zh:pp.en,sub:fy(pp.span[0])+'–'+fy(pp.span[1])})});
+  EVENTS.forEach(ev=>{if([ev.zh,ev.en,ev.w].some(s=>s&&s.toLowerCase().includes(q)))out.push({t:'event',ev,label:evText(ev),sub:fy(ev.y)})});
+  const seen=new Set();for(const [file,d] of Object.entries(cache))d.features.forEach(f=>{const p=f.properties;if(!p.en||seen.has(p.en))return;if([p.en,p.zh].some(s=>s&&s.toLowerCase().includes(q))){seen.add(p.en);out.push({t:'polity',p,label:lang==='zh'&&p.zh?p.zh:p.en,sub:d.year!==undefined?fy(d.year):''})}});
+  return out.slice(0,12)}
+function showSug(){const box=$('sug');if(!sugItems.length){box.hidden=true;return}box.innerHTML=sugItems.map((s,i)=>`<div class="${i===sugOn?'on':''}" data-i="${i}">${esc(s.label)}<small>${s.t} · ${esc(s.sub)}</small></div>`).join('');box.hidden=false}
+function pick(s){$('sug').hidden=true;$('q').value='';if(s.t==='city'){const n=s.g.names[0];if(INDEX[idx].year<n.from)jumpYear(n.from);flyTo(s.g.coord[0],s.g.coord[1],4);setTimeout(()=>cityCard(s.g),300)}
+  else if(s.t==='person'){jumpYear(s.pp.span[0]+1);flyTo(s.pp.c[0],s.pp.c[1],4);setTimeout(()=>personCard(s.pp),300)}
+  else if(s.t==='event'){jumpYear(s.ev.y);flyTo(s.ev.c[0],s.ev.c[1],4);setTimeout(()=>evCard(s.ev),300)}
+  else{hover=s.p.en;applyHover();const el=document.querySelector(`.pol[data-n="${CSS.escape(s.p.en)}"]`);if(el){const bb=el.getBBox();const z=Math.min(5,Math.max(1.3,0.6*Math.min(W/bb.width,H/bb.height)));const ll=proj.invert([bb.x+bb.width/2,bb.y+bb.height/2]);if(ll)flyTo(ll[0],ll[1],z)}}}
+$('q').addEventListener('input',e=>{sugItems=search(e.target.value);sugOn=-1;showSug()});
+$('q').addEventListener('keydown',e=>{if(e.key==='ArrowDown'){sugOn=Math.min(sugItems.length-1,sugOn+1);showSug()}else if(e.key==='ArrowUp'){sugOn=Math.max(0,sugOn-1);showSug()}else if(e.key==='Enter'){if(sugItems[sugOn>=0?sugOn:0])pick(sugItems[sugOn>=0?sugOn:0])}else if(e.key==='Escape'){$('sug').hidden=true}});
+$('sug').addEventListener('mousedown',e=>{const d=e.target.closest('[data-i]');if(d){e.preventDefault();pick(sugItems[+d.dataset.i])}});
+$('q').addEventListener('blur',()=>setTimeout(()=>$('sug').hidden=true,150));
+/* events */
+$('kinds').addEventListener('click',e=>{const b=e.target.closest('[data-k]');if(!b)return;const k=b.dataset.k;kinds.has(k)?kinds.delete(k):kinds.add(k);renderChrome();render()});
+$('phase').addEventListener('click',e=>{const d=e.target.closest('.dots i');if(d){idx=+d.dataset.i;render();return}const s=e.target.closest('[data-n]');if(s){hover=hover===s.dataset.n?null:s.dataset.n;applyHover()}});
+$('chron').addEventListener('click',e=>{const d=e.target.closest('[data-e]');if(!d)return;const ev=EVENTS[+d.dataset.e];jumpYear(ev.y);flyTo(ev.c[0],ev.c[1],4);setTimeout(()=>evCard(ev),300);if(window.innerWidth<=900)$('side').classList.remove('open')});
+svg.addEventListener('click',e=>{
+  const c=e.target.closest('.city');if(c){cityCard(GAZ.find(x=>x.en===c.dataset.g));return}
+  const pr=e.target.closest('.per');if(pr){personCard(PEOPLE.find(x=>x.en===pr.dataset.p));return}
+  const ev=e.target.closest('.ev');if(ev){evCard(EVENTS[+ev.dataset.e]);return}
+  const s=e.target.closest('[data-stop]');if(s){const st=JOURNEY.stops[+s.dataset.stop];jumpYear(st.y);card(`<h3><b>${+s.dataset.stop+1}. ${esc(lang==='zh'?st.zh:st.en)} · ${fy(st.y)}</b></h3><div>${esc(lang==='zh'?st.nz:st.ne)}</div><div class="ex">${esc(lang==='zh'?JOURNEY.zh:JOURNEY.en)}</div>${wiki(JOURNEY.w,JOURNEY.wz)}`);return}
+  const p=e.target.closest('.pol');if(p){hover=p.dataset.n||null;applyHover();card(`<h3><b>${esc(p.querySelector('title').textContent)}</b></h3>${p.dataset.n?`<div><span class="tag">${esc(p.dataset.n)}</span></div>`:''}<div class="ex">${fy(INDEX[idx].year)} · ${esc(eraOf(INDEX[idx].year).n[lang])}</div>`)}});
+/* pan / pinch / wheel */
+const ptrs=new Map();let pinch=null,drag=null;
+svg.addEventListener('pointerdown',e=>{svg.setPointerCapture(e.pointerId);ptrs.set(e.pointerId,[e.clientX,e.clientY]);if(ptrs.size===1){drag=[e.clientX,e.clientY,cx,cy];svg.classList.add('drag')}else if(ptrs.size===2){const[a,b]=[...ptrs.values()];pinch={d:Math.hypot(a[0]-b[0],a[1]-b[1]),z:cz,mx:(a[0]+b[0])/2,my:(a[1]+b[1])/2,cx,cy};drag=null}});
+svg.addEventListener('pointermove',e=>{if(!ptrs.has(e.pointerId))return;ptrs.set(e.pointerId,[e.clientX,e.clientY]);const k=W/svg.clientWidth;
+  if(pinch&&ptrs.size===2){const[a,b]=[...ptrs.values()];const d=Math.hypot(a[0]-b[0],a[1]-b[1]);const nz=Math.min(12,Math.max(1,pinch.z*d/pinch.d));const r=svg.getBoundingClientRect(),mx=(pinch.mx-r.left)*k,my=(pinch.my-r.top)*k;cx=mx-(mx-pinch.cx)*nz/pinch.z;cy=my-(my-pinch.cy)*nz/pinch.z;cz=nz;applyCam();return}
+  if(drag){cx=drag[2]+(e.clientX-drag[0])*k;cy=drag[3]+(e.clientY-drag[1])*k;applyCam()}});
+const up=e=>{ptrs.delete(e.pointerId);if(ptrs.size<2)pinch=null;if(!ptrs.size){drag=null;svg.classList.remove('drag')}};
+svg.addEventListener('pointerup',up);svg.addEventListener('pointercancel',up);
+function zoomAt(mx,my,f){const nz=Math.min(12,Math.max(1,cz*f));cx=mx-(mx-cx)*nz/cz;cy=my-(my-cy)*nz/cz;cz=nz;if(cz===1){cx=0;cy=0}applyCam()}
+svg.addEventListener('wheel',e=>{e.preventDefault();const r=svg.getBoundingClientRect(),k=W/r.width;zoomAt((e.clientX-r.left)*k,(e.clientY-r.top)*k,e.deltaY<0?1.15:1/1.15)},{passive:false});
+$('z-in').onclick=()=>zoomAt(W/2,H/2,1.4);$('z-out').onclick=()=>zoomAt(W/2,H/2,1/1.4);$('z-0').onclick=home;
+const fitPortrait=()=>{const st=$('stage');svg.setAttribute('preserveAspectRatio',st.clientHeight>st.clientWidth*0.8?'xMidYMid slice':'xMidYMid meet')};
+window.addEventListener('resize',fitPortrait);fitPortrait();
+/* timeline */
+function nearestSlice(y){let j=0,best=1e9;INDEX.forEach((s,i)=>{const d=Math.abs(s.year-y);if(d<best){best=d;j=i}});return j}
+function jumpYear(y){let j=0;for(let i=0;i<INDEX.length;i++)if(INDEX[i].year<=y)j=i;idx=j;render()}
+const tlPick=e=>{const r=$('tl').getBoundingClientRect();const y=Y0+(e.clientX-r.left)/r.width*(Y1-Y0);const j=nearestSlice(y);if(j!==idx){idx=j;render()}};
+let tlDrag=false;$('tl').addEventListener('pointerdown',e=>{tlDrag=true;$('tl').setPointerCapture(e.pointerId);tlPick(e)});$('tl').addEventListener('pointermove',e=>{if(tlDrag)tlPick(e)});$('tl').addEventListener('pointerup',()=>tlDrag=false);
+$('yrin').addEventListener('change',e=>{const v=parseInt(String(e.target.value).replace(/[^\d-]/g,''),10);if(!isNaN(v))jumpYear(Math.max(Y0,Math.min(Y1,v)))});
+$('b-prev').onclick=()=>{idx=Math.max(0,idx-1);render()};$('b-next').onclick=()=>{idx=Math.min(INDEX.length-1,idx+1);render()};
+$('b-jr').onclick=()=>{jr=!jr;$('g-jr').innerHTML='';if(jr)jumpYear(-334);else render()};
+$('lang').onchange=e=>{lang=e.target.value;document.documentElement.lang=lang==='zh'?'zh-CN':lang;renderChrome();drawStatic();render()};
+$('b-tour').onclick=runTour;$('b-people').onclick=()=>{people=!people;$('b-people').setAttribute('aria-pressed',people);render()};$('b-side').onclick=()=>$('side').classList.toggle('open');
+let timer=null;$('b-play').onclick=()=>{playing=!playing;$('b-play').textContent=playing?'❚❚':'▶';$('b-play').setAttribute('aria-pressed',playing);if(playing)timer=setInterval(()=>{idx=idx>=INDEX.length-1?0:idx+1;render()},1600);else clearInterval(timer)};
+document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')return;if(e.key==='ArrowLeft')$('b-prev').click();if(e.key==='ArrowRight')$('b-next').click();if(e.key===' '){e.preventDefault();$('b-play').click()}if(e.key==='Escape')$('card').hidden=true});
+/* boot */
+(async()=>{
+  const[ix,phys,ev,gz,pe]=await Promise.all(['index','physical','events','cities','people'].map(n=>fetch(`data/${n}.json`).then(r=>r.json())));
+  INDEX=ix.sort((a,b)=>a.year-b.year);PHYS=phys;EVENTS=ev;GAZ=gz;PEOPLE=pe;['land','lakes','ranges','deserts'].forEach(k=>PHYS[k].forEach(f=>rewind(f.geometry)));
+  const q=new URLSearchParams(location.search);const L=q.get('lang');if(LANGS.includes(L))lang=L;
+  document.documentElement.lang=lang==='zh'?'zh-CN':lang;if(q.get('journey')==='alexander')jr=true;
+  renderChrome();drawStatic();buildRelief();
+  jumpYear(q.has('year')?+q.get('year'):-323);if(q.get('tour')==='1')setTimeout(runTour,800)})();
+</script>
+
+</body>
+</html>
