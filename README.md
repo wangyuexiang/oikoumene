@@ -29,6 +29,7 @@ It is a static site. One HTML file, a folder of JSON, [d3-geo](https://github.co
 | **People** | 62 figures shown where they lived during the current slice. Each has a biography and a *Trace life* button that draws their movements: Alexander to the Indus, Xuanzang to Nalanda, Ibn Battuta to Hangzhou. |
 | **Events** | 138 events in six colour-coded categories: politics, science, technology, thought, religion, art. They appear on the map, on the timeline, and in a chronicle column grouped by era. |
 | **Tour** | One button flies through every period and lands on its defining event. |
+| **Population & GDP** | Two toggles under the timeline draw world population and world GDP (log scale) across the era bands, so the Black Death dip and the post-1800 hockey stick sit right under the borders. Sources in `data/series.json`. |
 | **Languages** | English, French, German, Italian, Spanish, Chinese. Every card links to Wikipedia. |
 
 ## Try these
@@ -62,6 +63,7 @@ Everything is plain JSON under `public/data/`, written to be edited by hand:
 | `cities.json` | Name genealogy, capital periods, tagline, history, Wikipedia titles |
 | `people.json` | Lifespan, home, category, biography, journey stops, Wikipedia titles |
 | `events.json` | Year, category, place, text, Wikipedia titles |
+| `series.json` | Time series drawn on the timeline (population, GDP), with units and sources |
 | `physical.json` · `relief.webp` | Natural Earth land, water, ranges, peaks; shaded relief |
 
 `scripts/` rebuilds borders and the physical layer from their upstream sources. [CONTRIBUTING.md](CONTRIBUTING.md) shows how to add a city, a person, an event, or correct a border, with copy-paste examples.
