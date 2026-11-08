@@ -20,6 +20,10 @@
 
 `?year=-323` 亚历山大去世那一年 · `?year=1200` 蒙古西征前夜 · `?year=1453&lang=zh` 君士坦丁堡陷落 · `?journey=alexander` 东征路线 · `?tour=1` 自动巡礼
 
+## 主题
+
+主题是可以走进去的故事：无关的一切淡出，时间轴只显示它的区间，一站一站地走。已上线四个，另有二十个待投票，选择理由见 [THEMES.zh.md](THEMES.zh.md)。
+
 ## 姊妹项目
 
 本项目以 [江山时序 jiangshan-map](https://github.com/DeanChensj/jiangshan-map)（Dean Chen）为范本，后者以手工描绘的边界和年号纪年做了同样的事。两者共用一套交互模型和 `?year=` 链接约定，计划让地名链接在两张图之间互跳，从长安到巴格达的行程可以一路看完。

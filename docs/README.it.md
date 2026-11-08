@@ -34,7 +34,7 @@ Un sito statico: un file HTML, una cartella di JSON, [d3-geo](https://github.com
 
 ## Temi
 
-Un tema è una storia in cui si entra: la mappa si restringe ai suoi anni e ai suoi luoghi, e la si percorre tappa per tappa. Una trentina sono proposti in [THEMES.md](THEMES.md) — guerre e loro rotte, il Grand Tour, la Via della Seta, la Peste nera, il viaggio del sapere greco verso l'arabo e poi il latino. **Votate con 👍 sulle issue etichettate `theme`.**
+Un tema è una storia in cui si entra: la mappa si restringe ai suoi anni e ai suoi luoghi, e la si percorre tappa per tappa. Una trentina sono proposti in [THEMES.it.md](THEMES.it.md) — guerre e loro rotte, il Grand Tour, la Via della Seta, la Peste nera, il viaggio del sapere greco verso l'arabo e poi il latino. **Votate con 👍 sulle issue etichettate `theme`.**
 
 ## Progetto gemello
 

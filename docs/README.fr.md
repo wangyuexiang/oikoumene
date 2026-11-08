@@ -34,7 +34,7 @@ Un site statique : un fichier HTML, un dossier de JSON, [d3-geo](https://github.
 
 ## Thèmes
 
-Un thème est une histoire dans laquelle on entre : la carte se resserre sur ses années et ses lieux, et on la parcourt étape par étape. Une trentaine sont proposés dans [THEMES.md](THEMES.md) — guerres et leurs routes, le Grand Tour, la route de la Soie, la Peste noire, le voyage du savoir grec vers l'arabe puis le latin. **Votez par 👍 sur les issues étiquetées `theme`.**
+Un thème est une histoire dans laquelle on entre : la carte se resserre sur ses années et ses lieux, et on la parcourt étape par étape. Une trentaine sont proposés dans [THEMES.fr.md](THEMES.fr.md) — guerres et leurs routes, le Grand Tour, la route de la Soie, la Peste noire, le voyage du savoir grec vers l'arabe puis le latin. **Votez par 👍 sur les issues étiquetées `theme`.**
 
 ## Projet frère
 

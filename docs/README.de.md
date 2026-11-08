@@ -34,7 +34,7 @@ Eine statische Seite: eine HTML-Datei, ein Ordner JSON, [d3-geo](https://github.
 
 ## Themen
 
-Ein Thema ist eine Geschichte, in die man eintritt: Die Karte verengt sich auf ihre Jahre und Orte, und man geht sie Station für Station ab. Rund dreißig sind in [THEMES.md](THEMES.md) vorgeschlagen — Kriege und ihre Routen, die Grand Tour, die Seidenstraße, der Schwarze Tod, der Weg des griechischen Wissens ins Arabische und zurück ins Lateinische. **Abstimmen per 👍 auf den Issues mit dem Label `theme`.**
+Ein Thema ist eine Geschichte, in die man eintritt: Die Karte verengt sich auf ihre Jahre und Orte, und man geht sie Station für Station ab. Rund dreißig sind in [THEMES.de.md](THEMES.de.md) vorgeschlagen — Kriege und ihre Routen, die Grand Tour, die Seidenstraße, der Schwarze Tod, der Weg des griechischen Wissens ins Arabische und zurück ins Lateinische. **Abstimmen per 👍 auf den Issues mit dem Label `theme`.**
 
 ## Schwesterprojekt
 
