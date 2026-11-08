@@ -21,7 +21,8 @@ Tags: `war` `travel` `trade` `ideas` `literature` `religion` `science` `art` `di
 | R9 | **The Grand Tour** 贵族壮游 | travel, art, literature | 1660–1820 | The canonical route Paris → Geneva → Turin → Florence → Rome → Naples → Venice, with who went when (Goethe 1786, Byron 1809) | 1 day |
 | R10 | **Goethe's Italian Journey** 歌德意大利之旅 | literature, travel | 1786–1788 | A single documented Grand Tour, day by day from his own diary | 0.5 day |
 | R11 | **The Crusades** 十字军 | war, religion | 1096–1291 | Four routes to the Holy Land plus the sack of Constantinople | 1.5 days |
-| R12 | **Mongol campaigns** 蒙古西征 | war | 1206–1260 | Genghis → Khwarazm; Batu → Kiev → Legnica; Hulagu → Baghdad | 1.5 days |
+| R12 | **The Mongol invasions** 蒙古入侵 | war | 1206–1294 | Genghis → Western Xia, Jin, Khwarazm; Batu → Kiev → Legnica → Mohi; Hulagu → Baghdad → Ain Jalut; Kublai → Song; the two failed landings in Japan | 2 days |
+| R14 | **The Barbarian Migrations** 蛮族入侵 | war, travel | 375–568 | Huns → Goths across the Danube → Adrianople → sack of Rome 410 → Vandals to Carthage → Attila → Lombards into Italy; the end of the Western empire as movement, not collapse | 1.5 days |
 | R13 | **Darwin on the Beagle** 达尔文 | science, travel | 1831–1836 | Mostly outside the map; listed to say no for now | — |
 
 ## Diffusions — one thing spreading, many arrival dates
@@ -30,7 +31,7 @@ Tags: `war` `travel` `trade` `ideas` `literature` `religion` `science` `art` `di
 |---|---|---|---|---|---|
 | D1 | **The Black Death** 黑死病 | disease | 1346–1353 | Caffa → Messina → Marseille → Paris → London → Moscow; the best-dated diffusion in pre-modern history | 1 day |
 | D2 | **The printing press** 活字印刷 | technology | 1450–1500 | ~250 towns with a documented first press; Mainz outward in rings | 1 day |
-| D3 | **Islam 632–750** 伊斯兰扩张 | religion, war | 632–750 | Four caliphs and the Umayyads, a border every 20 years; needs hand-drawn polygons | 2 days |
+| D3 | **The rise of Islam** 伊斯兰的形成 | religion, war, ideas | 610–750 | From the first revelation and the hijra to the Umayyad empire: a border every 20 years plus the formative events (Badr, Yarmouk, Karbala, the Qur'an's compilation, Damascus as capital); needs hand-drawn polygons | 2.5 days |
 | D4 | **Buddhism eastward** 佛教东传 | religion, ideas | 250 BCE–700 CE | Ashoka's missions → Gandhara → Dunhuang → Luoyang → Korea → Japan | 1.5 days |
 | D5 | **Greek learning into Arabic, then Latin** 希腊学术的翻译之路 | ideas, science | 750–1250 | Athens → Baghdad (House of Wisdom) → Córdoba/Toledo → Paris; a chain of translators with dates | 1.5 days |
 | D6 | **Paper** 造纸术西传 | technology | 105–1276 | Luoyang → Samarkand (751) → Baghdad → Cairo → Fez → Xàtiva → Fabriano | 0.5 day |
