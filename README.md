@@ -63,6 +63,10 @@ Everything is plain JSON under `public/data/`, written to be edited by hand:
 
 `scripts/` rebuilds borders and the physical layer from their upstream sources. [CONTRIBUTING.md](CONTRIBUTING.md) shows how to add a city, a person, an event, or correct a border, with copy-paste examples.
 
+## Themes
+
+A theme is a story you step into: the map narrows to its years and places, and you walk it stop by stop. One exists today (Alexander); 30 more are proposed in [docs/THEMES.md](docs/THEMES.md) — wars and their routes, the Grand Tour, the Silk Road, the Black Death, how Greek learning travelled into Arabic and back. **Vote with 👍 on the issues tagged `theme`** and we build them in that order.
+
 ## Sister project
 
 Oikoumene is modelled on [江山时序 jiangshan-map](https://github.com/DeanChensj/jiangshan-map) by Dean Chen, which does the same for China with hand-digitised borders and reign-era chronology. The two share an interaction model and a `?year=` link convention. The intention is that place links hop between them, so a journey from Chang'an to Baghdad can be followed end to end.
