@@ -1,6 +1,6 @@
 # Themes — proposed focus stories
 
-A **theme** is a story you step into: the map dims everything else, the timeline narrows to the theme's years, the chronicle shows only its stops, and each stop opens a card. You can leave at any time. One theme (Alexander's campaigns) exists today as a plain route; the list below is what could follow.
+A **theme** is a story you step into: the map dims everything else, the timeline narrows to the theme's years, the chronicle shows only its stops, and each stop opens a card. You can leave at any time. Four themes are live (Alexander, the Barbarian Migrations, the Mongol Invasions, the Rise of Islam); the list below is what could follow.
 
 **Vote**: each theme has an issue tagged `theme`. React 👍 on the ones you want. We build in vote order, roughly one a week.
 
@@ -10,7 +10,7 @@ Tags: `war` `travel` `trade` `ideas` `literature` `religion` `science` `art` `di
 
 | # | Theme | Tags | Years | Why | Cost |
 |---|---|---|---|---|---|
-| R1 | **Alexander's campaigns** 亚历山大东征 | war, travel | 334–323 BCE | Already on the map; becomes the first proper theme | done |
+| R1 | **Alexander and the spread of Greek thought** 亚历山大与希腊思想的传播 | war, ideas, travel | 343–30 BCE | From Aristotle's tutoring to Gandharan Buddhas and the Stoa: the conquest told as ideas | **shipped** |
 | R2 | **Xuanzang to India** 玄奘西行 | religion, travel | 629–645 | Chang'an → Turfan → Samarkand → Nalanda and back; the natural handshake with 江山时序 | 1 day |
 | R3 | **Ibn Battuta** 伊本·白图泰 | travel, trade, religion | 1325–1354 | The only traveller who crosses the whole map: Tangier → Mecca → Delhi → Hangzhou → Timbuktu | 1 day |
 | R4 | **Marco Polo** 马可·波罗 | travel, trade | 1271–1295 | Overland out, by sea back; the West's image of the East | 1 day |
@@ -21,8 +21,8 @@ Tags: `war` `travel` `trade` `ideas` `literature` `religion` `science` `art` `di
 | R9 | **The Grand Tour** 贵族壮游 | travel, art, literature | 1660–1820 | The canonical route Paris → Geneva → Turin → Florence → Rome → Naples → Venice, with who went when (Goethe 1786, Byron 1809) | 1 day |
 | R10 | **Goethe's Italian Journey** 歌德意大利之旅 | literature, travel | 1786–1788 | A single documented Grand Tour, day by day from his own diary | 0.5 day |
 | R11 | **The Crusades** 十字军 | war, religion | 1096–1291 | Four routes to the Holy Land plus the sack of Constantinople | 1.5 days |
-| R12 | **The Mongol invasions** 蒙古入侵 | war | 1206–1294 | Genghis → Western Xia, Jin, Khwarazm; Batu → Kiev → Legnica → Mohi; Hulagu → Baghdad → Ain Jalut; Kublai → Song; the two failed landings in Japan | 2 days |
-| R14 | **The Barbarian Migrations** 蛮族入侵 | war, travel | 375–568 | Huns → Goths across the Danube → Adrianople → sack of Rome 410 → Vandals to Carthage → Attila → Lombards into Italy; the end of the Western empire as movement, not collapse | 1.5 days |
+| R12 | **The Mongol invasions** 蒙古入侵 | war | 1206–1294 | Genghis → Western Xia, Jin, Khwarazm; Batu → Kiev → Legnica → Mohi; Hulagu → Baghdad → Ain Jalut; Kublai → Song; the two failed landings in Japan | **shipped** |
+| R14 | **The Barbarian Migrations** 蛮族入侵 | war, travel | 375–568 | Huns → Goths across the Danube → Adrianople → sack of Rome 410 → Vandals to Carthage → Attila → Lombards into Italy; the end of the Western empire as movement, not collapse | **shipped** |
 | R13 | **Darwin on the Beagle** 达尔文 | science, travel | 1831–1836 | Mostly outside the map; listed to say no for now | — |
 
 ## Diffusions — one thing spreading, many arrival dates
@@ -31,7 +31,7 @@ Tags: `war` `travel` `trade` `ideas` `literature` `religion` `science` `art` `di
 |---|---|---|---|---|---|
 | D1 | **The Black Death** 黑死病 | disease | 1346–1353 | Caffa → Messina → Marseille → Paris → London → Moscow; the best-dated diffusion in pre-modern history | 1 day |
 | D2 | **The printing press** 活字印刷 | technology | 1450–1500 | ~250 towns with a documented first press; Mainz outward in rings | 1 day |
-| D3 | **The rise of Islam** 伊斯兰的形成 | religion, war, ideas | 610–750 | From the first revelation and the hijra to the Umayyad empire: a border every 20 years plus the formative events (Badr, Yarmouk, Karbala, the Qur'an's compilation, Damascus as capital); needs hand-drawn polygons | 2.5 days |
+| D3 | **The rise of Islam** 伊斯兰的形成 | religion, war, ideas | 610–750 | From the first revelation and the hijra to the Abbasid revolution and Talas: 16 formative stops. Hand-drawn 20-year borders still to come | **shipped** (route) |
 | D4 | **Buddhism eastward** 佛教东传 | religion, ideas | 250 BCE–700 CE | Ashoka's missions → Gandhara → Dunhuang → Luoyang → Korea → Japan | 1.5 days |
 | D5 | **Greek learning into Arabic, then Latin** 希腊学术的翻译之路 | ideas, science | 750–1250 | Athens → Baghdad (House of Wisdom) → Córdoba/Toledo → Paris; a chain of translators with dates | 1.5 days |
 | D6 | **Paper** 造纸术西传 | technology | 105–1276 | Luoyang → Samarkand (751) → Baghdad → Cairo → Fez → Xàtiva → Fabriano | 0.5 day |
@@ -54,14 +54,14 @@ Tags: `war` `travel` `trade` `ideas` `literature` `religion` `science` `art` `di
 | P6 | **Tang and Abbasid** 唐与阿拔斯 | trade, ideas, art | 618–907 | Two capitals, Chang'an and Baghdad, and what moved between them (Talas 751, paper, astronomy) | 1.5 days |
 | P7 | **Al-Andalus** 安达卢斯 | ideas, art, religion | 711–1492 | Córdoba, Toledo, Granada; convivencia and reconquista | 1 day |
 
-## How a theme works (design)
+## How a theme works
 
 1. **Enter**: from the *Themes* menu, a search result, or `?theme=xuanzang`.
 2. **Focus**: borders outside the theme's years are not shown; polities not touched by the story fade to 15 %; the timeline shows only the theme's span; the chronicle lists only its stops; the phase card becomes the theme card (title, span, one paragraph, source).
 3. **Walk**: ← → or the chronicle moves stop to stop; each stop flies the camera, highlights the place, opens its card. *Play* animates the line being drawn.
 4. **Leave**: an *Exit* button or Esc restores the full map at the year you left.
 
-Data for a theme is one JSON file in `public/data/themes/`: `{id, kind: route|diffusion|period, title, span, tags, summary, source, stops:[{y, c, name, text, w}]}`.
+Data for a theme is one JSON file in `public/data/themes/<id>.json`, listed in `themes/index.json`: `{id, kind, tags, span, zoom, title:{en,zh}, subtitle, summary, source, polities:[regex…], stops:[{y, c:[lng,lat], name:{en,zh}, text:{en,zh}, w}]}`. `polities` names the borders that stay bright in focus mode. Deep link: `?theme=<id>&stop=<n>`.
 
 ## Not planned
 

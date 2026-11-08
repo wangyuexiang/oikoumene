@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0 — 2026-11-08
+
+- Theme focus mode: four stories (Alexander and Greek thought, Barbarian Migrations, Mongol Invasions, Rise of Islam), `?theme=&stop=` deep links
+- Population and GDP overlays on the timeline (world, Europe, China, Middle East)
+- People layer with 62 biographies and life traces; city histories; Wikipedia buttons
+- Six UI languages (Italian added); English-first README with FR/DE/IT translations
+- Marker click fix; clearer category chips; Themes menu separated from layers
+
 ## 0.1.0 — 2026-11-08
 
 First public release.

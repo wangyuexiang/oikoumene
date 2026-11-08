@@ -39,7 +39,8 @@ It is a static site. One HTML file, a folder of JSON, [d3-geo](https://github.co
 | [`?year=-323`](https://oikoumene.pages.dev/?year=-323) | The world the year Alexander died |
 | [`?year=1200`](https://oikoumene.pages.dev/?year=1200) | Just before the Mongols |
 | [`?year=1453&lang=en`](https://oikoumene.pages.dev/?year=1453&lang=en) | Constantinople falls |
-| [`?journey=alexander`](https://oikoumene.pages.dev/?journey=alexander) | Alexander's campaigns drawn on the map |
+| [`?theme=alexander`](https://oikoumene.pages.dev/?theme=alexander) | Alexander's campaigns, told as the spread of Greek thought |
+| [`?theme=mongols&stop=8`](https://oikoumene.pages.dev/?theme=mongols&stop=8) | Straight to the sack of Baghdad |
 | [`?tour=1`](https://oikoumene.pages.dev/?tour=1) | Sit back and watch |
 
 Search the box at the top for any city, person, polity or event, in any of its names. Click a person, then *Trace life*. Toggle event categories with the coloured chips.
@@ -63,6 +64,7 @@ Everything is plain JSON under `public/data/`, written to be edited by hand:
 | `cities.json` | Name genealogy, capital periods, tagline, history, Wikipedia titles |
 | `people.json` | Lifespan, home, category, biography, journey stops, Wikipedia titles |
 | `events.json` | Year, category, place, text, Wikipedia titles |
+| `themes/*.json` | One focus story each: span, summary, sources, stops with text |
 | `series.json` | Time series drawn on the timeline (population, GDP), with units and sources |
 | `physical.json` · `relief.webp` | Natural Earth land, water, ranges, peaks; shaded relief |
 
@@ -70,7 +72,7 @@ Everything is plain JSON under `public/data/`, written to be edited by hand:
 
 ## Themes
 
-A theme is a story you step into: the map narrows to its years and places, and you walk it stop by stop. One exists today (Alexander); 30 more are proposed in [docs/THEMES.md](docs/THEMES.md) — wars and their routes, the Grand Tour, the Silk Road, the Black Death, how Greek learning travelled into Arabic and back. **Vote with 👍 on the issues tagged `theme`** and we build them in that order.
+A theme is a story you step into: everything not part of it fades, the timeline shows its span, and you walk it stop by stop with a card at each. Four are live — **Alexander and the spread of Greek thought**, **the Barbarian Migrations**, **the Mongol Invasions**, **the Rise of Islam** — and 26 more are proposed in [docs/THEMES.md](docs/THEMES.md) — wars and their routes, the Grand Tour, the Silk Road, the Black Death, how Greek learning travelled into Arabic and back. **Vote with 👍 on the issues tagged `theme`** and we build them in that order.
 
 ## Sister project
 
