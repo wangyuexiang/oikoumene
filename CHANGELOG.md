@@ -11,5 +11,5 @@ First public release.
 - 62 people with biographies and life traces
 - 138 events in six categories; chronicle column; era timeline; tour mode
 - Search across cities, people, polities, events
-- UI in English, Chinese, French, German, Spanish
+- UI in English, French, German, Italian, Spanish, Chinese
 - Deep links: `?year=`, `?lang=`, `?journey=`, `?tour=`

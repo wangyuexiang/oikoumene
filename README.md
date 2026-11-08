@@ -3,12 +3,15 @@
 <h1 align="center">Oikoumene</h1>
 <p align="center"><em>The inhabited world, 500 BCE → 2000 CE, on one map you can scrub through time.</em></p>
 <p align="center">
-<a href="https://oikoumene.pages.dev">Live</a> ·
+<a href="https://oikoumene.pages.dev"><b>Live</b></a> ·
 <a href="#try-these">Try these</a> ·
 <a href="#data">Data</a> ·
-<a href="CONTRIBUTING.md">Contribute</a> ·
-<a href="docs/README.zh.md">中文说明</a>
+<a href="docs/THEMES.md">Themes</a> ·
+<a href="CONTRIBUTING.md">Contribute</a>
 </p>
+<p align="center"><sub>
+<a href="docs/README.fr.md">Français</a> · <a href="docs/README.de.md">Deutsch</a> · <a href="docs/README.it.md">Italiano</a> · <a href="docs/README.zh.md">中文</a>
+</sub></p>
 
 ---
 
@@ -26,7 +29,7 @@ It is a static site. One HTML file, a folder of JSON, [d3-geo](https://github.co
 | **People** | 62 figures shown where they lived during the current slice. Each has a biography and a *Trace life* button that draws their movements: Alexander to the Indus, Xuanzang to Nalanda, Ibn Battuta to Hangzhou. |
 | **Events** | 138 events in six colour-coded categories: politics, science, technology, thought, religion, art. They appear on the map, on the timeline, and in a chronicle column grouped by era. |
 | **Tour** | One button flies through every period and lands on its defining event. |
-| **Languages** | English, 中文, Français, Deutsch, Español. Every card links to Wikipedia. |
+| **Languages** | English, French, German, Italian, Spanish, Chinese. Every card links to Wikipedia. |
 
 ## Try these
 
