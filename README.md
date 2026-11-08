@@ -41,6 +41,7 @@ It is a static site. One HTML file, a folder of JSON, [d3-geo](https://github.co
 | [`?year=1453&lang=en`](https://oikoumene.pages.dev/?year=1453&lang=en) | Constantinople falls |
 | [`?theme=alexander`](https://oikoumene.pages.dev/?theme=alexander) | Alexander's campaigns, told as the spread of Greek thought |
 | [`?theme=mongols&stop=8`](https://oikoumene.pages.dev/?theme=mongols&stop=8) | Straight to the sack of Baghdad |
+| [`?year=1000&civ=islam`](https://oikoumene.pages.dev/?year=1000&civ=islam) | The Islamic world alone, at its widest |
 | [`?tour=1`](https://oikoumene.pages.dev/?tour=1) | Sit back and watch |
 
 Search the box at the top for any city, person, polity or event, in any of its names. Click a person, then *Trace life*. Toggle event categories with the coloured chips.

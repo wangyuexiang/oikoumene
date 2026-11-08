@@ -2,6 +2,8 @@
 
 ## 0.2.0 — 2026-11-08
 
+- Civilization lens (*Focus on* in the phase card, `?civ=`) and category solo by double-click
+
 - Theme focus mode: four stories (Alexander and Greek thought, Barbarian Migrations, Mongol Invasions, Rise of Islam), `?theme=&stop=` deep links
 - Population and GDP overlays on the timeline (world, Europe, China, Middle East)
 - People layer with 62 biographies and life traces; city histories; Wikipedia buttons
