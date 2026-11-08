@@ -1,58 +1,60 @@
 # Themes — proposed focus stories
 
-A **theme** is a story you step into: the map dims everything else, the timeline narrows to the theme's years, the chronicle shows only its stops, and each stop opens a card. You can leave at any time. Four themes are live (Alexander, the Barbarian Migrations, the Mongol Invasions, the Rise of Islam); the list below is what could follow.
+A **theme** is a story you step into: everything not part of it fades, the timeline shows its span, and you walk it stop by stop with a card at each. Four are live — Alexander and Greek thought, the Barbarian Migrations, the Mongol Invasions, the Rise of Islam — and the twenty below are the ones we think are worth building next.
 
-**Vote**: each theme has an issue tagged `theme`. React 👍 on the ones you want. We build in vote order, roughly one a week.
+**Vote**: each has an issue tagged [`theme`](https://github.com/wangyuexiang/oikoumene/issues?q=is%3Aissue+label%3Atheme). React 👍 on the ones you want; we build in vote order, roughly one a week. **Missing one?** Open an issue with the [theme proposal template](https://github.com/wangyuexiang/oikoumene/issues/new?template=theme.md) — a title, the years, and a one-paragraph pitch is enough.
 
-Tags: `war` `travel` `trade` `ideas` `literature` `religion` `science` `art` `disease` `technology` · shape: **route** (one line of dated stops), **diffusion** (many places, each with an arrival year), **period** (a span of years with its own stops and borders) · cost is a rough build estimate.
+## How the twenty were chosen
 
-## Routes — one traveller, one line
+Five tests, applied to about forty candidates:
 
-| # | Theme | Tags | Years | Why | Cost |
-|---|---|---|---|---|---|
-| R1 | **Alexander and the spread of Greek thought** 亚历山大与希腊思想的传播 | war, ideas, travel | 343–30 BCE | From Aristotle's tutoring to Gandharan Buddhas and the Stoa: the conquest told as ideas | **shipped** |
-| R2 | **Xuanzang to India** 玄奘西行 | religion, travel | 629–645 | Chang'an → Turfan → Samarkand → Nalanda and back; the natural handshake with 江山时序 | 1 day |
-| R3 | **Ibn Battuta** 伊本·白图泰 | travel, trade, religion | 1325–1354 | The only traveller who crosses the whole map: Tangier → Mecca → Delhi → Hangzhou → Timbuktu | 1 day |
-| R4 | **Marco Polo** 马可·波罗 | travel, trade | 1271–1295 | Overland out, by sea back; the West's image of the East | 1 day |
-| R5 | **Zheng He's seven voyages** 郑和下西洋 | travel, trade | 1405–1433 | East to west, ending in Malindi; needs the map's southern edge extended to 10°S | 1.5 days |
-| R6 | **Napoleon** 拿破仑 | war | 1796–1815 | Italy → Egypt → Austerlitz → Moscow → Waterloo; the last route that fills all of Europe | 1 day |
-| R7 | **Paul's missionary journeys** 保罗传教 | religion, travel | 46–64 | Three journeys and the voyage to Rome; the eastern Mediterranean at street level | 0.5 day |
-| R8 | **Hannibal across the Alps** 汉尼拔 | war | 218–202 BCE | Cartagena → Alps → Cannae → Zama | 0.5 day |
-| R9 | **The Grand Tour** 贵族壮游 | travel, art, literature | 1660–1820 | The canonical route Paris → Geneva → Turin → Florence → Rome → Naples → Venice, with who went when (Goethe 1786, Byron 1809) | 1 day |
-| R10 | **Goethe's Italian Journey** 歌德意大利之旅 | literature, travel | 1786–1788 | A single documented Grand Tour, day by day from his own diary | 0.5 day |
-| R11 | **The Crusades** 十字军 | war, religion | 1096–1291 | Four routes to the Holy Land plus the sack of Constantinople | 1.5 days |
-| R12 | **The Mongol invasions** 蒙古入侵 | war | 1206–1294 | Genghis → Western Xia, Jin, Khwarazm; Batu → Kiev → Legnica → Mohi; Hulagu → Baghdad → Ain Jalut; Kublai → Song; the two failed landings in Japan | **shipped** |
-| R14 | **The Barbarian Migrations** 蛮族入侵 | war, travel | 375–568 | Huns → Goths across the Danube → Adrianople → sack of Rome 410 → Vandals to Carthage → Attila → Lombards into Italy; the end of the Western empire as movement, not collapse | **shipped** |
-| R13 | **Darwin on the Beagle** 达尔文 | science, travel | 1831–1836 | Mostly outside the map; listed to say no for now | — |
+1. **It crosses the map.** A theme should use the fact that this atlas runs from the Atlantic to Japan. Stories that stay inside one modern country were set aside, however good.
+2. **Every stop can be dated and placed.** Routes and diffusions with documented stops first; stories that need hand-drawn borders (Islam's twenty-year frontiers, the Ottoman advance) come later, once the border pipeline exists.
+3. **Not only wars.** Four of the first four themes are at least partly military. The twenty are balanced: eight on ideas, religion, learning and art; five on trade and travel; four on disease and technology; three on empire.
+4. **Someone will share it.** Each one has a hook that works in a single sentence — "Europe was saved by a funeral", "coffee reached Vienna in a Turkish baggage train".
+5. **It talks to the others.** Xuanzang starts where the Mongol theme ends in China; the Black Death starts where the Mongols left off at Caffa; paper leaves Talas (last stop of the Islam theme) and arrives at Gutenberg. The twenty form a web, not a list.
 
-## Diffusions — one thing spreading, many arrival dates
+Dropped, and why: Hannibal (fits inside *Rome, rise and fall*), Goethe's Italian journey (fits inside *the Grand Tour*), the Enlightenment and the universities (fold into *the Republic of Letters* and *the translation road*), gunpowder and chess (fun, thin), Darwin and the Age of Discovery (leave the map), the Pax Mongolica (covered by *the Mongol Invasions*). The Silk Road is proposed as a permanent toggle layer, not a story.
 
-| # | Theme | Tags | Years | Why | Cost |
-|---|---|---|---|---|---|
-| D1 | **The Black Death** 黑死病 | disease | 1346–1353 | Caffa → Messina → Marseille → Paris → London → Moscow; the best-dated diffusion in pre-modern history | 1 day |
-| D2 | **The printing press** 活字印刷 | technology | 1450–1500 | ~250 towns with a documented first press; Mainz outward in rings | 1 day |
-| D3 | **The rise of Islam** 伊斯兰的形成 | religion, war, ideas | 610–750 | From the first revelation and the hijra to the Abbasid revolution and Talas: 16 formative stops. Hand-drawn 20-year borders still to come | **shipped** (route) |
-| D4 | **Buddhism eastward** 佛教东传 | religion, ideas | 250 BCE–700 CE | Ashoka's missions → Gandhara → Dunhuang → Luoyang → Korea → Japan | 1.5 days |
-| D5 | **Greek learning into Arabic, then Latin** 希腊学术的翻译之路 | ideas, science | 750–1250 | Athens → Baghdad (House of Wisdom) → Córdoba/Toledo → Paris; a chain of translators with dates | 1.5 days |
-| D6 | **Paper** 造纸术西传 | technology | 105–1276 | Luoyang → Samarkand (751) → Baghdad → Cairo → Fez → Xàtiva → Fabriano | 0.5 day |
-| D7 | **Universities** 大学的诞生 | ideas | 1088–1500 | Bologna, Paris, Oxford … 80 foundations with dates | 0.5 day |
-| D8 | **The Reformation** 宗教改革 | religion, ideas | 1517–1648 | Wittenberg → Zürich → Geneva → Edinburgh; which cities turned, when | 1.5 days |
-| D9 | **Coffee** 咖啡 | trade, technology | 1450–1700 | Yemen → Mecca → Cairo → Istanbul → Venice → Vienna → London; one coffeehouse date per city | 0.5 day |
-| D10 | **Gunpowder** 火药 | technology, war | 900–1450 | China → Mongols → Mamluks → Europe | 1 day |
-| D11 | **Chess** 国际象棋 | ideas, trade | 600–1500 | Chaturanga → Shatranj → Europe; a quiet, charming one | 0.5 day |
-| D12 | **The Silk Road** 丝绸之路 | trade | 130 BCE–1450 | Not a story but a network: proposed as a permanent toggle layer, like relief | 1 day |
+## The twenty
 
-## Periods — step into an age
+| # | Theme | Tags | Years | Shape | Why this one | Cost | Vote |
+|---|---|---|---|---|---|---|---|
+| 1 | **Xuanzang to India** 玄奘西行 | religion, travel | 629–645 | route | Chang'an → Turfan → Samarkand → Nalanda and back; the handshake with 江山时序, and the best-documented journey of the first millennium | 1 day | [#1](https://github.com/wangyuexiang/oikoumene/issues/1) |
+| 2 | **The Black Death** 黑死病 | disease | 1346–1353 | diffusion | Caffa → Messina → Marseille → Paris → London → Moscow, dated to the month; it begins where the Mongol theme ends | 1 day | [#9](https://github.com/wangyuexiang/oikoumene/issues/9) |
+| 3 | **Ibn Battuta** 伊本·白图泰 | travel, trade, religion | 1325–1354 | route | The only traveller who crosses the whole map: Tangier → Mecca → Delhi → Hangzhou → Timbuktu | 1 day | [#2](https://github.com/wangyuexiang/oikoumene/issues/2) |
+| 4 | **The translation road** 希腊学术的翻译之路 | ideas, science | 750–1250 | diffusion | Athens → Baghdad's House of Wisdom → Córdoba and Toledo → Paris: how Aristotle came back to Europe in Arabic, translator by translator | 1.5 days | [#13](https://github.com/wangyuexiang/oikoumene/issues/13) |
+| 5 | **The printing press** 活字印刷 | technology | 1450–1500 | diffusion | ~250 towns with a dated first press, spreading from Mainz in rings; the clearest picture of how a technology moves | 1 day | [#10](https://github.com/wangyuexiang/oikoumene/issues/10) |
+| 6 | **Paper** 造纸术西传 | technology | 105–1276 | diffusion | Luoyang → Samarkand 751 → Baghdad → Cairo → Fez → Xàtiva → Fabriano; eleven centuries, seven stops, and it ends at Gutenberg's door | 0.5 day | [#14](https://github.com/wangyuexiang/oikoumene/issues/14) |
+| 7 | **Marco Polo** 马可·波罗 | travel, trade | 1271–1295 | route | Venice → Hormuz → the Pamirs → Shangdu, back by sea; the West's picture of the East for five centuries | 1 day | [#3](https://github.com/wangyuexiang/oikoumene/issues/3) |
+| 8 | **Buddhism eastward** 佛教东传 | religion, ideas | 250 BCE–700 CE | diffusion | Ashoka's missions → Gandhara → Dunhuang → Luoyang → Korea → Japan; the only idea that crossed the whole of Asia before Islam | 1.5 days | [#12](https://github.com/wangyuexiang/oikoumene/issues/12) |
+| 9 | **The Viking Age** 维京时代 | war, trade, travel | 793–1066 | route | Lindisfarne → Paris → Iceland → Kiev → Constantinople → Baghdad's silver via the Volga; the North Sea tied to the Caspian | 1.5 days | [#26](https://github.com/wangyuexiang/oikoumene/issues/26) |
+| 10 | **The Crusades** 十字军 | war, religion | 1096–1291 | route | Four routes to Jerusalem and the 1204 sack of Constantinople; two centuries in which Europe and the Islamic world studied each other at close range | 1.5 days | [#7](https://github.com/wangyuexiang/oikoumene/issues/7) |
+| 11 | **Zheng He's voyages** 郑和下西洋 | travel, trade | 1405–1433 | route | Nanjing → Malacca → Calicut → Hormuz → Aden → Malindi; the one great voyage that went east to west. Needs the map's southern edge extended | 1.5 days | [#4](https://github.com/wangyuexiang/oikoumene/issues/4) |
+| 12 | **Paul's journeys** 保罗传教 | religion, travel | 46–64 | route | Antioch → Athens → Corinth → Ephesus → Rome; the eastern Mediterranean at street level and the birth of a universal religion | 0.5 day | [#25](https://github.com/wangyuexiang/oikoumene/issues/25) |
+| 13 | **Rome, rise and fall** 罗马兴衰 | war, ideas | 509 BCE–476 CE | period | The spine of the western half; Hannibal, Caesar, Augustus, Constantine as stops | 1 day | [#18](https://github.com/wangyuexiang/oikoumene/issues/18) |
+| 14 | **Tang and Abbasid** 唐与阿拔斯 | trade, ideas, art | 618–907 | period | Chang'an and Baghdad, the two largest cities on earth, and what moved between them: Talas, paper, astronomy, Nestorian monks | 1.5 days | [#21](https://github.com/wangyuexiang/oikoumene/issues/21) |
+| 15 | **Al-Andalus** 安达卢斯 | ideas, art, religion | 711–1492 | period | Córdoba, Toledo, Granada; convivencia and reconquista; where Europe got its Aristotle, its algebra and its lute | 1 day | [#22](https://github.com/wangyuexiang/oikoumene/issues/22) |
+| 16 | **The Reformation** 宗教改革 | religion, ideas | 1517–1648 | diffusion | Wittenberg → Zürich → Geneva → Edinburgh; which cities turned, and when; ends at Westphalia | 1.5 days | [#15](https://github.com/wangyuexiang/oikoumene/issues/15) |
+| 17 | **The Grand Tour** 贵族壮游 | travel, art, literature | 1660–1820 | route | Paris → Geneva → Turin → Florence → Rome → Naples → Venice, with who went when: Goethe 1786, Byron 1809 | 1 day | [#6](https://github.com/wangyuexiang/oikoumene/issues/6) |
+| 18 | **Republic of Letters** 文人共和国 | literature, ideas | 1500–1800 | period | Erasmus, Descartes, Voltaire, Kant and the correspondence networks between them; the Enlightenment as a map of letters | 1.5 days | [#20](https://github.com/wangyuexiang/oikoumene/issues/20) |
+| 19 | **Coffee** 咖啡 | trade | 1450–1700 | diffusion | Yemen → Mecca → Cairo → Istanbul → Venice → Vienna → London, one coffeehouse date per city; small, charming, and it maps the same road as ideas | 0.5 day | [#16](https://github.com/wangyuexiang/oikoumene/issues/16) |
+| 20 | **Napoleon** 拿破仑 | war | 1796–1815 | route | Italy → Egypt → Austerlitz → Moscow → Waterloo; the last route that fills all of Europe, and the Civil Code travelling with the army | 1 day | [#5](https://github.com/wangyuexiang/oikoumene/issues/5) |
 
-| # | Theme | Tags | Years | Why | Cost |
-|---|---|---|---|---|---|
-| P1 | **Rome, rise and fall** 罗马兴衰 | war, ideas | 509 BCE–476 CE | The spine of the western half | 1 day |
-| P2 | **The Mongol century** 蒙古的世纪 | war, trade | 1206–1294 | The only time one power held both ends of the map | 1 day |
-| P3 | **The Ottoman centuries** 奥斯曼三百年 | war, art | 1299–1683 | From Söğüt to the gates of Vienna | 1 day |
-| P4 | **Republic of Letters** 文人共和国 | literature, ideas | 1500–1800 | Erasmus, Descartes, Voltaire, Kant and the correspondence networks between them | 1.5 days |
-| P5 | **The Enlightenment** 启蒙运动 | ideas, literature | 1680–1800 | Salons, academies, the Encyclopédie's subscribers by city | 1.5 days |
-| P6 | **Tang and Abbasid** 唐与阿拔斯 | trade, ideas, art | 618–907 | Two capitals, Chang'an and Baghdad, and what moved between them (Talas 751, paper, astronomy) | 1.5 days |
-| P7 | **Al-Andalus** 安达卢斯 | ideas, art, religion | 711–1492 | Córdoba, Toledo, Granada; convivencia and reconquista | 1 day |
+Also proposed as a **layer**, not a story: the Silk Road network as a permanent toggle, like relief — [#17](https://github.com/wangyuexiang/oikoumene/issues/17).
+
+## Shipped
+
+| Theme | Tags | Years | Deep link |
+|---|---|---|---|
+| **Alexander and the spread of Greek thought** 亚历山大与希腊思想的传播 | war, ideas, travel | 343–30 BCE | `?theme=alexander` |
+| **The Barbarian Migrations** 蛮族入侵 | war, travel | 375–568 | `?theme=migrations` |
+| **The Mongol Invasions** 蒙古入侵 | war | 1206–1294 | `?theme=mongols` |
+| **The Rise of Islam** 伊斯兰的形成 | religion, war, ideas | 610–750 | `?theme=islam` |
+
+## Backlog (not in the twenty, kept for later)
+
+Hannibal · Goethe's Italian journey · Universities 1088–1500 · Gunpowder · Chess · the Enlightenment as its own theme · the Ottoman centuries · the Pax Mongolica · Darwin · the Age of Discovery (outside the map).
 
 ## How a theme works
 

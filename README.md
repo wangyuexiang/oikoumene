@@ -72,7 +72,7 @@ Everything is plain JSON under `public/data/`, written to be edited by hand:
 
 ## Themes
 
-A theme is a story you step into: everything not part of it fades, the timeline shows its span, and you walk it stop by stop with a card at each. Four are live — **Alexander and the spread of Greek thought**, **the Barbarian Migrations**, **the Mongol Invasions**, **the Rise of Islam** — and 26 more are proposed in [docs/THEMES.md](docs/THEMES.md) — wars and their routes, the Grand Tour, the Silk Road, the Black Death, how Greek learning travelled into Arabic and back. **Vote with 👍 on the issues tagged `theme`** and we build them in that order.
+A theme is a story you step into: everything not part of it fades, the timeline shows its span, and you walk it stop by stop with a card at each. Four are live — **Alexander and the spread of Greek thought**, **the Barbarian Migrations**, **the Mongol Invasions**, **the Rise of Islam** — and twenty more are proposed, with the reasons for choosing them, in [docs/THEMES.md](docs/THEMES.md) — wars and their routes, the Grand Tour, the Silk Road, the Black Death, how Greek learning travelled into Arabic and back. **Vote with 👍 on the issues tagged `theme`** and we build them in that order.
 
 ## Sister project
 
