@@ -40,6 +40,18 @@ Un tema è una storia in cui si entra: la mappa si restringe ai suoi anni e ai s
 
 Oikoumene è modellato su [江山时序 jiangshan-map](https://github.com/DeanChensj/jiangshan-map) di Dean Chen, che fa lo stesso per la Cina con confini disegnati a mano. I due condividono il modello di interazione e la convenzione di link `?year=`; l'obiettivo è che i link ai luoghi saltino dall'uno all'altro.
 
+## Nota
+
+Oikoumene è una visualizzazione educativa e culturale della storia. Non rappresenta né sostiene alcuna posizione politica, governo, movimento o rivendicazione.
+
+Confini storici, itinerari, date e toponimi sono approssimativi, semplificati e solo illustrativi. Non sono autorevoli e non sono una presa di posizione su alcun territorio, confine o questione di sovranità, nemmeno quando una sezione mostra gli stati come venivano disegnati comunemente intorno all’anno 2000.
+
+I confini provengono da [aourednik/historical-basemaps](https://github.com/aourednik/historical-basemaps) (CC BY 4.0), un dataset continentale con errori noti. Rilievo, fiumi e laghi provengono da Natural Earth. Biografie, storie di città, eventi e testi dei temi sono brevi introduzioni, non ricerca.
+
+Le correzioni sono benvenute tramite le [issue di GitHub](https://github.com/wangyuexiang/oikoumene/issues). Il codice e i testi curati sono sotto [licenza MIT](../LICENSE). Fork, mirror e copie modificate non sono il progetto ufficiale.
+
+Lo stesso testo è nell’atlante, sotto **Nota**.
+
 ## Limiti noti
 
 I confini vengono da [historical-basemaps](https://github.com/aourednik/historical-basemaps), un dataset a scala continentale con errori noti; sono schematici e verranno sostituiti periodo per periodo. Biografie e storie di città sono orientamenti, non ricerca. Correzioni benvenute via issue o pull request.

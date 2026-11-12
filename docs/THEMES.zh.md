@@ -2,7 +2,7 @@
 
 <sub>[English](THEMES.md) · [Français](THEMES.fr.md) · [Deutsch](THEMES.de.md) · [Italiano](THEMES.it.md)</sub>
 
-**主题**是一个可以走进去的故事：与之无关的一切淡出，时间轴只显示它的年份区间，你一站一站地走，每站弹出一张卡片。目前已上线四个——亚历山大与希腊思想、蛮族入侵、蒙古入侵、伊斯兰的形成；下面二十个是我们认为接下来最值得做的。
+**主题**是一个可以走进去的故事：与之无关的一切淡出，时间轴只显示它的年份区间，你一站一站地走，每站弹出一张卡片。目前已上线四个——亚历山大与希腊思想、民族大迁徙、蒙古入侵、伊斯兰的形成；下面二十个是我们认为接下来最值得做的。
 
 **投票**：每个主题都有一个带 [`theme`](https://github.com/wangyuexiang/oikoumene/issues?q=is%3Aissue+label%3Atheme) 标签的 issue，给你想要的点 👍；我们按票数顺序做，大约每周一个。**没有你想要的？** 用[主题提案模板](https://github.com/wangyuexiang/oikoumene/issues/new?template=theme.md)开一个 issue，写标题、年代和一段话就够。
 
@@ -50,7 +50,7 @@
 | 主题 | 标签 | 年代 | 深链 |
 |---|---|---|---|
 | **亚历山大与希腊思想的传播** | 战争, 思想, 旅行 | 前343–前30 | `?theme=alexander` |
-| **蛮族入侵** | 战争, 旅行 | 375–568 | `?theme=migrations` |
+| **民族大迁徙** | 战争, 旅行 | 375–568 | `?theme=migrations` |
 | **蒙古入侵** | 战争 | 1206–1294 | `?theme=mongols` |
 | **伊斯兰的形成** | 宗教, 战争, 思想 | 610–750 | `?theme=islam` |
 

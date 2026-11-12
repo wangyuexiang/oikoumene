@@ -94,12 +94,11 @@ svg[data-z="2"] .wlbl,svg[data-z="3"] .wlbl{display:block}
 .peak text{font-family:var(--mono);font-size:calc(6.5px*var(--inv,1));fill:var(--relief);pointer-events:none;display:none}
 svg[data-z="2"] .peak text,svg[data-z="3"] .peak text{display:block}
 .city{cursor:pointer}
-.city circle{fill:var(--panel-solid);stroke:var(--ink);stroke-width:.9;vector-effect:non-scaling-stroke;r:calc(1.6px*var(--marker,1))}
-.city.cap circle{fill:var(--accent);stroke:var(--panel-solid);stroke-width:1;vector-effect:non-scaling-stroke;r:calc(2.2px*var(--marker,1))}
-.city.cap .ring{fill:none;stroke:var(--accent);stroke-width:.8;opacity:.8;vector-effect:non-scaling-stroke;r:calc(4.2px*var(--marker,1))}
-.city .hit{fill:var(--panel-solid);stroke:var(--ink);stroke-width:.9;vector-effect:non-scaling-stroke;r:calc(5.5px*var(--marker,1))}
-.city.minor .hit{r:calc(4px*var(--marker,1))}
-.city text{font-family:var(--zh);font-size:calc(9px*var(--inv,1));fill:var(--ink);paint-order:stroke;stroke:var(--paper);stroke-width:2.6;stroke-linejoin:round;cursor:pointer}
+.city circle{fill:var(--panel-solid);stroke:var(--ink);stroke-width:1.15;vector-effect:non-scaling-stroke}
+.city.cap circle{fill:var(--accent);stroke:var(--panel-solid);stroke-width:1.2;vector-effect:non-scaling-stroke}
+.city.cap .ring{fill:none;stroke:var(--accent);stroke-width:1.15;opacity:.8;vector-effect:non-scaling-stroke}
+.city .hit,.city.cap .hit,.ev .hit{fill:transparent;stroke:none}
+.city text{font-family:var(--zh);font-size:10px;fill:var(--ink);paint-order:stroke;stroke:var(--paper);stroke-width:2.5px;vector-effect:non-scaling-stroke;stroke-linejoin:round;cursor:pointer}
 .hit{fill:transparent;stroke:none}
 .city.cap text{font-weight:700}
 .city.minor{display:none}
@@ -107,11 +106,10 @@ svg[data-z="2"] .city.minor,svg[data-z="3"] .city.minor{display:block}
 .lbl{font-family:var(--display);font-weight:600;font-size:calc(12px*var(--inv,1));fill:var(--ink);text-anchor:middle;letter-spacing:.18em;text-transform:uppercase;paint-order:stroke;stroke:var(--paper);stroke-width:2.4;stroke-opacity:.7;pointer-events:none}
 .lbl.zh{font-family:var(--zh);text-transform:none;letter-spacing:.35em;font-size:calc(11px*var(--inv,1))}
 .ev{cursor:pointer}
-.ev circle{fill:var(--c);stroke:var(--panel-solid);stroke-width:1.2;vector-effect:non-scaling-stroke;r:calc(2.4px*var(--marker,1))}
-.ev .hit{r:calc(7px*var(--marker,1))}
-.ev .halo{fill:var(--c);opacity:.22;stroke:none;r:calc(6px*var(--marker,1))}
-.ev text{font-family:var(--zh);font-size:calc(8.5px*var(--inv,1));fill:var(--c);paint-order:stroke;stroke:var(--paper);stroke-width:2.4;cursor:pointer}
-.ev.on .halo{opacity:.45;r:calc(8px*var(--marker,1))}
+.ev circle{fill:var(--c);stroke:var(--panel-solid);stroke-width:1.2;vector-effect:non-scaling-stroke}
+.ev .halo{fill:var(--c);opacity:.22;stroke:none}
+.ev text{font-family:var(--zh);font-size:10px;fill:var(--c);paint-order:stroke;stroke:var(--paper);stroke-width:2.4px;vector-effect:non-scaling-stroke;cursor:pointer}
+.ev.on .halo{opacity:.45}
 .jr path{fill:none;stroke:var(--accent);stroke-width:1.3;vector-effect:non-scaling-stroke}
 /* theme focus mode */
 body.focus .pol:not(.keep){fill-opacity:.08!important;stroke-opacity:.2!important}
@@ -186,6 +184,19 @@ body.focus #eras div{opacity:.35}
 #zoomc{position:absolute;right:max(14px,env(safe-area-inset-right,0px));bottom:14px;display:flex;flex-direction:column;gap:4px;z-index:2}
 #zoomc button{width:32px;padding:0}
 #hint{position:absolute;left:50%;top:10px;transform:translateX(-50%);font-family:var(--mono);font-size:10.5px;color:var(--ink-soft);background:var(--panel);border:1px solid var(--rule);padding:2px 10px;border-radius:3px;z-index:1;white-space:nowrap;max-width:60%;overflow:hidden;text-overflow:ellipsis}
+#tourcam{position:absolute;z-index:4;left:50%;top:10px;transform:translateX(-50%);display:flex;max-width:calc(100% - 120px);background:var(--panel);border:1px solid var(--rule);border-radius:4px;box-shadow:var(--shadow);overflow:hidden}
+#tourcam[hidden]{display:none !important}
+#tourcam button{border:0;border-radius:0;min-height:32px;padding:4px 12px;background:transparent;white-space:nowrap}
+#tourcam button+button{border-left:1px solid var(--rule)}
+#tourcam button[aria-pressed="true"]{background:var(--accent);color:#fff}
+#stage:has(#tourcam:not([hidden])) #hint{display:none}
+#about{position:absolute;z-index:6;left:50%;top:46%;transform:translate(-50%,-50%);width:min(560px,calc(100% - 28px));max-height:min(78vh,640px);overflow:auto;background:var(--panel);border:1px solid var(--rule);border-top:3px solid var(--accent);box-shadow:var(--shadow);padding:16px 18px 18px;font-family:var(--zh);font-size:14.5px;line-height:1.55}
+#about[hidden]{display:none !important}
+#about h3{margin:0 0 8px;font-family:var(--display);font-size:22px;padding-right:28px}
+#about section+section{margin-top:16px;padding-top:12px;border-top:1px solid var(--rule)}
+#about p{margin:0 0 8px}
+#about a{color:var(--accent)}
+#about .x{position:absolute;right:8px;top:6px;border:0;background:transparent;min-height:32px;font-size:16px;color:var(--ink-soft)}
 /* chronicle */
 #side{grid-area:side;min-height:0;border-left:1px solid var(--rule);background:var(--paper);display:flex;flex-direction:column}
 #side h4{margin:0;padding:8px 8px 8px 14px;font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;gap:8px}
@@ -267,7 +278,11 @@ footer{grid-area:tl;border-top:1px solid var(--rule);background:var(--panel-soli
   #lang{flex-basis:100%;width:100%;min-height:44px;font-size:16px}
   #tools .sep{display:none}
   #themes{display:flex}
-  #b-themes,#b-people,#b-tour{min-height:44px;font-size:14px;width:100%}
+  #b-themes,#b-people,#b-tour,#b-about{min-height:44px;font-size:14px;width:100%}
+  #tourcam{top:max(8px,env(safe-area-inset-top,0px))}
+  #tourcam button{min-height:40px;padding:6px 14px;font-size:13px}
+  #about{left:0;right:0;top:auto;bottom:0;transform:none;width:auto;max-height:min(78vh,560px);border-left:0;border-right:0;border-bottom:0;border-radius:12px 12px 0 0;padding:14px 16px calc(16px + env(safe-area-inset-bottom,0px))}
+  #about .x{width:44px;height:44px;min-height:44px}
   #sug{position:fixed;left:max(8px,env(safe-area-inset-left,0px));right:max(8px,env(safe-area-inset-right,0px));top:calc(var(--chrome-h,52px) + 4px);width:auto;max-height:50vh;font-size:15px}
   #sug div{min-height:44px;align-items:center}
   #thmenu{position:fixed;left:max(8px,env(safe-area-inset-left,0px));right:max(8px,env(safe-area-inset-right,0px));top:auto;bottom:max(8px,env(safe-area-inset-bottom,0px));width:auto;max-height:70vh}
@@ -343,7 +358,7 @@ footer{grid-area:tl;border-top:1px solid var(--rule);background:var(--panel-soli
     <div class="ctl" id="kinds"></div>
     <div class="ctl" id="tools">
       <select id="lang" aria-label="language"><option value="en">English</option><option value="zh">中文</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="es">Español</option><option value="it">Italiano</option></select>
-      <button type="button" id="b-people" aria-pressed="true"></button><span class="sep"></span><span id="themes"><button type="button" id="b-themes"></button><div id="thmenu" hidden><div id="thlist"></div><a class="th more" id="th-more" href="https://github.com/wangyuexiang/oikoumene/blob/main/docs/THEMES.md" target="_blank" rel="noopener"></a></div></span><button type="button" id="b-tour"></button>
+      <button type="button" id="b-people" aria-pressed="true"></button><span class="sep"></span><span id="themes"><button type="button" id="b-themes"></button><div id="thmenu" hidden><div id="thlist"></div><a class="th more" id="th-more" href="https://github.com/wangyuexiang/oikoumene/blob/main/docs/THEMES.md" target="_blank" rel="noopener"></a></div></span><button type="button" id="b-tour"></button><button type="button" id="b-about" aria-haspopup="dialog" aria-controls="about" aria-expanded="false"></button>
     </div>
   </div>
   <button type="button" id="b-menu" aria-expanded="false" aria-controls="drawer" aria-label="Layers"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="8" cy="7" r="1.7" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="1.7" fill="currentColor" stroke="none"/><circle cx="10" cy="17" r="1.7" fill="currentColor" stroke="none"/></svg></button>
@@ -360,6 +375,8 @@ footer{grid-area:tl;border-top:1px solid var(--rule);background:var(--panel-soli
       <g id="g-land"></g><image id="relief" x="0" y="0" width="1000" height="700" clip-path="url(#landclip)"/><g id="g-coast"></g><g id="g-layers"></g><g id="g-water"></g><g id="g-grat"></g><g id="g-ghost"></g><g id="g-rlbl"></g><g id="g-lbl"></g><g id="g-peak"></g><g id="g-city"></g><g id="g-per"></g><g id="g-tr" class="tr"></g><g id="g-ev"></g><g id="g-jr" class="jr"></g></g>
   </svg>
   <div id="hint"></div>
+  <div id="tourcam" hidden role="group"><button type="button" id="tm-wide" aria-pressed="true"></button><button type="button" id="tm-follow" aria-pressed="false"></button></div>
+  <div id="about" hidden role="dialog" aria-modal="true"></div>
   <div id="phase"><button type="button" id="phase-tog" aria-expanded="false" aria-controls="phase-body"><span id="phase-sum"></span></button><div id="phase-body"></div></div>
   <div id="themecard" hidden></div>
   <div id="card" hidden></div>
@@ -419,12 +436,12 @@ const ERAS=[
   {from:1500,to:1800,c:'#8fb5c9',n:{en:'Early Modern',zh:'近代早期',fr:'Époque moderne',de:'Frühe Neuzeit',es:'Edad Moderna',it:'Età moderna'}},
   {from:1800,to:2000,c:'#b9b9b9',n:{en:'Modern',zh:'现代',fr:'Époque contemporaine',de:'Moderne',es:'Edad Contemporánea',it:'Età contemporanea'}}];
 const T={
- en:{civAll:'All civilizations',civ:'Focus on',solo:'double-click a category to show only it',tStop:'Stop',tOf:'of',tExit:'Exit theme',tPrev:'‹ Prev',tNext:'Next ›',tTheme:'Theme',pop:'Population',gdp:'GDP',themes:'Themes',jrSub:'Campaigns 334–323 BCE · route',more:'More themes — vote on GitHub ↗',sub:'The Old World through time',legend:'Polities',slice:'Slice',pol:'polities',unnamed:'unnamed peoples / no polity',cap:'Capital',names:'Names through time',note:'Borders: aourednik/historical-basemaps (CC BY 4.0) · relief, rivers, lakes: Natural Earth · gazetteer, events, journey: prototype data. Borders are schematic; dashed = previous slice.',chron:'Chronicle',tour:'Guided tour',jr:'Route · Alexander',tourT:'Fly through every period and land on its defining event',jrT:"Draw Alexander's campaign route; click a stop to jump to that year",ghostT:'Show the previous slice\'s borders as dashed lines',wiki:'Wikipedia',relief:'Relief',ghost:'Previous borders',search:'Search city / polity / event',hint:'Scroll to zoom · drag to pan · click a city, polity or event · ← → change slice · Space plays',bce:'BCE',ce:'CE',year:'Year',events:'events',local:'local',people:'People',born:'b.',died:'d.',trace:'Trace life',untrace:'Hide trace',read:'Read'},
- zh:{civAll:'全部文明',civ:'只看',solo:'双击一个分类只显示它',tStop:'第',tOf:'/',tExit:'退出主题',tPrev:'‹ 上一站',tNext:'下一站 ›',tTheme:'主题',pop:'人口',gdp:'GDP',themes:'主题',jrSub:'东征 前334–前323 · 路线',more:'更多主题 — 去 GitHub 投票 ↗',sub:'寰宇时序 · 旧大陆历史地图',legend:'政权',slice:'切片',pol:'个政权',unnamed:'未命名部族 / 无主地',cap:'都城',names:'历代名称',note:'边界 aourednik/historical-basemaps（CC BY 4.0）· 山川水系 Natural Earth · 地名谱系、事件与行迹为原型数据。边界为示意，虚线 = 上一切片。',chron:'编年',tour:'巡礼',jr:'行迹 · 亚历山大',tourT:'自动飞过每个时期，停在它的代表性事件上',jrT:'画出亚历山大东征路线，点站点跳到那一年',ghostT:'把上一切片的边界显示为虚线',wiki:'维基百科',relief:'山川',ghost:'上期边界',search:'搜索城市 / 政权 / 事件',hint:'滚轮缩放 · 拖拽平移 · 点击城市、政权或事件 · ← → 切换切片 · 空格播放',bce:'前',ce:'公元',year:'年',events:'条事件',local:'当地',people:'人物',born:'生',died:'卒',trace:'生平行迹',untrace:'收起行迹',read:'阅读'},
- fr:{civAll:'Toutes les civilisations',civ:'Isoler',solo:'double-cliquez une catégorie pour n’afficher qu’elle',tStop:'Étape',tOf:'sur',tExit:'Quitter le thème',tPrev:'‹ Préc.',tNext:'Suiv. ›',tTheme:'Thème',pop:'Population',gdp:'PIB',themes:'Thèmes',jrSub:'Campagnes 334–323 av. J.-C. · itinéraire',more:'Autres thèmes — votez sur GitHub ↗',sub:'Le Vieux Monde à travers le temps',legend:'Entités politiques',slice:'Coupe',pol:'entités',unnamed:'peuples sans État',cap:'Capitale',names:'Noms au fil du temps',note:'Frontières : aourednik/historical-basemaps (CC BY 4.0) · relief, fleuves, lacs : Natural Earth · toponymes, événements, itinéraire : données prototype. Frontières schématiques ; pointillé = coupe précédente.',chron:'Chronique',tour:'Visite guidée',jr:'Itinéraire · Alexandre',tourT:'Survole chaque période et se pose sur son événement marquant',jrT:"Trace la campagne d'Alexandre ; cliquer une étape pour aller à cette année",ghostT:'Affiche les frontières de la coupe précédente en pointillé',wiki:'Wikipédia',relief:'Relief',ghost:'Frontières précédentes',search:'Ville / État / événement',hint:'Molette : zoom · glisser : déplacer · cliquer une ville, un État ou un événement · ← → coupe suivante · Espace : lecture',bce:'av. J.-C.',ce:'apr. J.-C.',year:'Année',events:'événements',local:'local',people:'Personnages',born:'né',died:'mort',trace:'Parcours',untrace:'Masquer',read:'Lire'},
- de:{civAll:'Alle Kulturkreise',civ:'Nur zeigen',solo:'Doppelklick auf eine Kategorie zeigt nur diese',tStop:'Station',tOf:'von',tExit:'Thema verlassen',tPrev:'‹ Zurück',tNext:'Weiter ›',tTheme:'Thema',pop:'Bevölkerung',gdp:'BIP',themes:'Themen',jrSub:'Feldzüge 334–323 v. Chr. · Route',more:'Weitere Themen — auf GitHub abstimmen ↗',sub:'Die Alte Welt im Wandel der Zeit',legend:'Herrschaften',slice:'Schnitt',pol:'Herrschaften',unnamed:'namenlose Völker / kein Staat',cap:'Hauptstadt',names:'Namen im Lauf der Zeit',note:'Grenzen: aourednik/historical-basemaps (CC BY 4.0) · Relief, Flüsse, Seen: Natural Earth · Ortsnamen, Ereignisse, Reise: Prototypdaten. Grenzen schematisch; gestrichelt = vorheriger Schnitt.',chron:'Chronik',tour:'Rundgang',jr:'Route · Alexander',tourT:'Fliegt durch jede Epoche und landet auf ihrem Schlüsselereignis',jrT:'Zeichnet Alexanders Feldzug; Station anklicken springt zum Jahr',ghostT:'Grenzen des vorherigen Schnitts gestrichelt anzeigen',wiki:'Wikipedia',relief:'Relief',ghost:'Vorherige Grenzen',search:'Stadt / Reich / Ereignis',hint:'Scrollen: Zoom · Ziehen: Verschieben · Stadt, Reich oder Ereignis anklicken · ← → Schnitt wechseln · Leertaste: Abspielen',bce:'v. Chr.',ce:'n. Chr.',year:'Jahr',events:'Ereignisse',local:'lokal',people:'Personen',born:'geb.',died:'gest.',trace:'Lebensweg',untrace:'Ausblenden',read:'Lesen'},
- es:{civAll:'Todas las civilizaciones',civ:'Solo',solo:'doble clic en una categoría para mostrar solo esa',tStop:'Parada',tOf:'de',tExit:'Salir del tema',tPrev:'‹ Ant.',tNext:'Sig. ›',tTheme:'Tema',pop:'Población',gdp:'PIB',themes:'Temas',jrSub:'Campañas 334–323 a. C. · ruta',more:'Más temas — vota en GitHub ↗',sub:'El Viejo Mundo a través del tiempo',legend:'Entidades políticas',slice:'Corte',pol:'entidades',unnamed:'pueblos sin Estado',cap:'Capital',names:'Nombres a lo largo del tiempo',note:'Fronteras: aourednik/historical-basemaps (CC BY 4.0) · relieve, ríos, lagos: Natural Earth · topónimos, eventos, viaje: datos prototipo. Fronteras esquemáticas; discontinua = corte anterior.',chron:'Crónica',tour:'Recorrido guiado',jr:'Ruta · Alejandro',tourT:'Vuela por cada época y aterriza en su evento clave',jrT:'Dibuja la campaña de Alejandro; clic en una parada salta a ese año',ghostT:'Muestra las fronteras del corte anterior en línea discontinua',wiki:'Wikipedia',relief:'Relieve',ghost:'Fronteras anteriores',search:'Ciudad / Estado / evento',hint:'Rueda: zoom · arrastrar: mover · clic en ciudad, Estado o evento · ← → cambiar corte · Espacio: reproducir',bce:'a. C.',ce:'d. C.',year:'Año',events:'eventos',local:'local',people:'Personajes',born:'n.',died:'m.',trace:'Trayectoria',untrace:'Ocultar',read:'Leer'},
- it:{civAll:'Tutte le civiltà',civ:'Solo',solo:'doppio clic su una categoria per mostrare solo quella',tStop:'Tappa',tOf:'di',tExit:'Esci dal tema',tPrev:'‹ Prec.',tNext:'Succ. ›',tTheme:'Tema',pop:'Popolazione',gdp:'PIL',themes:'Temi',jrSub:'Campagne 334–323 a.C. · itinerario',more:'Altri temi — vota su GitHub ↗',sub:'Il Vecchio Mondo attraverso il tempo',legend:'Entità politiche',slice:'Sezione',pol:'entità',unnamed:'popoli senza Stato',cap:'Capitale',names:'Nomi nel tempo',note:'Confini: aourednik/historical-basemaps (CC BY 4.0) · rilievo, fiumi, laghi: Natural Earth · toponimi, eventi, viaggio: dati prototipo. Confini schematici; tratteggio = sezione precedente.',chron:'Cronaca',tour:'Visita guidata',jr:'Itinerario · Alessandro',tourT:'Sorvola ogni epoca e si ferma sul suo evento chiave',jrT:"Traccia la campagna di Alessandro; clicca una tappa per saltare a quell'anno",ghostT:'Mostra i confini della sezione precedente tratteggiati',wiki:'Wikipedia',relief:'Rilievo',ghost:'Confini precedenti',search:'Città / Stato / evento',hint:'Rotella: zoom · trascina: sposta · clicca una città, uno Stato o un evento · ← → cambia sezione · Spazio: riproduci',bce:'a.C.',ce:'d.C.',year:'Anno',events:'eventi',local:'locale',people:'Personaggi',born:'n.',died:'m.',trace:'Percorso di vita',untrace:'Nascondi',read:'Leggi'}};
+ en:{civAll:'All civilizations',civ:'Focus on',solo:'double-click a category to show only it',tStop:'Stop',tOf:'of',tExit:'Exit theme',tPrev:'‹ Prev',tNext:'Next ›',tTheme:'Theme',pop:'Population',gdp:'GDP',themes:'Themes',jrSub:'Campaigns 334–323 BCE · route',more:'More themes — vote on GitHub ↗',sub:'The Old World through time',legend:'Polities',slice:'Slice',pol:'polities',unnamed:'unnamed peoples / no polity',cap:'Capital',names:'Names through time',note:'Illustrative only — not a statement on sovereignty. Borders: aourednik/historical-basemaps (CC BY 4.0) · relief, rivers, lakes: Natural Earth · gazetteer, events, journey: prototype data. Dashed = previous slice.',chron:'Chronicle',tour:'Guided tour',jr:'Route · Alexander',tourT:'Fly through every period and land on its defining event',jrT:"Draw Alexander's campaign route; click a stop to jump to that year",ghostT:'Show the previous slice\'s borders as dashed lines',wiki:'Wikipedia',relief:'Relief',ghost:'Previous borders',search:'Search city / polity / event',hint:'Scroll to zoom · drag to pan · click a city, polity or event · ← → change slice · Space plays',bce:'BCE',ce:'CE',year:'Year',events:'events',local:'local',people:'People',born:'b.',died:'d.',trace:'Trace life',untrace:'Hide trace',read:'Read'},
+ zh:{civAll:'全部文明',civ:'只看',solo:'双击一个分类只显示它',tStop:'第',tOf:'/',tExit:'退出主题',tPrev:'‹ 上一站',tNext:'下一站 ›',tTheme:'主题',pop:'人口',gdp:'GDP',themes:'主题',jrSub:'东征 前334–前323 · 路线',more:'更多主题 — 去 GitHub 投票 ↗',sub:'寰宇时序 · 旧大陆历史地图',legend:'政权',slice:'切片',pol:'个政权',unnamed:'未命名部族 / 无主地',cap:'都城',names:'历代名称',note:'仅为示意，不表示任何主权。边界 aourednik/historical-basemaps（CC BY 4.0）· 山川水系 Natural Earth · 地名谱系、事件与行迹为原型数据。虚线 = 上一切片。',chron:'编年',tour:'巡礼',jr:'行迹 · 亚历山大',tourT:'自动飞过每个时期，停在它的代表性事件上',jrT:'画出亚历山大东征路线，点站点跳到那一年',ghostT:'把上一切片的边界显示为虚线',wiki:'维基百科',relief:'山川',ghost:'上期边界',search:'搜索城市 / 政权 / 事件',hint:'滚轮缩放 · 拖拽平移 · 点击城市、政权或事件 · ← → 切换切片 · 空格播放',bce:'前',ce:'公元',year:'年',events:'条事件',local:'当地',people:'人物',born:'生',died:'卒',trace:'生平行迹',untrace:'收起行迹',read:'阅读'},
+ fr:{civAll:'Toutes les civilisations',civ:'Isoler',solo:'double-cliquez une catégorie pour n’afficher qu’elle',tStop:'Étape',tOf:'sur',tExit:'Quitter le thème',tPrev:'‹ Préc.',tNext:'Suiv. ›',tTheme:'Thème',pop:'Population',gdp:'PIB',themes:'Thèmes',jrSub:'Campagnes 334–323 av. J.-C. · itinéraire',more:'Autres thèmes — votez sur GitHub ↗',sub:'Le Vieux Monde à travers le temps',legend:'Entités politiques',slice:'Coupe',pol:'entités',unnamed:'peuples sans État',cap:'Capitale',names:'Noms au fil du temps',note:'Illustration seulement, sans énoncé de souveraineté. Frontières : aourednik/historical-basemaps (CC BY 4.0) · relief, fleuves, lacs : Natural Earth · toponymes, événements, itinéraire : données prototype. Pointillé = coupe précédente.',chron:'Chronique',tour:'Visite guidée',jr:'Itinéraire · Alexandre',tourT:'Survole chaque période et se pose sur son événement marquant',jrT:"Trace la campagne d'Alexandre ; cliquer une étape pour aller à cette année",ghostT:'Affiche les frontières de la coupe précédente en pointillé',wiki:'Wikipédia',relief:'Relief',ghost:'Frontières précédentes',search:'Ville / État / événement',hint:'Molette : zoom · glisser : déplacer · cliquer une ville, un État ou un événement · ← → coupe suivante · Espace : lecture',bce:'av. J.-C.',ce:'apr. J.-C.',year:'Année',events:'événements',local:'local',people:'Personnages',born:'né',died:'mort',trace:'Parcours',untrace:'Masquer',read:'Lire'},
+ de:{civAll:'Alle Kulturkreise',civ:'Nur zeigen',solo:'Doppelklick auf eine Kategorie zeigt nur diese',tStop:'Station',tOf:'von',tExit:'Thema verlassen',tPrev:'‹ Zurück',tNext:'Weiter ›',tTheme:'Thema',pop:'Bevölkerung',gdp:'BIP',themes:'Themen',jrSub:'Feldzüge 334–323 v. Chr. · Route',more:'Weitere Themen — auf GitHub abstimmen ↗',sub:'Die Alte Welt im Wandel der Zeit',legend:'Herrschaften',slice:'Schnitt',pol:'Herrschaften',unnamed:'namenlose Völker / kein Staat',cap:'Hauptstadt',names:'Namen im Lauf der Zeit',note:'Nur zur Veranschaulichung, keine Aussage zur Souveränität. Grenzen: aourednik/historical-basemaps (CC BY 4.0) · Relief, Flüsse, Seen: Natural Earth · Ortsnamen, Ereignisse, Reise: Prototypdaten. Gestrichelt = vorheriger Schnitt.',chron:'Chronik',tour:'Rundgang',jr:'Route · Alexander',tourT:'Fliegt durch jede Epoche und landet auf ihrem Schlüsselereignis',jrT:'Zeichnet Alexanders Feldzug; Station anklicken springt zum Jahr',ghostT:'Grenzen des vorherigen Schnitts gestrichelt anzeigen',wiki:'Wikipedia',relief:'Relief',ghost:'Vorherige Grenzen',search:'Stadt / Reich / Ereignis',hint:'Scrollen: Zoom · Ziehen: Verschieben · Stadt, Reich oder Ereignis anklicken · ← → Schnitt wechseln · Leertaste: Abspielen',bce:'v. Chr.',ce:'n. Chr.',year:'Jahr',events:'Ereignisse',local:'lokal',people:'Personen',born:'geb.',died:'gest.',trace:'Lebensweg',untrace:'Ausblenden',read:'Lesen'},
+ es:{civAll:'Todas las civilizaciones',civ:'Solo',solo:'doble clic en una categoría para mostrar solo esa',tStop:'Parada',tOf:'de',tExit:'Salir del tema',tPrev:'‹ Ant.',tNext:'Sig. ›',tTheme:'Tema',pop:'Población',gdp:'PIB',themes:'Temas',jrSub:'Campañas 334–323 a. C. · ruta',more:'Más temas — vota en GitHub ↗',sub:'El Viejo Mundo a través del tiempo',legend:'Entidades políticas',slice:'Corte',pol:'entidades',unnamed:'pueblos sin Estado',cap:'Capital',names:'Nombres a lo largo del tiempo',note:'Solo ilustrativo, sin pronunciarse sobre la soberanía. Fronteras: aourednik/historical-basemaps (CC BY 4.0) · relieve, ríos, lagos: Natural Earth · topónimos, eventos, viaje: datos prototipo. Discontinua = corte anterior.',chron:'Crónica',tour:'Recorrido guiado',jr:'Ruta · Alejandro',tourT:'Vuela por cada época y aterriza en su evento clave',jrT:'Dibuja la campaña de Alejandro; clic en una parada salta a ese año',ghostT:'Muestra las fronteras del corte anterior en línea discontinua',wiki:'Wikipedia',relief:'Relieve',ghost:'Fronteras anteriores',search:'Ciudad / Estado / evento',hint:'Rueda: zoom · arrastrar: mover · clic en ciudad, Estado o evento · ← → cambiar corte · Espacio: reproducir',bce:'a. C.',ce:'d. C.',year:'Año',events:'eventos',local:'local',people:'Personajes',born:'n.',died:'m.',trace:'Trayectoria',untrace:'Ocultar',read:'Leer'},
+ it:{civAll:'Tutte le civiltà',civ:'Solo',solo:'doppio clic su una categoria per mostrare solo quella',tStop:'Tappa',tOf:'di',tExit:'Esci dal tema',tPrev:'‹ Prec.',tNext:'Succ. ›',tTheme:'Tema',pop:'Popolazione',gdp:'PIL',themes:'Temi',jrSub:'Campagne 334–323 a.C. · itinerario',more:'Altri temi — vota su GitHub ↗',sub:'Il Vecchio Mondo attraverso il tempo',legend:'Entità politiche',slice:'Sezione',pol:'entità',unnamed:'popoli senza Stato',cap:'Capitale',names:'Nomi nel tempo',note:'Solo illustrativo, senza alcuna affermazione di sovranità. Confini: aourednik/historical-basemaps (CC BY 4.0) · rilievo, fiumi, laghi: Natural Earth · toponimi, eventi, viaggio: dati prototipo. Tratteggio = sezione precedente.',chron:'Cronaca',tour:'Visita guidata',jr:'Itinerario · Alessandro',tourT:'Sorvola ogni epoca e si ferma sul suo evento chiave',jrT:"Traccia la campagna di Alessandro; clicca una tappa per saltare a quell'anno",ghostT:'Mostra i confini della sezione precedente tratteggiati',wiki:'Wikipedia',relief:'Rilievo',ghost:'Confini precedenti',search:'Città / Stato / evento',hint:'Rotella: zoom · trascina: sposta · clicca una città, uno Stato o un evento · ← → cambia sezione · Spazio: riproduci',bce:'a.C.',ce:'d.C.',year:'Anno',events:'eventi',local:'locale',people:'Personaggi',born:'n.',died:'m.',trace:'Percorso di vita',untrace:'Nascondi',read:'Leggi'}};
 const LANGS=['en','zh','fr','de','es','it'];
 const MENU_L={en:'Layers and tools',zh:'图层与工具',fr:'Calques et outils',de:'Ebenen und Werkzeuge',es:'Capas y herramientas',it:'Livelli e strumenti'};
 const TOUR_BTN={
@@ -434,6 +451,59 @@ const TOUR_BTN={
   resumeT:{en:'Resume the guided tour',zh:'继续巡礼',fr:'Reprendre la visite',de:'Rundgang fortsetzen',es:'Reanudar el recorrido',it:'Riprendi la visita'},
   play:{en:'Play',zh:'播放',fr:'Lecture',de:'Abspielen',es:'Reproducir',it:'Riproduci'},
   playPause:{en:'Pause',zh:'暂停',fr:'Pause',de:'Pause',es:'Pausa',it:'Pausa'}
+};
+const TOUR_CAM={
+  wide:{en:'Overview',zh:'全景',fr:'Panorama',de:'Überblick',es:'Panorama',it:'Panorama'},
+  follow:{en:'Follow',zh:'跟随',fr:'Suivre',de:'Folgen',es:'Seguir',it:'Segui'},
+  wideT:{en:'Keep the whole region in view while the tour advances',zh:'巡礼推进时保持全区视野',fr:'Garder toute la région visible pendant la visite',de:'Die ganze Region im Blick behalten',es:'Mantener toda la región a la vista',it:'Tieni visibile l’intera regione'},
+  followT:{en:'Zoom in on each stop',zh:'放大到每一站',fr:'Zoomer sur chaque étape',de:'Auf jede Station zoomen',es:'Acercar cada parada',it:'Ingrandisci ogni tappa'},
+  group:{en:'Tour camera',zh:'巡礼镜头',fr:'Cadrage de la visite',de:'Rundgang-Kamera',es:'Cámara del recorrido',it:'Inquadratura della visita'}
+};
+const ISSUES='https://github.com/wangyuexiang/oikoumene/issues';
+const LICENSE_URL='https://github.com/wangyuexiang/oikoumene/blob/main/LICENSE';
+const ABOUT={
+  en:{btn:'About',title:'About',paras:[
+    'Oikoumene is an educational and cultural visualization of history. It does not represent or endorse any political position, government, movement, or claim.',
+    'Historical boundaries, routes, dates, and place names are approximate, simplified, and drawn for illustration only. They are not authoritative. They are not a statement on any territory, border, or question of sovereignty, including where a slice shows states as they were commonly drawn around the year 2000.',
+    'Borders come from <a href="https://github.com/aourednik/historical-basemaps" target="_blank" rel="noopener">aourednik/historical-basemaps</a> (CC BY 4.0), a continental dataset with known errors and simplifications. Relief, rivers, and lakes come from Natural Earth. Biographies, city histories, events, and theme essays were written for this atlas as short orientations, not as scholarship.',
+    `Corrections are welcome as <a href="${ISSUES}" target="_blank" rel="noopener">GitHub issues</a>.`,
+    `Code and curated text in this repository are under the <a href="${LICENSE_URL}" target="_blank" rel="noopener">MIT licence</a>. Forks, mirrors, and modified copies are not the official project.`
+  ]},
+  zh:{btn:'声明',title:'声明',paras:[
+    'Oikoumene（寰宇时序）是一幅面向教育和人文阅读的历史可视化。它不代表、也不支持任何政治立场、政府、运动或主张。',
+    '历史边界、路线、年代和地名都是近似的、简化的，只供示意。它们不是权威结论，也不对任何领土、边界或主权问题表态；即便某一时间切片画出了约 2000 年前后常见的国家轮廓，那仍然只是示意图，不是对承认或实际控制的说明。',
+    '边界来自 <a href="https://github.com/aourednik/historical-basemaps" target="_blank" rel="noopener">aourednik/historical-basemaps</a>（CC BY 4.0），是一份已知有误差、经过简化的大洲尺度数据。地形、河流和湖泊来自 Natural Earth。人物传记、城市简史、事件和主题文章是为本图写的导读，不是学术考据。',
+    `欢迎通过 <a href="${ISSUES}" target="_blank" rel="noopener">GitHub issues</a> 指正。`,
+    `本仓库的代码与整理过的文字以 <a href="${LICENSE_URL}" target="_blank" rel="noopener">MIT 许可证</a>发布。分叉、镜像和修改副本都不是本项目的正式版本。`
+  ]},
+  fr:{btn:'À propos',title:'À propos',paras:[
+    'Oikoumene est une visualisation éducative et culturelle de l’histoire. Il ne représente ni n’approuve aucune position politique, aucun gouvernement, mouvement ou revendication.',
+    'Les frontières historiques, les itinéraires, les dates et les noms de lieux sont approximatifs, simplifiés et donnés à titre d’illustration seulement. Ils ne font pas autorité. Ils ne constituent pas une prise de position sur un territoire, une frontière ou une question de souveraineté, y compris lorsqu’une coupe montre des États tels qu’on les dessinait couramment vers l’an 2000.',
+    'Les frontières proviennent d’<a href="https://github.com/aourednik/historical-basemaps" target="_blank" rel="noopener">aourednik/historical-basemaps</a> (CC BY 4.0), un jeu continental aux erreurs et simplifications connues. Le relief, les fleuves et les lacs viennent de Natural Earth. Biographies, histoires de villes, événements et textes de thèmes sont de courtes introductions écrites pour cet atlas, non des travaux d’érudition.',
+    `Les corrections sont les bienvenues via les <a href="${ISSUES}" target="_blank" rel="noopener">issues GitHub</a>.`,
+    `Le code et les textes préparés de ce dépôt sont sous <a href="${LICENSE_URL}" target="_blank" rel="noopener">licence MIT</a>. Les forks, miroirs et copies modifiées ne sont pas le projet officiel.`
+  ]},
+  de:{btn:'Hinweis',title:'Hinweis',paras:[
+    'Oikoumene ist eine Bildungs- und Kulturdarstellung der Geschichte. Sie vertritt und unterstützt keine politische Position, keine Regierung, keine Bewegung und keinen Anspruch.',
+    'Historische Grenzen, Routen, Jahreszahlen und Ortsnamen sind ungefähr, vereinfacht und nur zur Veranschaulichung. Sie sind nicht maßgeblich. Sie sind keine Aussage zu einem Gebiet, einer Grenze oder einer Souveränitätsfrage, auch dort nicht, wo ein Schnitt Staaten so zeigt, wie sie um das Jahr 2000 häufig gezeichnet wurden.',
+    'Die Grenzen stammen aus <a href="https://github.com/aourednik/historical-basemaps" target="_blank" rel="noopener">aourednik/historical-basemaps</a> (CC BY 4.0), einem Datensatz im Kontinentalmaßstab mit bekannten Fehlern und Vereinfachungen. Relief, Flüsse und Seen stammen von Natural Earth. Biografien, Stadtgeschichten, Ereignisse und Thementexte sind kurze Einführungen für diesen Atlas, keine Forschung.',
+    `Berichtigungen sind über <a href="${ISSUES}" target="_blank" rel="noopener">GitHub-Issues</a> willkommen.`,
+    `Code und aufbereitete Texte dieses Repositoriums stehen unter der <a href="${LICENSE_URL}" target="_blank" rel="noopener">MIT-Lizenz</a>. Forks, Spiegel und veränderte Kopien sind nicht das offizielle Projekt.`
+  ]},
+  es:{btn:'Aviso',title:'Aviso',paras:[
+    'Oikoumene es una visualización educativa y cultural de la historia. No representa ni respalda ninguna posición política, gobierno, movimiento o reclamación.',
+    'Los límites históricos, las rutas, las fechas y los topónimos son aproximados, simplificados y solo ilustrativos. No son una fuente autorizada. No constituyen una declaración sobre ningún territorio, frontera o cuestión de soberanía, tampoco cuando un corte muestra estados tal como se dibujaban habitualmente hacia el año 2000.',
+    'Las fronteras proceden de <a href="https://github.com/aourednik/historical-basemaps" target="_blank" rel="noopener">aourednik/historical-basemaps</a> (CC BY 4.0), un conjunto continental con errores y simplificaciones conocidos. El relieve, los ríos y los lagos proceden de Natural Earth. Biografías, historias de ciudades, acontecimientos y textos de temas son introducciones breves escritas para este atlas, no estudios académicos.',
+    `Las correcciones son bienvenidas en las <a href="${ISSUES}" target="_blank" rel="noopener">issues de GitHub</a>.`,
+    `El código y los textos preparados de este repositorio se publican bajo la <a href="${LICENSE_URL}" target="_blank" rel="noopener">licencia MIT</a>. Las bifurcaciones, los espejos y las copias modificadas no son el proyecto oficial.`
+  ]},
+  it:{btn:'Nota',title:'Nota',paras:[
+    'Oikoumene è una visualizzazione educativa e culturale della storia. Non rappresenta né sostiene alcuna posizione politica, governo, movimento o rivendicazione.',
+    'Confini storici, itinerari, date e toponimi sono approssimativi, semplificati e solo illustrativi. Non sono autorevoli. Non sono una presa di posizione su alcun territorio, confine o questione di sovranità, nemmeno quando una sezione mostra gli stati come venivano disegnati comunemente intorno all’anno 2000.',
+    'I confini provengono da <a href="https://github.com/aourednik/historical-basemaps" target="_blank" rel="noopener">aourednik/historical-basemaps</a> (CC BY 4.0), un dataset continentale con errori e semplificazioni noti. Rilievo, fiumi e laghi provengono da Natural Earth. Biografie, storie di città, eventi e testi dei temi sono brevi introduzioni scritte per questo atlante, non ricerca.',
+    `Le correzioni sono benvenute tramite le <a href="${ISSUES}" target="_blank" rel="noopener">issue di GitHub</a>.`,
+    `Il codice e i testi curati di questo repository sono sotto <a href="${LICENSE_URL}" target="_blank" rel="noopener">licenza MIT</a>. Fork, mirror e copie modificate non sono il progetto ufficiale.`
+  ]}
 };
 const SEARCH_S={en:'Search',zh:'搜索',fr:'Chercher',de:'Suchen',es:'Buscar',it:'Cerca'};
 const CLOSE_L={en:'Close',zh:'关闭',fr:'Fermer',de:'Schließen',es:'Cerrar',it:'Chiudi'};
@@ -456,8 +526,10 @@ const cityName=(g,n)=>lang==='zh'?n.zh:lang==='en'?n.en:(g.names.length>1?n.en:(
 /* state */
 let INDEX=[],EVENTS=[],GAZ=[],PEOPLE=[],SERIES=null,THEMES=[],THEME=null,tIdx=0,tcache={},civ=null,showPop=false,showGdp=false,PHYS=null,people=true,traced=null,cache={},idx=0,lang='en',ghost=true,relief=true,playing=false,hover=null,kinds=new Set(Object.keys(KINDS));
 const $=id=>document.getElementById(id),svg=$('map'),cam=$('cam');
-let cz=1,cx=0,cy=0;
-const applyCam=()=>{cam.setAttribute('transform',`translate(${cx} ${cy}) scale(${cz})`);svg.style.setProperty('--inv',(1/Math.sqrt(cz)).toFixed(3));svg.style.setProperty('--marker',(1/cz).toFixed(4));svg.dataset.z=cz>=4?'3':cz>=1.8?'2':'1'};
+let cz=1,cx=0,cy=0,pins=[];
+function placePins(){const s=(1/cz).toFixed(4);for(const el of pins)el.setAttribute('transform',`translate(${el.dataset.x} ${el.dataset.y}) scale(${s})`)}
+function collectPins(){pins=[...svg.querySelectorAll('[data-pin]')];placePins()}
+const applyCam=()=>{cam.setAttribute('transform',`translate(${cx} ${cy}) scale(${cz})`);svg.style.setProperty('--inv',(1/Math.sqrt(cz)).toFixed(3));svg.dataset.z=cz>=4?'3':cz>=1.8?'2':'1';placePins()};
 async function load(i){const e=INDEX[i];if(!cache[e.file]){const d=await(await fetch('data/'+e.file)).json();d.features.forEach(f=>rewind(f.geometry));cache[e.file]=d}return cache[e.file]}
 function sliceRange(i){const a=INDEX[i].year,b=i+1<INDEX.length?INDEX[i+1].year:2100;return[a,b]}
 const Y0=-500,Y1=2000,yx=y=>(y-Y0)/(Y1-Y0);
@@ -512,19 +584,19 @@ async function render(){
     <div class="tg"><button id="b-relief" aria-pressed="${relief}">${t.relief}</button><button id="b-ghost" aria-pressed="${ghost}" title="${esc(t.ghostT)}">${t.ghost}</button></div>`;
   $('b-relief').onclick=()=>{relief=!relief;drawReliefLabels();render()};$('b-ghost').onclick=()=>{ghost=!ghost;render()};$('civ').onchange=e=>{civ=e.target.value||null;render()};
   // cities
-  $('g-city').innerHTML=GAZ.map(gz=>{const n=gz.names.find(n=>year>=n.from&&year<=n.to);if(!n)return'';const cap=gz.cap.some(([a,b])=>year>=a&&year<=b);const pt=P(gz.coord[0],gz.coord[1]);if(!pt)return'';const major=cap||gz.names.length>1;return `<g class="city${cap?' cap':''}${major?'':' minor'}" data-g="${esc(gz.en)}" transform="translate(${pt[0].toFixed(1)} ${pt[1].toFixed(1)})"><circle class="hit" r="7"/>${cap?'<circle class="ring" r="4.2"/>':''}<circle r="${cap?2.2:1.6}"/><text x="${cap?6:4}" y="3">${esc(cityName(gz,n))}</text></g>`}).join('');
+  $('g-city').innerHTML=GAZ.map(gz=>{const n=gz.names.find(n=>year>=n.from&&year<=n.to);if(!n)return'';const cap=gz.cap.some(([a,b])=>year>=a&&year<=b);const pt=P(gz.coord[0],gz.coord[1]);if(!pt)return'';const major=cap||gz.names.length>1;const X=pt[0].toFixed(1),Y=pt[1].toFixed(1);return `<g class="city${cap?' cap':''}${major?'':' minor'}" data-g="${esc(gz.en)}" data-pin data-x="${X}" data-y="${Y}">${cap?'<circle class="ring" r="8.5"/>':''}<circle r="${cap?5.5:5}"/><text x="8" y="3.5">${esc(cityName(gz,n))}</text><circle class="hit" r="14"/></g>`}).join('');
   // people alive in this slice
   const stackP={};$('g-per').innerHTML=people?PEOPLE.filter(pp=>pp.span[1]>=a&&pp.span[0]<b).map(pp=>{const pt=P(pp.c[0],pp.c[1]);if(!pt)return'';const[x,y]=pt;const k=Math.round(x/10)+','+Math.round(y/10);const n=stackP[k]=(stackP[k]||0)+1;const ox=(n-1)*7;return `<g class="per${traced===pp.en?' on':''}" data-p="${esc(pp.en)}" style="--c:var(--k-${pp.k})" transform="translate(${(x+ox).toFixed(1)} ${(y-9).toFixed(1)})"><circle class="hit" r="7"/><rect x="-3.2" y="-3.2" width="6.4" height="6.4"/><rect class="in" x="-1.4" y="-1.4" width="2.8" height="2.8"/><text x="5" y="-3">${esc(lang==='zh'?pp.zh:pp.en)}</text></g>`}).join(''):'';
   drawTrace();
   // events
-  const stack={};$('g-ev').innerHTML=evs.map(ev=>{const pt=P(ev.c[0],ev.c[1]);if(!pt)return'';const[x,y]=pt;const k=Math.round(x/10)+','+Math.round(y/10);const n=stack[k]=(stack[k]||0)+1;return `<g class="ev" data-e="${EVENTS.indexOf(ev)}" style="--c:var(--k-${ev.k})" transform="translate(${x.toFixed(1)} ${y.toFixed(1)})"><circle class="hit" r="8"/><circle class="halo" r="6"/><circle r="2.4"/><text x="5" y="${-4-(n-1)*9}">${esc(evText(ev))}</text></g>`}).join('');
+  const stack={};$('g-ev').innerHTML=evs.map(ev=>{const pt=P(ev.c[0],ev.c[1]);if(!pt)return'';const[x,y]=pt;const k=Math.round(x/10)+','+Math.round(y/10);const n=stack[k]=(stack[k]||0)+1;const X=x.toFixed(1),Y=y.toFixed(1);return `<g class="ev" data-e="${EVENTS.indexOf(ev)}" data-pin data-x="${X}" data-y="${Y}" style="--c:var(--k-${ev.k})"><circle class="halo" r="8"/><circle r="5"/><text x="8" y="${-4-(n-1)*11}">${esc(evText(ev))}</text><circle class="hit" r="14"/></g>`}).join('');
   drawTheme();
   // chronicle highlight
   if(!THEME){document.querySelectorAll('.ce[data-e]').forEach(el=>{const ev=EVENTS[+el.dataset.e];el.classList.toggle('now',ev.y>=a&&ev.y<b)});
   const first=document.querySelector('.ce.now');if(first&&!tour)revealChron(first)}
   $('b-themes').setAttribute('aria-pressed',!!THEME);
   const u=new URL(location);u.searchParams.set('year',year);u.searchParams.set('lang',lang);if(THEME){u.searchParams.set('theme',THEME.id);u.searchParams.set('stop',tIdx)}else{u.searchParams.delete('theme');u.searchParams.delete('stop')}civ?u.searchParams.set('civ',civ):u.searchParams.delete('civ');u.searchParams.delete('journey');history.replaceState(null,'',u);
-  applyHover();lastYear=year;
+  applyHover();lastYear=year;collectPins();
 }
 const eraOf=y=>ERAS.find(e=>y>=e.from&&y<e.to)||ERAS[ERAS.length-1];
 const evText=ev=>ev[lang]||(lang==='zh'?ev.zh:ev.en);
@@ -545,7 +617,7 @@ async function enterTheme(id,stop=0){THEME=await loadTheme(id);tIdx=stop;documen
 function exitTheme(){THEME=null;document.body.classList.remove('focus');$('phase').hidden=false;$('themecard').hidden=true;$('card').hidden=true;$('g-jr').innerHTML='';$('tl').querySelectorAll('.span,.tstop').forEach(e=>e.remove());renderChronicle();home();render()}
 async function gotoStop(i,first=false){if(!THEME)return;tIdx=Math.max(0,Math.min(THEME.stops.length-1,i));const st=THEME.stops[tIdx];
   let j=0;for(let k=0;k<INDEX.length;k++)if(INDEX[k].year<=st.y)j=k;idx=j;await render();
-  flyTo(st.c[0],st.c[1],THEME.zoom||3,first?1400:900);themeCard();stopCard(st);
+  flyTo(st.c[0],st.c[1],THEME.zoom||3,first?1400:900,true);themeCard();stopCard(st);
   const[a,b]=sliceRange(idx);$('yr').innerHTML=fy(st.y)+`<small>${T[lang].slice} ${fy(a)} → ${b>=2100?'…':fy(b)}</small>`;$('yrin').value=st.y;$('cur').style.left=(yx(st.y)*100)+'%';$('cur').querySelector('b').textContent=fy(st.y);
   document.querySelectorAll('.ce.stop').forEach((el,k)=>el.classList.toggle('now',k===tIdx));const el=document.querySelector('.ce.stop.now');if(el)revealChron(el);
   document.querySelectorAll('#tl .tstop').forEach((el,k)=>el.classList.toggle('on',k===tIdx));}
@@ -574,15 +646,20 @@ function renderChrome(){const t=T[lang];
   const evl=EVENTS.filter(ev=>kinds.has(ev.k));
   $('evt').innerHTML=evl.map(ev=>`<i style="left:${(yx(ev.y)*100).toFixed(2)}%;--c:var(--k-${ev.k})"></i>`).join('');
   renderChronicle();renderThemeMenu();if(THEME)themeCard();
+  const ab=ABOUT[lang]||ABOUT.en;$('b-about').textContent=ab.btn;$('b-about').title=ab.title;
+  if(!$('about').hidden)renderAbout();
   syncPlayback();
 }
 const civRe=()=>{if(!civ)return null;const i=CIVS.findIndex(c=>c.id===civ);return i>=0?LINEAGE[i][0]:null};
 function applyHover(){const re=civRe();document.querySelectorAll('.pol').forEach(p=>{const inCiv=!re||re.test(p.dataset.n);p.classList.toggle('dim',(!!hover&&p.dataset.n!==hover)||!inCiv)});
   document.querySelectorAll('.lbl').forEach(l=>{l.style.opacity=re&&!re.test(l.dataset.n||'')?'.2':''})}
 const wiki=(w,wz)=>{const t=T[lang];const en=w?`<a href="https://en.wikipedia.org/wiki/${encodeURIComponent(w.replace(/ /g,'_'))}" target="_blank" rel="noopener">en</a>`:'';const zh=wz?`<a href="https://zh.wikipedia.org/wiki/${encodeURIComponent(wz)}" target="_blank" rel="noopener">zh</a>`:'';return (en||zh)?`<div class="ex">${t.wiki}: ${[en,zh].filter(Boolean).join(' · ')}</div>`:''};
-let camAnim=null;function flyTo(lng,lat,z,ms=1200){if(camAnim)cancelAnimationFrame(camAnim);const pt=P(lng,lat)||[W/2,H/2];const t0={cz,cx,cy},t1={cz:z,cx:W/2-pt[0]*z,cy:H/2-pt[1]*z};const start=performance.now();const step=now=>{const t=Math.min(1,(now-start)/ms),e=t<.5?2*t*t:-1+(4-2*t)*t;cz=t0.cz+(t1.cz-t0.cz)*e;cx=t0.cx+(t1.cx-t0.cx)*e;cy=t0.cy+(t1.cy-t0.cy)*e;applyCam();if(t<1)camAnim=requestAnimationFrame(step)};camAnim=requestAnimationFrame(step)}
-const home=()=>{if(camAnim)cancelAnimationFrame(camAnim);const t0={cz,cx,cy},start=performance.now();const step=now=>{const t=Math.min(1,(now-start)/900),e=t<.5?2*t*t:-1+(4-2*t)*t;cz=t0.cz+(1-t0.cz)*e;cx=t0.cx*(1-e);cy=t0.cy*(1-e);applyCam();if(t<1)camAnim=requestAnimationFrame(step)};camAnim=requestAnimationFrame(step)};
-let tour=null,tourToken=0,timer=null;
+let camAnim=null;
+function flyTo(lng,lat,z,ms=1200,user=false){if(user)onUserCam();if(camAnim)cancelAnimationFrame(camAnim);const pt=P(lng,lat)||[W/2,H/2];const t0={cz,cx,cy},t1={cz:z,cx:W/2-pt[0]*z,cy:H/2-pt[1]*z};const start=performance.now();const step=now=>{const t=Math.min(1,(now-start)/ms),e=t<.5?2*t*t:-1+(4-2*t)*t;cz=t0.cz+(t1.cz-t0.cz)*e;cx=t0.cx+(t1.cx-t0.cx)*e;cy=t0.cy+(t1.cy-t0.cy)*e;applyCam();if(t<1)camAnim=requestAnimationFrame(step)};camAnim=requestAnimationFrame(step)}
+const home=(user)=>{if(user)onUserCam();if(camAnim)cancelAnimationFrame(camAnim);const t0={cz,cx,cy},start=performance.now();const step=now=>{const t=Math.min(1,(now-start)/900),e=t<.5?2*t*t:-1+(4-2*t)*t;cz=t0.cz+(1-t0.cz)*e;cx=t0.cx*(1-e);cy=t0.cy*(1-e);applyCam();if(t<1)camAnim=requestAnimationFrame(step)};camAnim=requestAnimationFrame(step)};
+let tour=null,tourToken=0,tourFollow=false,timer=null;
+function onUserCam(){if(camAnim){cancelAnimationFrame(camAnim);camAnim=null}if(tour&&tour.follow){tour.follow=false;tourFollow=false;syncPlayback()}}
+function syncTourCam(){const box=$('tourcam');if(!box)return;box.hidden=!tour;box.setAttribute('aria-label',TOUR_CAM.group[lang]||TOUR_CAM.group.en);const follow=!!(tour&&tour.follow);const w=$('tm-wide'),f=$('tm-follow');w.textContent=TOUR_CAM.wide[lang]||TOUR_CAM.wide.en;f.textContent=TOUR_CAM.follow[lang]||TOUR_CAM.follow.en;w.title=TOUR_CAM.wideT[lang]||TOUR_CAM.wideT.en;f.title=TOUR_CAM.followT[lang]||TOUR_CAM.followT.en;w.setAttribute('aria-pressed',follow?'false':'true');f.setAttribute('aria-pressed',follow?'true':'false')}
 function syncPlayback(){const t=T[lang],b=$('b-tour');
   if(!b)return;
   if(!tour){b.textContent=t.tour;b.title=t.tourT;b.setAttribute('aria-pressed','false')}
@@ -592,28 +669,34 @@ function syncPlayback(){const t=T[lang],b=$('b-tour');
   $('b-play').textContent=advancing?'❚❚':'▶';
   $('b-play').setAttribute('aria-pressed',advancing?'true':'false');
   $('b-play').setAttribute('aria-label',advancing?(TOUR_BTN.playPause[lang]||'Pause'):(TOUR_BTN.play[lang]||'Play'));
+  syncTourCam();
 }
 function stopTimeline(){playing=false;if(timer){clearInterval(timer);timer=null}}
 function sleepTour(ms,token){return new Promise(resolve=>{const t0=performance.now();const step=()=>{if(!tour||tour.token!==token||tour.paused)return resolve(false);if(performance.now()-t0>=ms)return resolve(true);setTimeout(step,80)};step()})}
+function sliceTop(i){const[a,b]=sliceRange(i);return EVENTS.find(ev=>ev.top&&ev.y>=a&&ev.y<b)||EVENTS.find(ev=>ev.y>=a&&ev.y<b)||null}
 async function tourLoop(token){
   while(tour&&tour.token===token&&!tour.paused&&tour.i<INDEX.length){
     const i=tour.i;idx=i;await render();
     if(!tour||tour.token!==token||tour.paused)return;
-    const[a,b]=sliceRange(i);const top=EVENTS.find(ev=>ev.top&&ev.y>=a&&ev.y<b)||EVENTS.find(ev=>ev.y>=a&&ev.y<b);
-    if(top){flyTo(top.c[0],top.c[1],4);if(!await sleepTour(900,token))return;if(!tour||tour.token!==token||tour.paused)return;evCard(top)}
-    else home();
-    if(!await sleepTour(2600,token))return;
+    const top=sliceTop(i);
+    if(tour.follow){if(top)flyTo(top.c[0],top.c[1],4);else home();if(top&&!await sleepTour(900,token))return}
+    if(!tour||tour.token!==token||tour.paused)return;
+    if(top)evCard(top);
+    if(!await sleepTour(tour.follow?2600:3200,token))return;
     if(!tour||tour.token!==token||tour.paused)return;
     tour.i=i+1;
   }
   if(tour&&tour.token===token&&!tour.paused){tour=null;syncPlayback()}
 }
-function startTour(from){stopTimeline();if(THEME)exitTheme();const token=++tourToken;tour={i:from,paused:false,token};syncPlayback();tourLoop(token)}
+function startTour(from){stopTimeline();if(THEME)exitTheme();const token=++tourToken;tour={i:from,paused:false,token,follow:tourFollow};syncPlayback();if(!tour.follow)home();tourLoop(token)}
 function pauseTour(){if(!tour||tour.paused)return;tour.paused=true;syncPlayback()}
 function resumeTour(){if(!tour||!tour.paused)return;stopTimeline();const token=++tourToken;tour.paused=false;tour.token=token;syncPlayback();tourLoop(token)}
 function runTour(){if(!tour)startTour(0);else if(tour.paused)resumeTour();else pauseTour()}
-function evCard(d){document.querySelectorAll('.ev.on').forEach(e=>e.classList.remove('on'));const el=document.querySelector(`.ev[data-e="${EVENTS.indexOf(d)}"]`);if(el)el.classList.add('on');
+function setTourFollow(on){const next=!!on,was=tour?!!tour.follow:tourFollow;tourFollow=next;if(tour)tour.follow=next;if(next&&!was){const top=sliceTop(idx);if(top)flyTo(top.c[0],top.c[1],4)}else if(!next&&was)home();syncPlayback()}
+function evCard(d){document.querySelectorAll('.ev.on').forEach(e=>{e.classList.remove('on');const h=e.querySelector('.halo');if(h)h.setAttribute('r','8')});const el=document.querySelector(`.ev[data-e="${EVENTS.indexOf(d)}"]`);if(el){el.classList.add('on');const h=el.querySelector('.halo');if(h)h.setAttribute('r','10')}
   card(`<h3><b>${fy(d.y)}</b></h3><div><span class="k" style="--c:var(--k-${d.k})"></span>${esc(evText(d))}</div><div class="ex">${KINDS[d.k][lang]} · ${esc(eraOf(d.y).n[lang])}</div>${wikiBtns(d.w,d.wz)}`)}
+function renderAbout(){const order=lang==='zh'?['zh','en']:lang==='en'?['en','zh']:[lang,'en','zh'];$('about').innerHTML=`<button type="button" class="x" id="about-x" aria-label="${esc(CLOSE_L[lang]||'Close')}">✕</button>`+order.map(l=>{const a=ABOUT[l];return `<section lang="${l}"><h3>${esc(a.title)}</h3>${a.paras.map(p=>`<p>${p}</p>`).join('')}</section>`}).join('');$('about-x').onclick=()=>{ $('about').hidden=true;$('b-about').setAttribute('aria-expanded','false') }}
+function toggleAbout(){const a=$('about');a.hidden=!a.hidden;$('b-about').setAttribute('aria-expanded',a.hidden?'false':'true');if(!a.hidden)renderAbout()}
 function drawTrace(){const pp=PEOPLE.find(x=>x.en===traced);if(!pp||!pp.places.length){$('g-tr').innerHTML='';return}
   const pts=[pp.c,...pp.places.map(q=>q.c)].map(c=>P(c[0],c[1])).filter(Boolean);let d='';pts.forEach((p,i)=>{d+=(i?' L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)});
   $('g-tr').innerHTML=`<g style="--c:var(--k-${pp.k})"><path d="${d}"/>${pp.places.map(q=>{const pt=P(q.c[0],q.c[1]);return pt?`<circle cx="${pt[0].toFixed(1)}" cy="${pt[1].toFixed(1)}" r="2.4"/><text x="${(pt[0]+4).toFixed(1)}" y="${(pt[1]+3).toFixed(1)}">${esc(fy(q.y))} ${esc(lang==='zh'?q.zh:q.en)}</text>`:''}).join('')}</g>`}
@@ -633,10 +716,10 @@ function search(q){q=q.trim().toLowerCase();if(!q)return[];const out=[];
   const seen=new Set();for(const [file,d] of Object.entries(cache))d.features.forEach(f=>{const p=f.properties;if(!p.en||seen.has(p.en))return;if([p.en,p.zh].some(s=>s&&s.toLowerCase().includes(q))){seen.add(p.en);out.push({t:'polity',p,label:lang==='zh'&&p.zh?p.zh:p.en,sub:d.year!==undefined?fy(d.year):''})}});
   return out.slice(0,12)}
 function showSug(){const box=$('sug');if(!sugItems.length){box.hidden=true;return}box.innerHTML=sugItems.map((s,i)=>`<div class="${i===sugOn?'on':''}" data-i="${i}">${esc(s.label)}<small>${s.t} · ${esc(s.sub)}</small></div>`).join('');box.hidden=false}
-function pick(s){$('sug').hidden=true;$('q').value='';if(s.t==='city'){const n=s.g.names[0];if(INDEX[idx].year<n.from)jumpYear(n.from);flyTo(s.g.coord[0],s.g.coord[1],4);setTimeout(()=>cityCard(s.g),300)}
-  else if(s.t==='person'){jumpYear(s.pp.span[0]+1);flyTo(s.pp.c[0],s.pp.c[1],4);setTimeout(()=>personCard(s.pp),300)}
-  else if(s.t==='event'){jumpYear(s.ev.y);flyTo(s.ev.c[0],s.ev.c[1],4);setTimeout(()=>evCard(s.ev),300)}
-  else{hover=s.p.en;applyHover();const el=document.querySelector(`.pol[data-n="${CSS.escape(s.p.en)}"]`);if(el){const bb=el.getBBox();const z=Math.min(5,Math.max(1.3,0.6*Math.min(W/bb.width,H/bb.height)));const ll=proj.invert([bb.x+bb.width/2,bb.y+bb.height/2]);if(ll)flyTo(ll[0],ll[1],z)}}}
+function pick(s){$('sug').hidden=true;$('q').value='';if(s.t==='city'){const n=s.g.names[0];if(INDEX[idx].year<n.from)jumpYear(n.from);flyTo(s.g.coord[0],s.g.coord[1],4,1200,true);setTimeout(()=>cityCard(s.g),300)}
+  else if(s.t==='person'){jumpYear(s.pp.span[0]+1);flyTo(s.pp.c[0],s.pp.c[1],4,1200,true);setTimeout(()=>personCard(s.pp),300)}
+  else if(s.t==='event'){jumpYear(s.ev.y);flyTo(s.ev.c[0],s.ev.c[1],4,1200,true);setTimeout(()=>evCard(s.ev),300)}
+  else{hover=s.p.en;applyHover();const el=document.querySelector(`.pol[data-n="${CSS.escape(s.p.en)}"]`);if(el){const bb=el.getBBox();const z=Math.min(5,Math.max(1.3,0.6*Math.min(W/bb.width,H/bb.height)));const ll=proj.invert([bb.x+bb.width/2,bb.y+bb.height/2]);if(ll)flyTo(ll[0],ll[1],z,1200,true)}}}
 $('q').addEventListener('input',e=>{sugItems=search(e.target.value);sugOn=-1;showSug()});
 $('q').addEventListener('keydown',e=>{if(e.key==='ArrowDown'){sugOn=Math.min(sugItems.length-1,sugOn+1);showSug()}else if(e.key==='ArrowUp'){sugOn=Math.max(0,sugOn-1);showSug()}else if(e.key==='Enter'){if(sugItems[sugOn>=0?sugOn:0])pick(sugItems[sugOn>=0?sugOn:0])}else if(e.key==='Escape'){$('sug').hidden=true}});
 $('sug').addEventListener('mousedown',e=>{const d=e.target.closest('[data-i]');if(d){e.preventDefault();pick(sugItems[+d.dataset.i])}});
@@ -645,7 +728,7 @@ $('q').addEventListener('blur',()=>setTimeout(()=>$('sug').hidden=true,150));
 let chipT=0,chipK=null;$('kinds').addEventListener('click',e=>{const b=e.target.closest('[data-k]');if(!b)return;const k=b.dataset.k,now=Date.now();
   if(chipK===k&&now-chipT<350){kinds=new Set(kinds.size===1&&kinds.has(k)?Object.keys(KINDS):[k])}else{kinds.has(k)?kinds.delete(k):kinds.add(k)}chipT=now;chipK=k;renderChrome();render()});
 $('phase').addEventListener('click',e=>{const d=e.target.closest('.dots i');if(d){idx=+d.dataset.i;render();return}const s=e.target.closest('[data-n]');if(s){hover=hover===s.dataset.n?null:s.dataset.n;applyHover()}});
-$('chron').addEventListener('click',e=>{const st=e.target.closest('[data-s]');if(st){gotoStop(+st.dataset.s);if(window.innerWidth<=900)closeSide();return}const d=e.target.closest('[data-e]');if(!d)return;const ev=EVENTS[+d.dataset.e];jumpYear(ev.y);flyTo(ev.c[0],ev.c[1],4);setTimeout(()=>evCard(ev),300);if(window.innerWidth<=900)closeSide()});
+$('chron').addEventListener('click',e=>{const st=e.target.closest('[data-s]');if(st){gotoStop(+st.dataset.s);if(window.innerWidth<=900)closeSide();return}const d=e.target.closest('[data-e]');if(!d)return;const ev=EVENTS[+d.dataset.e];jumpYear(ev.y);flyTo(ev.c[0],ev.c[1],4,1200,true);setTimeout(()=>evCard(ev),300);if(window.innerWidth<=900)closeSide()});
 function handleTap(target){const e={target};
   const c=e.target.closest('.city');if(c){cityCard(GAZ.find(x=>x.en===c.dataset.g));return}
   const pr=e.target.closest('.per');if(pr){personCard(PEOPLE.find(x=>x.en===pr.dataset.p));return}
@@ -657,13 +740,13 @@ const ptrs=new Map();let pinch=null,drag=null;
 let tap=null;
 svg.addEventListener('pointerdown',e=>{tap={t:e.target,x:e.clientX,y:e.clientY,n:ptrs.size+1};svg.setPointerCapture(e.pointerId);ptrs.set(e.pointerId,[e.clientX,e.clientY]);if(ptrs.size===1){drag=[e.clientX,e.clientY,cx,cy];svg.classList.add('drag')}else if(ptrs.size===2){const[a,b]=[...ptrs.values()];pinch={d:Math.hypot(a[0]-b[0],a[1]-b[1]),z:cz,mx:(a[0]+b[0])/2,my:(a[1]+b[1])/2,cx,cy};drag=null}});
 svg.addEventListener('pointermove',e=>{if(!ptrs.has(e.pointerId))return;ptrs.set(e.pointerId,[e.clientX,e.clientY]);const k=W/svg.clientWidth;
-  if(pinch&&ptrs.size===2){const[a,b]=[...ptrs.values()];const d=Math.hypot(a[0]-b[0],a[1]-b[1]);const nz=Math.min(12,Math.max(1,pinch.z*d/pinch.d));const r=svg.getBoundingClientRect(),mx=(pinch.mx-r.left)*k,my=(pinch.my-r.top)*k;cx=mx-(mx-pinch.cx)*nz/pinch.z;cy=my-(my-pinch.cy)*nz/pinch.z;cz=nz;applyCam();return}
-  if(drag){cx=drag[2]+(e.clientX-drag[0])*k;cy=drag[3]+(e.clientY-drag[1])*k;applyCam()}});
+  if(pinch&&ptrs.size===2){const[a,b]=[...ptrs.values()];const d=Math.hypot(a[0]-b[0],a[1]-b[1]);if(Math.abs(d-pinch.d)>4)onUserCam();const nz=Math.min(12,Math.max(1,pinch.z*d/pinch.d));const r=svg.getBoundingClientRect(),mx=(pinch.mx-r.left)*k,my=(pinch.my-r.top)*k;cx=mx-(mx-pinch.cx)*nz/pinch.z;cy=my-(my-pinch.cy)*nz/pinch.z;cz=nz;applyCam();return}
+  if(drag){if(Math.hypot(e.clientX-drag[0],e.clientY-drag[1])>5)onUserCam();cx=drag[2]+(e.clientX-drag[0])*k;cy=drag[3]+(e.clientY-drag[1])*k;applyCam()}});
 const up=e=>{ptrs.delete(e.pointerId);if(ptrs.size<2)pinch=null;if(!ptrs.size){drag=null;svg.classList.remove('drag');if(tap&&tap.n===1&&Math.hypot(e.clientX-tap.x,e.clientY-tap.y)<5&&e.type==='pointerup')handleTap(tap.t);tap=null}};
 svg.addEventListener('pointerup',up);svg.addEventListener('pointercancel',up);
-function zoomAt(mx,my,f){const nz=Math.min(12,Math.max(1,cz*f));cx=mx-(mx-cx)*nz/cz;cy=my-(my-cy)*nz/cz;cz=nz;if(cz===1){cx=0;cy=0}applyCam()}
+function zoomAt(mx,my,f){onUserCam();const nz=Math.min(12,Math.max(1,cz*f));cx=mx-(mx-cx)*nz/cz;cy=my-(my-cy)*nz/cz;cz=nz;if(cz===1){cx=0;cy=0}applyCam()}
 svg.addEventListener('wheel',e=>{e.preventDefault();const r=svg.getBoundingClientRect(),k=W/r.width;zoomAt((e.clientX-r.left)*k,(e.clientY-r.top)*k,e.deltaY<0?1.15:1/1.15)},{passive:false});
-$('z-in').onclick=()=>zoomAt(W/2,H/2,1.4);$('z-out').onclick=()=>zoomAt(W/2,H/2,1/1.4);$('z-0').onclick=home;
+$('z-in').onclick=()=>zoomAt(W/2,H/2,1.4);$('z-out').onclick=()=>zoomAt(W/2,H/2,1/1.4);$('z-0').onclick=()=>home(true);
 const fitPortrait=()=>{const st=$('stage');svg.setAttribute('preserveAspectRatio',st.clientHeight>st.clientWidth*0.8?'xMidYMid slice':'xMidYMid meet')};
 const headEl=document.querySelector('header');
 const syncChrome=()=>document.documentElement.style.setProperty('--chrome-h',headEl.offsetHeight+'px');
@@ -684,7 +767,7 @@ $('b-prev').onclick=()=>{idx=Math.max(0,idx-1);render()};$('b-next').onclick=()=
 $('thlist').addEventListener('click',e=>{const d=e.target.closest('[data-t]');if(!d)return;if(THEME&&THEME.id===d.dataset.t)exitTheme();else enterTheme(d.dataset.t)});
 $('b-themes').onclick=e=>{e.stopPropagation();$('thmenu').hidden=!$('thmenu').hidden};document.addEventListener('click',e=>{if(!e.target.closest('#themes'))$('thmenu').hidden=true;if(!e.target.closest('header'))closeMenu()});
 $('lang').onchange=e=>{lang=e.target.value;document.documentElement.lang=lang==='zh'?'zh-CN':lang;renderChrome();drawStatic();render();if(THEME)stopCard(THEME.stops[tIdx])};
-$('b-tour').onclick=()=>{closeMenu();runTour()};$('b-pop').onclick=()=>{showPop=!showPop;$('b-pop').setAttribute('aria-pressed',showPop);drawSeries()};$('b-gdp').onclick=()=>{showGdp=!showGdp;$('b-gdp').setAttribute('aria-pressed',showGdp);drawSeries()};$('b-people').onclick=()=>{people=!people;$('b-people').setAttribute('aria-pressed',people);render()};
+$('b-tour').onclick=()=>{closeMenu();runTour()};$('b-about').onclick=()=>{closeMenu();toggleAbout()};$('tm-wide').onclick=()=>setTourFollow(false);$('tm-follow').onclick=()=>setTourFollow(true);$('b-pop').onclick=()=>{showPop=!showPop;$('b-pop').setAttribute('aria-pressed',showPop);drawSeries()};$('b-gdp').onclick=()=>{showGdp=!showGdp;$('b-gdp').setAttribute('aria-pressed',showGdp);drawSeries()};$('b-people').onclick=()=>{people=!people;$('b-people').setAttribute('aria-pressed',people);render()};
 $('b-menu').onclick=e=>{e.stopPropagation();const open=headEl.classList.toggle('open');$('b-menu').setAttribute('aria-expanded',String(open));if(open)$('thmenu').hidden=true};
 $('b-side').onclick=()=>{const open=!$('side').classList.contains('open');if(open){closeMenu();$('side').classList.add('open');$('scrim').hidden=window.innerWidth>900}else closeSide();$('b-side').setAttribute('aria-expanded',String(open))};
 $('side-x').onclick=closeSide;$('scrim').onclick=closeSide;
@@ -696,7 +779,7 @@ $('b-play').onclick=()=>{
   else if(timer){clearInterval(timer);timer=null}
   syncPlayback();
 };
-document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')return;if(e.key==='ArrowLeft'){THEME?gotoStop(tIdx-1):$('b-prev').click()}if(e.key==='ArrowRight'){THEME?gotoStop(tIdx+1):$('b-next').click()}if(e.key===' '){e.preventDefault();$('b-play').click()}if(e.key==='Escape'){if(headEl.classList.contains('open')){closeMenu();return}if(window.innerWidth<=900&&$('side').classList.contains('open')){closeSide();return}if(THEME&&$('card').hidden)exitTheme();else $('card').hidden=true}});
+document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')return;if(e.key==='ArrowLeft'){THEME?gotoStop(tIdx-1):$('b-prev').click()}if(e.key==='ArrowRight'){THEME?gotoStop(tIdx+1):$('b-next').click()}if(e.key===' '){e.preventDefault();$('b-play').click()}if(e.key==='Escape'){if(!$('about').hidden){$('about').hidden=true;$('b-about').setAttribute('aria-expanded','false');return}if(headEl.classList.contains('open')){closeMenu();return}if(window.innerWidth<=900&&$('side').classList.contains('open')){closeSide();return}if(THEME&&$('card').hidden)exitTheme();else $('card').hidden=true}});
 /* boot */
 (async()=>{
   const[ix,phys,ev,gz,pe,sr,ti]=await Promise.all(['index','physical','events','cities','people','series','themes/index'].map(n=>fetch(`data/${n}.json`).then(r=>r.json())));THEMES=ti;
