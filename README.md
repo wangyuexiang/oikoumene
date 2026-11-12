@@ -55,6 +55,10 @@ cd oikoumene/public && python3 -m http.server 8000
 
 Deploy by pointing any static host at `public/`. On Cloudflare Pages or Vercel: no build command, output directory `public`.
 
+### Mainland China static build
+
+`public/` stays the full six-language site. `./scripts/build-cn.sh` writes `dist-cn/`: Chinese and English only (Chinese by default), d3 vendored, system fonts, no Google Fonts or public CDNs. Chinese encyclopedia buttons open a Baidu Baike search; English keeps English Wikipedia. Upload with `./scripts/deploy-oss.sh` (ossutil, bucket in `oss-cn-hongkong`). The default OSS hostname downloads HTML instead of displaying it; bind a custom domain or put a CDN in front. Bucket setup, public-read, the least-privilege RAM policy, and the cache headers are in the [Chinese README](docs/README.zh.md#中国大陆可访问的静态构建).
+
 ## Data
 
 Everything is plain JSON under `public/data/`, written to be edited by hand:

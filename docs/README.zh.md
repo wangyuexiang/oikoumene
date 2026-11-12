@@ -49,3 +49,64 @@ Oikoumene（寰宇时序）是一幅面向教育和人文阅读的历史可视�
 本项目由王悦翔与 Anthropic 的 Claude 在 2026 年 11 月的两天对话中设计并构建：数据管道、页面、传记、城市简史和 README 均如此。方向、取舍和名字是悦翔的，键盘大多是 Claude 敲的。
 
 详细的数据格式和贡献方法见英文 [README](../README.md) 与 [CONTRIBUTING](../CONTRIBUTING.md)。
+
+## 中国大陆可访问的静态构建
+
+主站 `public/` 仍是 Cloudflare 上的六种语言版本，构建不会改它。给大陆读者的是另一份产物 `dist-cn/`：只有中文和英文，默认中文；页面不请求 Google 字体，也不请求 cdnjs、jsDelivr、unpkg。d3 随包放在 `vendor/d3.min.js`（与主站相同的 7.9.0，ISC）。地图不用 topojson。字体用系统字体。中文界面的百科按钮打开百度百科搜索，英文界面仍用英文维基百科。声明文字与主站相同。2000 年切片里，岛屿多边形并在中国多边形上，标签也是中国。
+
+GitHub 上的声明链接和「更多主题」链接是点击才打开的，页面加载不依赖它们。大陆网络访问 GitHub 可能较慢。
+
+### 本地构建
+
+```bash
+./scripts/build-cn.sh
+cd dist-cn && python3 -m http.server 8000
+```
+
+### 创建 Bucket
+
+1. 在阿里云 OSS 新建 Bucket，地域选**中国香港**（`oss-cn-hongkong`）。香港地域不需要 ICP 备案，适合小范围访问。
+2. 读写权限设为**公共读**（public-read），否则浏览器读不到文件。
+3. 基础设置里打开**静态页面**，默认首页填 `index.html`。
+4. 新 Bucket 的默认域名（`*.oss-cn-hongkong.aliyuncs.com`）会把 HTML 当成附件下载，地址栏打开是下载而不是网页。给 Bucket **绑定自定义域名**后再访问，HTML 才会按网页返回。香港地域绑定域名一般不要求备案。也可以在 OSS 前面加 CDN，用 CDN 域名访问，回源到这个 Bucket。
+
+### 最小权限的 RAM
+
+为上传单独建一个 RAM 用户，只允许这一个 Bucket。把下面的 `YOUR-BUCKET` 换成实际名字：
+
+```json
+{
+  "Version": "1",
+  "Statement": [{
+    "Effect": "Allow",
+    "Action": [
+      "oss:PutObject",
+      "oss:GetObject",
+      "oss:DeleteObject",
+      "oss:ListObjects",
+      "oss:AbortMultipartUpload",
+      "oss:ListParts"
+    ],
+    "Resource": [
+      "acs:oss:*:*:YOUR-BUCKET",
+      "acs:oss:*:*:YOUR-BUCKET/*"
+    ]
+  }]
+}
+```
+
+AccessKey 只放在环境变量里，不要写进仓库。
+
+### 上传
+
+安装 [ossutil](https://www.alibabacloud.com/help/zh/oss/developer-reference/ossutil-overview) 1.7 或 2.x，然后：
+
+```bash
+export OSS_BUCKET=your-bucket
+export OSS_REGION=oss-cn-hongkong
+export ALIBABA_CLOUD_ACCESS_KEY_ID=你的AccessKeyId
+export ALIBABA_CLOUD_ACCESS_KEY_SECRET=你的AccessKeySecret
+./scripts/deploy-oss.sh
+```
+
+`index.html` 为 `Cache-Control: no-cache`。`data/` 以及 `vendor/` 缓存一天。脚本按扩展名设置 Content-Type（`.html` 为 `text/html`，`.json` 为 `application/json`，`.js` 为 `text/javascript`，`.webp` 为 `image/webp`）。
