@@ -6,8 +6,8 @@
  * Chinese is the default language. French, German, Spanish and Italian
  * UI strings are removed. d3 is copied from scripts/vendor (d3 7.9.0, ISC).
  * The page does not use topojson. Fonts are system stacks, not Google Fonts.
- * In Chinese, encyclopedia links go to Baidu Baike search. English keeps
- * English Wikipedia.
+ * In Chinese, encyclopedia links go to Douyin Baike search
+ * (https://www.baike.com/search?keyword=). English keeps English Wikipedia.
  */
 import { cpSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -88,8 +88,8 @@ function transformHtml(html) {
   s = s.replace("const LANGS=['en','zh','fr','de','es','it'];", "const LANGS=['zh','en'];");
   s = s.replace(",lang='en',", ",lang='zh',");
 
-  const wikiFn = `const wiki=(w,wz)=>{const t=T[lang];if(lang==='zh'){const q=wz||w;return q?\`<div class="ex">\${t.wiki}: <a href="https://baike.baidu.com/search?word=\${encodeURIComponent(q)}" target="_blank" rel="noopener">百度百科 ↗</a></div>\`:''}const en=w?\`<a href="https://en.wikipedia.org/wiki/\${encodeURIComponent(w.replace(/ /g,'_'))}" target="_blank" rel="noopener">en</a>\`:'';return en?\`<div class="ex">\${t.wiki}: \${en}</div>\`:''};`;
-  const wikiBtnsFn = `function wikiBtns(w,wz){const t=T[lang];const a=[];if(lang==='zh'){const q=wz||w;if(q)a.push(\`<a href="https://baike.baidu.com/search?word=\${encodeURIComponent(q)}" target="_blank" rel="noopener">\${t.wiki==='维基百科'?'百度百科':t.wiki} ↗</a>\`);}else if(w)a.push(\`<a href="https://en.wikipedia.org/wiki/\${encodeURIComponent(w.replace(/ /g,'_'))}" target="_blank" rel="noopener">\${t.wiki} · EN ↗</a>\`);return a.length?\`<div class="wk">\${a.join('')}</div>\`:''}`;
+  const wikiFn = `const wiki=(w,wz)=>{const t=T[lang];if(lang==='zh'){const q=wz||w;return q?\`<div class="ex">\${t.wiki}: <a href="https://www.baike.com/search?keyword=\${encodeURIComponent(q)}" target="_blank" rel="noopener">抖音百科 ↗</a></div>\`:''}const en=w?\`<a href="https://en.wikipedia.org/wiki/\${encodeURIComponent(w.replace(/ /g,'_'))}" target="_blank" rel="noopener">en</a>\`:'';return en?\`<div class="ex">\${t.wiki}: \${en}</div>\`:''};`;
+  const wikiBtnsFn = `function wikiBtns(w,wz){const t=T[lang];const a=[];if(lang==='zh'){const q=wz||w;if(q)a.push(\`<a href="https://www.baike.com/search?keyword=\${encodeURIComponent(q)}" target="_blank" rel="noopener">抖音百科 ↗</a>\`);}else if(w)a.push(\`<a href="https://en.wikipedia.org/wiki/\${encodeURIComponent(w.replace(/ /g,'_'))}" target="_blank" rel="noopener">\${t.wiki} · EN ↗</a>\`);return a.length?\`<div class="wk">\${a.join('')}</div>\`:''}`;
 
   const oldWiki = s.match(/const wiki=\(w,wz\)=>\{[\s\S]*?\};/);
   const oldBtns = s.match(/function wikiBtns\(w,wz\)\{[\s\S]*?return a\.length\?`<div class="wk">\$\{a\.join\(''\)\}<\/div>`:''\}/);
@@ -126,7 +126,8 @@ for (const b of banned) {
   if (html.includes(b)) throw new Error('CN build still contains ' + b);
 }
 if (!html.includes('vendor/d3.min.js')) throw new Error('d3 was not vendored into index.html');
-if (!html.includes('baike.baidu.com/search?word=')) throw new Error('Baidu Baike link missing');
+if (!html.includes('https://www.baike.com/search?keyword=')) throw new Error('Douyin Baike link missing');
+if (html.includes('baike.baidu.com')) throw new Error('Baidu Baike link still present');
 if (!html.includes('en.wikipedia.org')) throw new Error('English Wikipedia link missing');
 if (!html.includes("lang='zh'")) throw new Error('default language is not Chinese');
 console.log('dist-cn ready:', dist);
