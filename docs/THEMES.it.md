@@ -2,7 +2,7 @@
 
 <sub>[English](THEMES.md) · [Français](THEMES.fr.md) · [Deutsch](THEMES.de.md) · [中文](THEMES.zh.md)</sub>
 
-Un **tema** è una storia in cui si entra: tutto ciò che non ne fa parte sbiadisce, la linea del tempo si restringe al suo arco, e la si percorre tappa per tappa, con una scheda a ogni fermata. Quattro sono online — Alessandro e il pensiero greco, le invasioni barbariche, le invasioni mongole, la nascita dell'islam — e i venti qui sotto sono quelli che riteniamo più utili da costruire.
+Un **tema** è una storia in cui si entra: tutto ciò che non ne fa parte sbiadisce, la linea del tempo si restringe al suo arco, e la si percorre tappa per tappa, con una scheda a ogni fermata. Quattro sono online — Alessandro e il pensiero greco, le grandi migrazioni, le invasioni mongole, la nascita dell'islam — e i venti qui sotto sono quelli che riteniamo più utili da costruire.
 
 **Votare**: ognuno ha una issue con etichetta [`theme`](https://github.com/wangyuexiang/oikoumene/issues?q=is%3Aissue+label%3Atheme). Reagite con 👍 a quelli che volete; costruiamo in ordine di voti, circa uno a settimana. **Ne manca uno?** Aprite una issue con il [modello di proposta](https://github.com/wangyuexiang/oikoumene/issues/new?template=theme.md): bastano un titolo, gli anni e un paragrafo.
 
@@ -50,7 +50,7 @@ Proposta anche come **livello** e non come storia: la rete della Via della Seta 
 | Tema | Etichette | Anni | Link |
 |---|---|---|---|
 | **Alessandro e la diffusione del pensiero greco** | guerra, idee, viaggio | 343–30 a.C. | `?theme=alexander` |
-| **Le invasioni barbariche** | guerra, viaggio | 375–568 | `?theme=migrations` |
+| **Le grandi migrazioni** | guerra, viaggio | 375–568 | `?theme=migrations` |
 | **Le invasioni mongole** | guerra | 1206–1294 | `?theme=mongols` |
 | **La nascita dell'islam** | religione, guerra, idee | 610–750 | `?theme=islam` |
 

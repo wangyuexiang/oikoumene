@@ -40,6 +40,18 @@ Un thème est une histoire dans laquelle on entre : la carte se resserre sur ses
 
 Oikoumene est conçu sur le modèle de [江山时序 jiangshan-map](https://github.com/DeanChensj/jiangshan-map) de Dean Chen, qui fait de même pour la Chine avec des frontières dessinées à la main. Les deux partagent une même interaction et la convention de lien `?year=` ; l'objectif est que les liens de lieux passent de l'un à l'autre.
 
+## Avertissement
+
+Oikoumene est une visualisation éducative et culturelle de l’histoire. Il ne représente ni n’approuve aucune position politique.
+
+Les frontières, les itinéraires, les dates et les noms sont approximatifs et donnés à titre d’illustration seulement.
+
+Les frontières proviennent d’[aourednik/historical-basemaps](https://github.com/aourednik/historical-basemaps) (CC BY 4.0), un jeu continental aux erreurs connues. Le relief, les fleuves et les lacs viennent de Natural Earth. Biographies, histoires de villes, événements et textes de thèmes sont de courtes introductions, non des travaux d’érudition.
+
+Les corrections sont les bienvenues via les [issues GitHub](https://github.com/wangyuexiang/oikoumene/issues). Le code et les textes préparés sont sous [licence MIT](../LICENSE). Les forks, miroirs et copies modifiées ne sont pas le projet officiel.
+
+Le même texte est dans l’atlas, sous **À propos**.
+
 ## Limites connues
 
 Les frontières viennent de [historical-basemaps](https://github.com/aourednik/historical-basemaps), un jeu de données à l'échelle continentale aux erreurs connues ; elles sont schématiques et seront remplacées période par période. Les biographies et histoires de villes sont des repères, non des travaux d'érudition. Corrections bienvenues par issue ou pull request.

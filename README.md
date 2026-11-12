@@ -28,7 +28,7 @@ It is a static site. One HTML file, a folder of JSON, [d3-geo](https://github.co
 | **Cities** | 128 cities with every name they have carried, in the script of whoever ruled them (Byzantion → Constantinople → Qusṭanṭīniyya → İstanbul), their capital periods, and for the major ones a tagline and a short history. |
 | **People** | 62 figures shown where they lived during the current slice. Each has a biography and a *Trace life* button that draws their movements: Alexander to the Indus, Xuanzang to Nalanda, Ibn Battuta to Hangzhou. |
 | **Events** | 138 events in six colour-coded categories: politics, science, technology, thought, religion, art. They appear on the map, on the timeline, and in a chronicle column grouped by era. |
-| **Tour** | One button flies through every period and lands on its defining event. |
+| **Tour** | Plays through every period. Overview keeps the whole region in view; Follow zooms to each stop. Dragging or zooming the map leaves Follow. `?tour=1` still starts it. |
 | **Population & GDP** | Two toggles under the timeline draw world population and world GDP (log scale) across the era bands, so the Black Death dip and the post-1800 hockey stick sit right under the borders. Sources in `data/series.json`. |
 | **Languages** | English, French, German, Italian, Spanish, Chinese. Every card links to Wikipedia. |
 
@@ -73,15 +73,27 @@ Everything is plain JSON under `public/data/`, written to be edited by hand:
 
 ## Themes
 
-A theme is a story you step into: everything not part of it fades, the timeline shows its span, and you walk it stop by stop with a card at each. Four are live — **Alexander and the spread of Greek thought**, **the Barbarian Migrations**, **the Mongol Invasions**, **the Rise of Islam** — and twenty more are proposed, with the reasons for choosing them, in [docs/THEMES.md](docs/THEMES.md) (also in [French](docs/THEMES.fr.md), [German](docs/THEMES.de.md), [Italian](docs/THEMES.it.md) and [Chinese](docs/THEMES.zh.md)) — wars and their routes, the Grand Tour, the Silk Road, the Black Death, how Greek learning travelled into Arabic and back. **Vote with 👍 on the issues tagged `theme`** and we build them in that order.
+A theme is a story you step into: everything not part of it fades, the timeline shows its span, and you walk it stop by stop with a card at each. Four are live — **Alexander and the spread of Greek thought**, **the Great Migrations**, **the Mongol Invasions**, **the Rise of Islam** — and twenty more are proposed, with the reasons for choosing them, in [docs/THEMES.md](docs/THEMES.md) (also in [French](docs/THEMES.fr.md), [German](docs/THEMES.de.md), [Italian](docs/THEMES.it.md) and [Chinese](docs/THEMES.zh.md)) — wars and their routes, the Grand Tour, the Silk Road, the Black Death, how Greek learning travelled into Arabic and back. **Vote with 👍 on the issues tagged `theme`** and we build them in that order.
 
 ## Sister project
 
 Oikoumene is modelled on [江山时序 jiangshan-map](https://github.com/DeanChensj/jiangshan-map) by Dean Chen, which does the same for China with hand-digitised borders and reign-era chronology. The two share an interaction model and a `?year=` link convention. The intention is that place links hop between them, so a journey from Chang'an to Baghdad can be followed end to end.
 
+## Disclaimer
+
+Oikoumene is an educational and cultural visualization of history. It does not represent or endorse any political position.
+
+Boundaries, routes, dates, and names are approximate and for illustration only.
+
+Borders come from [aourednik/historical-basemaps](https://github.com/aourednik/historical-basemaps) (CC BY 4.0), a continental dataset with known errors. Relief, rivers, and lakes come from Natural Earth. Biographies, city histories, events, and theme essays were written for this atlas as short orientations, not as scholarship.
+
+Corrections are welcome as [GitHub issues](https://github.com/wangyuexiang/oikoumene/issues). Code and curated text in this repository are under the [MIT licence](LICENSE). Forks, mirrors, and modified copies are not the official project.
+
+The same notice is in the atlas, under **About** (声明 in Chinese).
+
 ## Known limits
 
-- Borders come from [historical-basemaps](https://github.com/aourednik/historical-basemaps), a continental-scale dataset with known errors. They are schematic. The plan is to replace them period by period with hand-digitised borders referenced to Euratlas and the Barrington Atlas.
+- Borders come from [historical-basemaps](https://github.com/aourednik/historical-basemaps), a continental-scale dataset with known errors. They are schematic and illustrative. The plan is to replace them period by period with hand-digitised borders referenced to Euratlas and the Barrington Atlas.
 - Biographies and city histories are short orientations written for this atlas, not scholarship. Corrections are welcome as issues or pull requests.
 - Polity names and event text exist in English and Chinese; the other UI languages fall back to English for those fields.
 

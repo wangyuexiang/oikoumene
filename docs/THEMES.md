@@ -2,7 +2,7 @@
 
 <sub>[Français](THEMES.fr.md) · [Deutsch](THEMES.de.md) · [Italiano](THEMES.it.md) · [中文](THEMES.zh.md)</sub>
 
-A **theme** is a story you step into: everything not part of it fades, the timeline shows its span, and you walk it stop by stop with a card at each. Four are live — Alexander and Greek thought, the Barbarian Migrations, the Mongol Invasions, the Rise of Islam — and the twenty below are the ones we think are worth building next.
+A **theme** is a story you step into: everything not part of it fades, the timeline shows its span, and you walk it stop by stop with a card at each. Four are live — Alexander and Greek thought, the Great Migrations, the Mongol Invasions, the Rise of Islam — and the twenty below are the ones we think are worth building next.
 
 **Vote**: each has an issue tagged [`theme`](https://github.com/wangyuexiang/oikoumene/issues?q=is%3Aissue+label%3Atheme). React 👍 on the ones you want; we build in vote order, roughly one a week. **Missing one?** Open an issue with the [theme proposal template](https://github.com/wangyuexiang/oikoumene/issues/new?template=theme.md) — a title, the years and a one-paragraph pitch is enough.
 
@@ -50,7 +50,7 @@ Also proposed as a **layer**, not a story: the Silk Road network as a permanent 
 | Theme | Tags | Years | Deep link |
 |---|---|---|---|
 | **Alexander and the spread of Greek thought** | war, ideas, travel | 343–30 BCE | `?theme=alexander` |
-| **The Barbarian Migrations** | war, travel | 375–568 | `?theme=migrations` |
+| **The Great Migrations** | war, travel | 375–568 | `?theme=migrations` |
 | **The Mongol Invasions** | war | 1206–1294 | `?theme=mongols` |
 | **The Rise of Islam** | religion, war, ideas | 610–750 | `?theme=islam` |
 

@@ -40,6 +40,18 @@ Ein Thema ist eine Geschichte, in die man eintritt: Die Karte verengt sich auf i
 
 Vorbild ist [江山时序 jiangshan-map](https://github.com/DeanChensj/jiangshan-map) von Dean Chen, das dasselbe für China mit handgezeichneten Grenzen leistet. Beide teilen das Bedienkonzept und die `?year=`-Linkkonvention; Ziel ist, dass Ortslinks zwischen beiden springen.
 
+## Hinweis
+
+Oikoumene ist eine Bildungs- und Kulturdarstellung der Geschichte. Sie vertritt und unterstützt keine politische Position.
+
+Grenzen, Routen, Jahreszahlen und Namen sind ungefähr und nur zur Veranschaulichung.
+
+Die Grenzen stammen aus [aourednik/historical-basemaps](https://github.com/aourednik/historical-basemaps) (CC BY 4.0), einem kontinentalen Datensatz mit bekannten Fehlern. Relief, Flüsse und Seen stammen von Natural Earth. Biografien, Stadtgeschichten, Ereignisse und Thementexte sind kurze Einführungen, keine Forschung.
+
+Berichtigungen sind über [GitHub-Issues](https://github.com/wangyuexiang/oikoumene/issues) willkommen. Code und aufbereitete Texte stehen unter der [MIT-Lizenz](../LICENSE). Forks, Spiegel und veränderte Kopien sind nicht das offizielle Projekt.
+
+Derselbe Text steht im Atlas unter **Hinweis**.
+
 ## Bekannte Grenzen
 
 Die Grenzen stammen aus [historical-basemaps](https://github.com/aourednik/historical-basemaps), einem Datensatz im Kontinentalmaßstab mit bekannten Fehlern; sie sind schematisch und werden Epoche für Epoche ersetzt. Biografien und Stadtgeschichten sind Orientierung, keine Forschung. Korrekturen als Issue oder Pull Request willkommen.
