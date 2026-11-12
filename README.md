@@ -81,9 +81,9 @@ Oikoumene is modelled on [江山时序 jiangshan-map](https://github.com/DeanChe
 
 ## Disclaimer
 
-Oikoumene is an educational and cultural visualization of history. It does not represent or endorse any political position, government, movement, or claim.
+Oikoumene is an educational and cultural visualization of history. It does not represent or endorse any political position.
 
-Historical boundaries, routes, dates, and place names are approximate, simplified, and shown for illustration only. They are not authoritative, and they are not a statement on any territorial or sovereignty matter. A slice that draws states as they were commonly mapped around 2000 is still a schematic picture, not a map of recognition or control.
+Boundaries, routes, dates, and names are approximate and for illustration only.
 
 Borders come from [aourednik/historical-basemaps](https://github.com/aourednik/historical-basemaps) (CC BY 4.0), a continental dataset with known errors. Relief, rivers, and lakes come from Natural Earth. Biographies, city histories, events, and theme essays were written for this atlas as short orientations, not as scholarship.
 
@@ -93,7 +93,7 @@ The same notice is in the atlas, under **About** (声明 in Chinese).
 
 ## Known limits
 
-- Borders come from [historical-basemaps](https://github.com/aourednik/historical-basemaps), a continental-scale dataset with known errors. They are schematic and illustrative, not a statement on sovereignty. The plan is to replace them period by period with hand-digitised borders referenced to Euratlas and the Barrington Atlas.
+- Borders come from [historical-basemaps](https://github.com/aourednik/historical-basemaps), a continental-scale dataset with known errors. They are schematic and illustrative. The plan is to replace them period by period with hand-digitised borders referenced to Euratlas and the Barrington Atlas.
 - Biographies and city histories are short orientations written for this atlas, not scholarship. Corrections are welcome as issues or pull requests.
 - Polity names and event text exist in English and Chinese; the other UI languages fall back to English for those fields.
 

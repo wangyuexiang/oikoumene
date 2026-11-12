@@ -42,9 +42,9 @@ Oikoumene est conçu sur le modèle de [江山时序 jiangshan-map](https://gith
 
 ## Avertissement
 
-Oikoumene est une visualisation éducative et culturelle de l’histoire. Il ne représente ni n’approuve aucune position politique, aucun gouvernement, mouvement ou revendication.
+Oikoumene est une visualisation éducative et culturelle de l’histoire. Il ne représente ni n’approuve aucune position politique.
 
-Les frontières historiques, les itinéraires, les dates et les noms de lieux sont approximatifs, simplifiés et donnés à titre d’illustration seulement. Ils ne font pas autorité et ne constituent pas une prise de position sur un territoire, une frontière ou une question de souveraineté, y compris lorsqu’une coupe montre des États tels qu’on les dessinait couramment vers l’an 2000.
+Les frontières, les itinéraires, les dates et les noms sont approximatifs et donnés à titre d’illustration seulement.
 
 Les frontières proviennent d’[aourednik/historical-basemaps](https://github.com/aourednik/historical-basemaps) (CC BY 4.0), un jeu continental aux erreurs connues. Le relief, les fleuves et les lacs viennent de Natural Earth. Biographies, histoires de villes, événements et textes de thèmes sont de courtes introductions, non des travaux d’érudition.
 

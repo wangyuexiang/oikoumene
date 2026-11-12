@@ -42,9 +42,9 @@ Vorbild ist [江山时序 jiangshan-map](https://github.com/DeanChensj/jiangshan
 
 ## Hinweis
 
-Oikoumene ist eine Bildungs- und Kulturdarstellung der Geschichte. Sie vertritt und unterstützt keine politische Position, keine Regierung, keine Bewegung und keinen Anspruch.
+Oikoumene ist eine Bildungs- und Kulturdarstellung der Geschichte. Sie vertritt und unterstützt keine politische Position.
 
-Historische Grenzen, Routen, Jahreszahlen und Ortsnamen sind ungefähr, vereinfacht und nur zur Veranschaulichung. Sie sind nicht maßgeblich und keine Aussage zu einem Gebiet, einer Grenze oder einer Souveränitätsfrage, auch dort nicht, wo ein Schnitt Staaten so zeigt, wie sie um das Jahr 2000 häufig gezeichnet wurden.
+Grenzen, Routen, Jahreszahlen und Namen sind ungefähr und nur zur Veranschaulichung.
 
 Die Grenzen stammen aus [aourednik/historical-basemaps](https://github.com/aourednik/historical-basemaps) (CC BY 4.0), einem kontinentalen Datensatz mit bekannten Fehlern. Relief, Flüsse und Seen stammen von Natural Earth. Biografien, Stadtgeschichten, Ereignisse und Thementexte sind kurze Einführungen, keine Forschung.
 
